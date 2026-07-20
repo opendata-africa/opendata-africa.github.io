@@ -3,38 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open Data Research Portal</title>
+    <title>Open Data Africa | Research Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <style>
-        body { background-color: #f6f8fa; color: #24292f; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+        body { background-color: #f8fafc; color: #0f172a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
         .card { transition: all 0.2s ease; }
-        .card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .badge { background-color: #ddf4ff; color: #0969da; padding: 2px 10px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
-        .author-tag { background-color: #f6f8fa; border: 1px solid #d0d7de; padding: 2px 8px; border-radius: 6px; font-size: 0.8rem; display: inline-block; margin-right: 4px; margin-bottom: 4px; }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
+        .badge { background-color: #dbeafe; color: #1d4ed8; padding: 4px 12px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        .author-tag { background-color: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; display: inline-block; margin-right: 6px; margin-bottom: 6px; }
         details > summary { list-style: none; cursor: pointer; }
         details > summary::-webkit-details-marker { display: none; }
         details[open] summary svg { transform: rotate(180deg); }
     </style>
 </head>
-<body class="min-h-screen">
-    <header class="bg-white border-b border-gray-200 py-12 px-4 text-center">
-        <h1 class="text-4xl font-bold text-gray-900 mb-2">🌍 Open Data Research Portal</h1>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Discover, explore, and cite high-quality open datasets with clear provenance and use cases.</p>
-        <div class="max-w-3xl mx-auto mt-8 flex flex-col sm:flex-row gap-4">
-            <input type="text" id="searchInput" placeholder="Search by title or description..." class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm">
-            <select id="categoryFilter" class="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm">
-                <option value="All">All Categories</option>
-            </select>
-        </div>
+<body class="min-h-screen flex flex-col">
+
+    <!-- 1. HERO SECTION (Change your Title and Description here) -->
+    <header class="bg-white border-b border-slate-200">
+        <div class="max-w-5xl mx-auto px-4 py-16 text-center">
+            <h1 class="text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">🌍 Open Data Africa</h1>
+            <p class="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+                A centralized, interactive portal for researchers, policymakers, and developers to discover, explore, and cite high-quality open datasets across the continent.
+            </p>
+            
+            <!-- About Box -->
+            <div class="mt-8 bg-blue-50 border border-blue-100 rounded-xl p-6 max-w-3xl mx-auto text-left">
+                <h3 class="font-bold text-blue-900 mb-2 flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    About This Portal
+                </h3>
+                <p class="text-blue-800 text-sm leading-relaxed">
+                    This platform aggregates open datasets with verified metadata, including author provenance, licensing (e.g., CC-BY, CC0), and real-world research use cases. All data is freely accessible to accelerate evidence-based research and innovation.
+                </p>
+            </div>
+
+            <!-- Search and Filter -->
+            <div class="max-w-3xl mx-auto mt-10 flex flex-col sm:flex-row gap-4">
+                <input type="text" id="searchInput" placeholder="Search datasets by title, keyword, or description..." 
+                       class="flex-1 px-5 py-4 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent shadow-sm text-lg">
+                <select id="categoryFilter" class="px-5 py-4 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white shadow-sm text-lg font-medium">
+                    <option value="All">All Categories</option>
+                </select>
+            </div>
+        </div.
     </header>
-    <main class="max-w-5xl mx-auto px-4 py-8">
-        <p class="text-gray-600 mb-4 font-medium" id="resultCount">Loading datasets...</p>
-        <div id="loading" class="text-center py-12 text-gray-500">Loading data from CSV files...</div>
-        <div id="datasetContainer" class="space-y-4"></div>
+
+    <!-- 2. MAIN CONTENT (Dataset Cards) -->
+    <main class="flex-1 max-w-5xl mx-auto px-4 py-10 w-full">
+        <div class="flex justify-between items-center mb-6">
+            <p class="text-slate-600 font-semibold text-lg" id="resultCount">Loading datasets...</p>
+        </div>
+        
+        <div id="loading" class="text-center py-16 text-slate-500">
+            <svg class="animate-spin h-8 w-8 text-blue-600 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Loading data from repository...
+        </div>
+        
+        <div id="datasetContainer" class="space-y-6"></div>
     </main>
+
+    <!-- 3. FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-8 text-center text-slate-500 text-sm">
+        <p>© <span id="year"></span> Open Data Africa. Built with ❤️ for researchers.</p>
+        <p class="mt-2">Hosted openly on GitHub Pages.</p>
+    </footer>
+
     <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
         let datasets = [], authors = [], usecases = [];
+
         Promise.all([
             fetch('datasets.csv').then(res => { if(!res.ok) throw new Error('datasets.csv not found'); return res.text(); }),
             fetch('authors.csv').then(res => { if(!res.ok) throw new Error('authors.csv not found'); return res.text(); }),
@@ -43,12 +84,14 @@
             datasets = Papa.parse(dsText, { header: true, skipEmptyLines: true }).data;
             authors = Papa.parse(authText, { header: true, skipEmptyLines: true }).data;
             usecases = Papa.parse(ucText, { header: true, skipEmptyLines: true }).data;
+            
             populateCategories();
             renderDatasets(datasets);
             document.getElementById('loading').style.display = 'none';
         }).catch(err => {
-            document.getElementById('loading').innerHTML = `<span class="text-red-600 font-bold">Error loading data.</span><br><small class="text-gray-500">Make sure datasets.csv, authors.csv, and usecases.csv are in this repository.<br>Details: ${err.message}</small>`;
+            document.getElementById('loading').innerHTML = `<span class="text-red-600 font-bold">Error loading data.</span><br><small class="text-slate-500">Make sure datasets.csv, authors.csv, and usecases.csv are in this repository.<br>Details: ${err.message}</small>`;
         });
+
         function populateCategories() {
             const categories = [...new Set(datasets.map(d => d.category).filter(Boolean))].sort();
             const select = document.getElementById('categoryFilter');
@@ -59,74 +102,91 @@
                 select.appendChild(option);
             });
         }
+
         function renderDatasets(data) {
             const container = document.getElementById('datasetContainer');
             const countLabel = document.getElementById('resultCount');
             container.innerHTML = '';
             countLabel.textContent = `Showing ${data.length} Dataset(s)`;
+
             if (data.length === 0) {
-                container.innerHTML = '<div class="text-center py-8 text-gray-500 bg-white rounded-lg border">No datasets match your search.</div>';
+                container.innerHTML = '<div class="text-center py-12 text-slate-500 bg-white rounded-xl border border-slate-200">No datasets match your search. Try different keywords.</div>';
                 return;
             }
+
             data.forEach(ds => {
                 const dsUseCases = usecases.filter(uc => uc.dataset_id === ds.dataset_id);
                 const authorNames = ds.authors ? ds.authors.split(',').map(a => a.trim()) : [];
+                
                 let useCasesHtml = '';
                 if (dsUseCases.length > 0) {
-                    useCasesHtml = `<div class="mt-4 pt-4 border-t border-gray-100"><h5 class="font-semibold text-gray-800 mb-2">💡 Potential Use Cases</h5>`;
+                    useCasesHtml = `<div class="mt-6 pt-6 border-t border-slate-100"><h5 class="font-bold text-slate-800 mb-3 flex items-center gap-2">💡 Potential Use Cases</h5>`;
                     dsUseCases.forEach(uc => {
-                        useCasesHtml += `<div class="mb-3 text-sm text-gray-700"><strong>• ${uc.title}:</strong> ${uc.description}<br>`;
-                        if (uc.paper_link) useCasesHtml += `<a href="${uc.paper_link}" target="_blank" class="text-blue-600 hover:underline ml-4 inline-block mt-1">📄 Read Paper</a> `;
-                        if (uc.code_repo) useCasesHtml += `<a href="${uc.code_repo}" target="_blank" class="text-blue-600 hover:underline ml-2 inline-block mt-1">💻 View Code</a>`;
+                        useCasesHtml += `<div class="mb-4 text-sm text-slate-700 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <strong class="text-slate-900">• ${uc.title}:</strong> ${uc.description}<br>`;
+                        if (uc.paper_link) useCasesHtml += `<a href="${uc.paper_link}" target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline ml-4 inline-block mt-2 font-medium">📄 Read Paper</a> `;
+                        if (uc.code_repo) useCasesHtml += `<a href="${uc.code_repo}" target="_blank" class="text-slate-600 hover:text-slate-900 hover:underline ml-2 inline-block mt-2 font-medium">💻 View Code</a>`;
                         useCasesHtml += `</div>`;
                     });
                     useCasesHtml += `</div>`;
                 }
+
                 let authorsHtml = '';
                 authorNames.forEach(name => {
                     const auth = authors.find(a => a.author_name === name);
                     if (auth) {
                         authorsHtml += `<div class="mb-3">
-                            <span class="author-tag">👤 ${auth.author_name}</span>
-                            <div class="text-xs text-gray-600 mt-1"><strong>${auth.affiliation}</strong> (${auth.role})</div>`;
-                        if (auth.orcid) authorsHtml += `<a href="https://orcid.org/${auth.orcid}" target="_blank" class="text-xs text-blue-600 hover:underline inline-block mt-1">🔗 ORCID: ${auth.orcid}</a>`;
+                            <span class="author-tag font-medium text-slate-700">👤 ${auth.author_name}</span>
+                            <div class="text-xs text-slate-600 mt-1 ml-1"><strong>${auth.affiliation}</strong> • ${auth.role}</div>`;
+                        if (auth.orcid) authorsHtml += `<a href="https://orcid.org/${auth.orcid}" target="_blank" class="text-xs text-blue-600 hover:underline ml-1 inline-block mt-1">🔗 ORCID: ${auth.orcid}</a>`;
                         authorsHtml += `</div>`;
                     }
                 });
+
                 const year = new Date().getFullYear();
                 const citation = `${ds.authors} (${year}). ${ds.title}. Retrieved from ${ds.data_url}`;
+
                 const card = document.createElement('details');
-                card.className = 'card bg-white border border-gray-200 rounded-lg p-6';
+                card.className = 'card bg-white border border-slate-200 rounded-xl p-6 shadow-sm';
                 card.innerHTML = `
-                    <summary class="flex justify-between items-start focus:outline-none">
+                    <summary class="flex justify-between items-start focus:outline-none group">
                         <div class="flex-1 pr-4">
-                            <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <div class="flex items-center gap-3 mb-3 flex-wrap">
                                 <span class="badge">${ds.category}</span>
-                                <span class="text-xs text-gray-500">⚖️ ${ds.license}</span>
+                                <span class="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded">⚖️ ${ds.license}</span>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900">${ds.title}</h3>
-                            <p class="text-gray-600 mt-2">${ds.description}</p>
+                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-700 transition-colors">${ds.title}</h3>
+                            <p class="text-slate-600 mt-3 leading-relaxed">${ds.description}</p>
                         </div>
-                        <svg class="w-6 h-6 text-gray-400 transform transition-transform duration-200 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        <svg class="w-6 h-6 text-slate-400 transform transition-transform duration-200 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </summary>
-                    <div class="mt-6 pt-6 border-t border-gray-200 grid md:grid-cols-3 gap-8">
-                        <div class="md:col-span-2">${useCasesHtml}</div>
-                        <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
-                            <div class="mb-5">
-                                <a href="${ds.data_url}" target="_blank" class="block w-full text-center bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 px-4 rounded-md transition-colors shadow-sm">View / Download Dataset →</a>
-                            </div>
-                            <h5 class="font-semibold text-gray-800 mb-3 text-sm uppercase tracking-wide">👥 Authors & Provenance</h5>
-                            <div class="text-sm mb-4">${authorsHtml || '<span class="text-gray-500">No author details found.</span>'}</div>
-                            <h5 class="font-semibold text-gray-800 mb-2 text-sm uppercase tracking-wide">📝 Cite this Dataset</h5>
-                            <code class="block bg-white border border-gray-300 p-3 rounded text-xs text-gray-700 break-all select-all cursor-pointer hover:bg-gray-50 transition-colors" onclick="navigator.clipboard.writeText(this.innerText); alert('Citation copied!')">${citation}</code>
+                    
+                    <div class="mt-8 pt-6 border-t border-slate-200 grid md:grid-cols-3 gap-8">
+                        <div class="md:col-span-2">
+                            ${useCasesHtml}
                         </div>
-                    </div>`;
+                        <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 h-fit">
+                            <div class="mb-6">
+                                <a href="${ds.data_url}" target="_blank" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors shadow-sm">
+                                    View / Download Dataset →
+                                </a>
+                            </div>
+                            <h5 class="font-bold text-slate-800 mb-3 text-xs uppercase tracking-wider">👥 Authors & Provenance</h5>
+                            <div class="text-sm mb-6">${authorsHtml || '<span class="text-slate-500">No author details found.</span>'}</div>
+                            
+                            <h5 class="font-bold text-slate-800 mb-2 text-xs uppercase tracking-wider">📝 Cite this Dataset</h5>
+                            <code class="block bg-white border border-slate-300 p-3 rounded-lg text-xs text-slate-700 break-all select-all cursor-pointer hover:bg-slate-50 transition-colors font-mono" onclick="navigator.clipboard.writeText(this.innerText); alert('Citation copied to clipboard!')">${citation}</code>
+                        </div>
+                    </div>
+                `;
                 container.appendChild(card);
             });
         }
+
         function filterData() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const category = document.getElementById('categoryFilter').value;
+
             const filtered = datasets.filter(ds => {
                 const matchesSearch = ds.title.toLowerCase().includes(searchTerm) || ds.description.toLowerCase().includes(searchTerm);
                 const matchesCategory = category === 'All' || ds.category === category;
@@ -134,6 +194,7 @@
             });
             renderDatasets(filtered);
         }
+
         document.getElementById('searchInput').addEventListener('input', filterData);
         document.getElementById('categoryFilter').addEventListener('change', filterData);
     </script>
