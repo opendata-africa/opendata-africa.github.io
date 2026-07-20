@@ -1,0 +1,4 @@
+dataset_id,title,description,category,license,data_url,authors
+DS001,Global Temperature Anomalies (2020-2025),Monthly temperature deviations from the 20th-century average across 50 major cities.,Climate,CC-BY-4.0,https://example.com/data/temp.csv,"Dr. Jane Smith, John Doe"
+DS002,Regional Hospital Admission Rates,Daily hospital admission counts categorized by age group and primary diagnosis over a 5-year period.,Health,CC0-1.0,https://example.com/data/health.csv,Dr. Alan Grant
+DS003,Small Business Growth Index,Quarterly revenue and employment metrics for registered small-to-medium enterprises in the tech sector.,Economics,MIT,"Dr. Sarah Connor, Dr. Alan Grant"
