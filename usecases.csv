@@ -1,0 +1,4 @@
+usecase_id,dataset_id,title,description,paper_link,code_repo
+UC001,DS001,Predicting Urban Heat Islands,Correlating monthly temperature deviations with urban infrastructure density to identify high-risk heat zones.,https://doi.org/10.1234/heat.island,https://github.com/example/heat-model
+UC002,DS002,Seasonal Flu Outbreak Prediction,Using historical admission counts to train a time-series forecasting model for resource allocation during winter months.,https://doi.org/10.1234/flu.predict,https://github.com/example/flu-forecast
+UC003,DS003,Tech Sector Resilience Analysis,Analyzing quarterly revenue metrics to determine which sub-sectors recovered fastest post-pandemic.,,https://github.com/example/tech-resilience
