@@ -1,0 +1,117 @@
+name: 📊 Submit New Dataset
+description: Propose a new dataset, author details, and use cases for the Open Data Africa portal.
+title: "[New Dataset]: "
+labels: ["new-dataset", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing to Open Data Africa! Please fill out the details below. 
+        *Do not use commas inside the "Authors" or "Affiliations" fields if there is only one person. If multiple, separate with a comma and space.*
+
+  - type: input
+    id: dataset_id
+    attributes:
+      label: Dataset ID
+      description: A unique ID (e.g., DS004).
+      placeholder: DS004
+    validations:
+      required: true
+
+  - type: input
+    id: title
+    attributes:
+      label: Dataset Title
+      placeholder: e.g., National Rainfall Data 2020-2025
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      placeholder: A brief, 1-2 sentence summary of the data.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Climate
+        - Health
+        - Economics
+        - Agriculture
+        - Education
+        - Technology
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: license
+    attributes:
+      label: License
+      description: e.g., CC-BY-4.0, CC0-1.0, MIT
+      placeholder: CC-BY-4.0
+    validations:
+      required: true
+
+  - type: input
+    id: data_url
+    attributes:
+      label: Data URL
+      description: The direct link to download or view the data.
+      placeholder: https://example.com/data/rainfall.csv
+    validations:
+      required: true
+
+  - type: input
+    id: authors
+    attributes:
+      label: Authors
+      description: Comma-separated list of author names.
+      placeholder: Dr. Jane Smith, John Doe
+    validations:
+      required: true
+
+  - type: input
+    id: affiliations
+    attributes:
+      label: Author Affiliations
+      description: Comma-separated, matching the author order.
+      placeholder: University of Nairobi, Ministry of Health
+    validations:
+      required: true
+
+  - type: input
+    id: orcids
+    attributes:
+      label: Author ORCIDs (Optional)
+      description: Comma-separated, matching the author order.
+      placeholder: 0000-0002-1825-0097, 0000-0003-1234-5678
+
+  - type: textarea
+    id: usecase_title
+    attributes:
+      label: Use Case Title (Optional)
+      placeholder: e.g., Predicting Crop Yields in Arid Regions
+
+  - type: textarea
+    id: usecase_description
+    attributes:
+      label: Use Case Description (Optional)
+      placeholder: How this data can be used in research.
+
+  - type: input
+    id: paper_link
+    attributes:
+      label: Published Paper Link (Optional)
+      placeholder: https://doi.org/...
+
+  - type: input
+    id: code_repo
+    attributes:
+      label: Code Repository Link (Optional)
+      placeholder: https://github.com/...
