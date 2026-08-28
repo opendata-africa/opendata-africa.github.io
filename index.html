@@ -8,34 +8,152 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body { background-color: #f8fafc; color: #0f172a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        .gradient-hero { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #06b6d4 100%); }
-        .card-hover { transition: all 0.3s ease; }
-        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        
+        /* Animated gradient background */
+        .gradient-hero { 
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 25%, #06b6d4 50%, #8b5cf6 75%, #1e3a8a 100%); 
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Floating animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Pulse animation for stats */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(1.3); opacity: 0; }
+        }
+        
+        .pulse-ring::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px solid currentColor;
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        
+        /* Card hover effects */
+        .card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-hover:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 25px 50px rgba(0,0,0,0.15); }
+        
+        /* Partner logo animations */
         .partner-logo { filter: grayscale(0); opacity: 0.9; transition: all 0.3s; }
-        .partner-logo:hover { filter: grayscale(0); opacity: 1; transform: scale(1.05); }
-        .stat-card { transition: all 0.2s ease; }
-        .stat-card:hover { transform: translateY(-2px); }
+        .partner-logo:hover { filter: grayscale(0); opacity: 1; transform: scale(1.1); }
+        
+        /* Stat card animations */
+        .stat-card { transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        .stat-card:hover::before { left: 100%; }
+        .stat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.1); }
+        
+        /* Search bar glow */
+        .search-glow:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        /* Scroll animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Domain card gradient borders */
+        .domain-card {
+            position: relative;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .domain-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--card-color-start), var(--card-color-end));
+        }
+        
+        /* Animated counter */
+        .counter {
+            display: inline-block;
+            font-variant-numeric: tabular-nums;
+        }
+        
+        /* Glassmorphism effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Typing animation */
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        .typing-animation {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 3s steps(40, end);
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
     <!-- Navigation -->
-    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+    <nav class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 py-3">
             <div class="flex justify-between items-center">
                 <div class="flex items-center gap-3">
-                    <span class="text-2xl">🌍</span>
+                    <div class="relative">
+                        <span class="text-3xl">🌍</span>
+                        <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                    </div>
                     <div>
                         <div class="font-bold text-slate-900 text-lg">Open Data Africa</div>
                         <div class="text-xs text-slate-500">AI-Powered Research Portal</div>
                     </div>
                 </div>
                 <div class="hidden md:flex items-center gap-6">
-                    <a href="index.html" class="text-blue-600 font-medium">Home</a>
-                    <a href="datasets.html" class="text-slate-600 hover:text-blue-600 font-medium">Datasets</a>
-                    <a href="countries.html" class="text-slate-600 hover:text-blue-600 font-medium">Countries</a>
-                    <a href="insights.html" class="text-slate-600 hover:text-blue-600 font-medium">Insights</a>
-                    <a href="about.html" class="text-slate-600 hover:text-blue-600 font-medium">About</a>
+                    <a href="index.html" class="text-blue-600 font-medium relative group">
+                        Home
+                        <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-blue-600 transform scale-x-100 transition-transform"></span>
+                    </a>
+                    <a href="datasets.html" class="text-slate-600 hover:text-blue-600 font-medium transition-colors">Datasets</a>
+                    <a href="countries.html" class="text-slate-600 hover:text-blue-600 font-medium transition-colors">Countries</a>
+                    <a href="insights.html" class="text-slate-600 hover:text-blue-600 font-medium transition-colors">Insights</a>
+                    <a href="about.html" class="text-slate-600 hover:text-blue-600 font-medium transition-colors">About</a>
                 </div>
                 <button class="md:hidden text-slate-600">
                     <i class="fas fa-bars text-xl"></i>
@@ -45,25 +163,54 @@
     </nav>
 
     <!-- Hero Section -->
-    <header class="gradient-hero text-white">
-        <div class="max-w-7xl mx-auto px-4 py-16 md:py-24">
-            <div class="max-w-3xl">
-                <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium mb-6">
-                    <i class="fas fa-rocket"></i>
+    <header class="gradient-hero text-white relative overflow-hidden">
+        <!-- Animated background shapes -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-white/10 rounded-full blur-3xl float-animation"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl float-animation" style="animation-delay: 2s;"></div>
+            <div class="absolute top-1/2 left-1/2 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl float-animation" style="animation-delay: 4s;"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 py-20 md:py-28 relative z-10">
+            <div class="max-w-4xl">
+                <div class="inline-flex items-center gap-2 glass px-4 py-2 rounded-full text-sm font-medium mb-6 fade-in-up">
+                    <i class="fas fa-rocket text-yellow-300"></i>
                     <span>Empowering African AI Research</span>
                 </div>
-                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
-                    Africa's Premier<br>Open Data Hub
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight fade-in-up" style="animation-delay: 0.1s;">
+                    Africa's Premier<br>
+                    <span class="bg-gradient-to-r from-yellow-300 via-orange-300 to-pink-300 bg-clip-text text-transparent">Open Data Hub</span>
                 </h1>
-                <p class="text-lg md:text-xl text-blue-100 mb-8 leading-relaxed">
-                    Discover 296+ high-quality datasets across agriculture, health, NLP, and more. Built for researchers, policymakers, and AI developers driving innovation across the continent.
+                <p class="text-xl md:text-2xl text-blue-100 mb-8 leading-relaxed fade-in-up" style="animation-delay: 0.2s;">
+                    Discover <span class="font-bold text-white" id="heroDatasetCount">296+</span> high-quality datasets across agriculture, health, NLP, and more. Built for researchers, policymakers, and AI developers driving innovation across the continent.
                 </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="datasets.html" class="bg-white text-blue-700 hover:bg-blue-50 px-8 py-4 rounded-lg font-bold transition-colors shadow-lg flex items-center gap-2">
-                        <i class="fas fa-database"></i> Explore Datasets
+                
+                <!-- Interactive Search Bar -->
+                <div class="max-w-2xl fade-in-up" style="animation-delay: 0.3s;">
+                    <div class="relative">
+                        <input type="text" id="heroSearch" placeholder="Search datasets, countries, or keywords..." 
+                               class="search-glow w-full pl-14 pr-32 py-5 bg-white/95 backdrop-blur-md text-slate-900 rounded-2xl focus:outline-none focus:ring-4 focus:ring-white/30 shadow-2xl text-lg font-medium">
+                        <i class="fas fa-search absolute left-5 top-1/2 transform -translate-y-1/2 text-slate-400 text-xl"></i>
+                        <button onclick="performSearch()" class="absolute right-3 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors shadow-lg">
+                            Search
+                        </button>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="text-sm text-blue-200">Popular:</span>
+                        <a href="datasets.html?domain=NLP" class="text-sm text-white/80 hover:text-white underline">NLP</a>
+                        <a href="datasets.html?domain=Agriculture" class="text-sm text-white/80 hover:text-white underline">Agriculture</a>
+                        <a href="datasets.html?country=Kenya" class="text-sm text-white/80 hover:text-white underline">Kenya</a>
+                        <a href="datasets.html?country=Ethiopia" class="text-sm text-white/80 hover:text-white underline">Ethiopia</a>
+                    </div>
+                </div>
+                
+                <!-- CTA Buttons -->
+                <div class="flex flex-wrap gap-4 mt-10 fade-in-up" style="animation-delay: 0.4s;">
+                    <a href="datasets.html" class="bg-white text-blue-700 hover:bg-blue-50 px-8 py-4 rounded-xl font-bold transition-all shadow-xl hover:shadow-2xl flex items-center gap-2 group">
+                        <i class="fas fa-database group-hover:rotate-12 transition-transform"></i> Explore All Datasets
                     </a>
-                    <a href="insights.html" class="bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 px-8 py-4 rounded-lg font-bold transition-colors flex items-center gap-2">
-                        <i class="fas fa-chart-line"></i> View Insights
+                    <a href="countries.html" class="glass hover:bg-white/20 px-8 py-4 rounded-xl font-bold transition-all flex items-center gap-2">
+                        <i class="fas fa-map-marked-alt"></i> View Interactive Map
                     </a>
                 </div>
             </div>
@@ -71,14 +218,14 @@
     </header>
 
     <!-- Partner Branding Section -->
-    <section class="bg-white border-b border-slate-200 py-8">
+    <section class="bg-white border-b border-slate-200 py-10">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-6">
-                <p class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Supported By</p>
+            <div class="text-center mb-8">
+                <p class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Supported By Leading Organizations</p>
             </div>
-            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-                <div class="flex items-center gap-3 partner-logo">
-                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center text-white font-bold text-xl">
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+                <div class="flex items-center gap-3 partner-logo cursor-pointer">
+                    <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center text-white font-bold text-2xl shadow-lg">
                         AI
                     </div>
                     <div>
@@ -86,8 +233,8 @@
                         <div class="text-xs text-slate-500">Initiative</div>
                     </div>
                 </div>
-                <div class="flex items-center gap-3 partner-logo">
-                    <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-red-700 rounded-lg flex items-center justify-center text-white font-bold text-lg">
+                <div class="flex items-center gap-3 partner-logo cursor-pointer">
+                    <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-red-700 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
                         GIZ
                     </div>
                     <div>
@@ -95,9 +242,9 @@
                         <div class="text-xs text-slate-500">FAIR Forward</div>
                     </div>
                 </div>
-                <div class="flex items-center gap-3 partner-logo">
-                    <div class="w-12 h-12 bg-gradient-to-br from-green-600 to-yellow-500 rounded-full flex items-center justify-center text-white">
-                        <i class="fas fa-globe-africa"></i>
+                <div class="flex items-center gap-3 partner-logo cursor-pointer">
+                    <div class="w-14 h-14 bg-gradient-to-br from-green-600 to-yellow-500 rounded-full flex items-center justify-center text-white shadow-lg">
+                        <i class="fas fa-globe-africa text-2xl"></i>
                     </div>
                     <div>
                         <div class="font-bold text-slate-900">African Union</div>
@@ -108,109 +255,158 @@
         </div>
     </section>
 
-    <!-- Quick Stats -->
-    <section class="py-12 bg-slate-50">
+    <!-- Animated Stats Section -->
+    <section class="py-16 bg-gradient-to-br from-slate-50 to-blue-50">
         <div class="max-w-7xl mx-auto px-4">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="stat-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
-                    <div class="text-4xl font-bold text-blue-600 mb-2" id="statDatasets">296</div>
-                    <div class="text-sm text-slate-600 font-medium">Open Datasets</div>
+                <div class="stat-card bg-white p-8 rounded-2xl border border-slate-200 shadow-lg text-center">
+                    <div class="relative inline-block mb-4">
+                        <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto">
+                            <i class="fas fa-database text-blue-600 text-3xl"></i>
+                        </div>
+                        <div class="absolute inset-0 pulse-ring text-blue-600"></div>
+                    </div>
+                    <div class="text-5xl font-bold text-blue-600 mb-2 counter" id="statDatasets">0</div>
+                    <div class="text-sm text-slate-600 font-medium uppercase tracking-wide">Open Datasets</div>
                 </div>
-                <div class="stat-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
-                    <div class="text-4xl font-bold text-emerald-600 mb-2">54</div>
-                    <div class="text-sm text-slate-600 font-medium">African Countries</div>
+                <div class="stat-card bg-white p-8 rounded-2xl border border-slate-200 shadow-lg text-center">
+                    <div class="relative inline-block mb-4">
+                        <div class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center mx-auto">
+                            <i class="fas fa-globe-africa text-emerald-600 text-3xl"></i>
+                        </div>
+                        <div class="absolute inset-0 pulse-ring text-emerald-600"></div>
+                    </div>
+                    <div class="text-5xl font-bold text-emerald-600 mb-2 counter" id="statCountries">0</div>
+                    <div class="text-sm text-slate-600 font-medium uppercase tracking-wide">African Countries</div>
                 </div>
-                <div class="stat-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
-                    <div class="text-4xl font-bold text-amber-600 mb-2">12</div>
-                    <div class="text-sm text-slate-600 font-medium">Research Domains</div>
+                <div class="stat-card bg-white p-8 rounded-2xl border border-slate-200 shadow-lg text-center">
+                    <div class="relative inline-block mb-4">
+                        <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto">
+                            <i class="fas fa-layer-group text-amber-600 text-3xl"></i>
+                        </div>
+                        <div class="absolute inset-0 pulse-ring text-amber-600"></div>
+                    </div>
+                    <div class="text-5xl font-bold text-amber-600 mb-2 counter" id="statDomains">0</div>
+                    <div class="text-sm text-slate-600 font-medium uppercase tracking-wide">Research Domains</div>
                 </div>
-                <div class="stat-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
-                    <div class="text-4xl font-bold text-purple-600 mb-2">100%</div>
-                    <div class="text-sm text-slate-600 font-medium">Open Access</div>
+                <div class="stat-card bg-white p-8 rounded-2xl border border-slate-200 shadow-lg text-center">
+                    <div class="relative inline-block mb-4">
+                        <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto">
+                            <i class="fas fa-unlock text-purple-600 text-3xl"></i>
+                        </div>
+                        <div class="absolute inset-0 pulse-ring text-purple-600"></div>
+                    </div>
+                    <div class="text-5xl font-bold text-purple-600 mb-2">100%</div>
+                    <div class="text-sm text-slate-600 font-medium uppercase tracking-wide">Open Access</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Featured Domains -->
-    <section class="py-16">
+    <!-- Featured Domains Section -->
+    <section class="py-20">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Explore by Domain</h2>
-                <p class="text-lg text-slate-600 max-w-2xl mx-auto">High-quality datasets powering AI research across critical sectors</p>
+            <div class="text-center mb-16 fade-in-up">
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">Explore by Domain</h2>
+                <p class="text-xl text-slate-600 max-w-2xl mx-auto">High-quality datasets powering AI research across critical sectors</p>
             </div>
-            <div class="grid md:grid-cols-3 gap-6">
-                <a href="datasets.html?domain=NLP" class="card-hover bg-white p-8 rounded-xl border border-slate-200 shadow-sm group">
-                    <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors">
-                        <i class="fas fa-language text-blue-600 text-2xl"></i>
+            <div class="grid md:grid-cols-3 gap-8">
+                <a href="datasets.html?domain=NLP" class="domain-card card-hover p-8 shadow-lg group" style="--card-color-start: #3b82f6; --card-color-end: #8b5cf6;">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-language text-white text-3xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">Natural Language Processing</h3>
-                    <p class="text-slate-600 mb-4">80+ datasets for African languages, speech recognition, and text analysis</p>
-                    <span class="text-blue-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
-                        Explore NLP Data <i class="fas fa-arrow-right"></i>
-                    </span>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Natural Language Processing</h3>
+                    <p class="text-slate-600 mb-6 leading-relaxed">80+ datasets for African languages, speech recognition, and text analysis</p>
+                    <div class="flex items-center gap-2 text-blue-600 font-semibold group-hover:gap-4 transition-all">
+                        <span>Explore NLP Data</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
                 </a>
-                <a href="datasets.html?domain=Agriculture" class="card-hover bg-white p-8 rounded-xl border border-slate-200 shadow-sm group">
-                    <div class="w-14 h-14 bg-emerald-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-emerald-200 transition-colors">
-                        <i class="fas fa-seedling text-emerald-600 text-2xl"></i>
+                <a href="datasets.html?domain=Agriculture" class="domain-card card-hover p-8 shadow-lg group" style="--card-color-start: #10b981; --card-color-end: #059669;">
+                    <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-seedling text-white text-3xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">Agriculture & Food Security</h3>
-                    <p class="text-slate-600 mb-4">120+ datasets on crop monitoring, soil data, and agricultural planning</p>
-                    <span class="text-emerald-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
-                        Explore Agriculture Data <i class="fas fa-arrow-right"></i>
-                    </span>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Agriculture & Food Security</h3>
+                    <p class="text-slate-600 mb-6 leading-relaxed">120+ datasets on crop monitoring, soil data, and agricultural planning</p>
+                    <div class="flex items-center gap-2 text-emerald-600 font-semibold group-hover:gap-4 transition-all">
+                        <span>Explore Agriculture Data</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
                 </a>
-                <a href="datasets.html?domain=Healthcare" class="card-hover bg-white p-8 rounded-xl border border-slate-200 shadow-sm group">
-                    <div class="w-14 h-14 bg-rose-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-rose-200 transition-colors">
-                        <i class="fas fa-heartbeat text-rose-600 text-2xl"></i>
+                <a href="datasets.html?domain=Healthcare" class="domain-card card-hover p-8 shadow-lg group" style="--card-color-start: #ef4444; --card-color-end: #ec4899;">
+                    <div class="w-16 h-16 bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-heartbeat text-white text-3xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">Healthcare & Public Health</h3>
-                    <p class="text-slate-600 mb-4">60+ datasets on disease tracking, health facilities, and medical research</p>
-                    <span class="text-rose-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
-                        Explore Health Data <i class="fas fa-arrow-right"></i>
-                    </span>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3">Healthcare & Public Health</h3>
+                    <p class="text-slate-600 mb-6 leading-relaxed">60+ datasets on disease tracking, health facilities, and medical research</p>
+                    <div class="flex items-center gap-2 text-rose-600 font-semibold group-hover:gap-4 transition-all">
+                        <span>Explore Health Data</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Datasets Section -->
+    <section class="py-20 bg-gradient-to-br from-blue-50 to-indigo-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12 fade-in-up">
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">Featured Datasets</h2>
+                <p class="text-xl text-slate-600">Curated high-impact datasets driving African AI innovation</p>
+            </div>
+            <div id="featuredDatasets" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Populated by JavaScript -->
+            </div>
+            <div class="text-center mt-12">
+                <a href="datasets.html" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-bold transition-colors shadow-lg">
+                    <i class="fas fa-th-large"></i> View All 296+ Datasets
                 </a>
             </div>
         </div>
     </section>
 
     <!-- For Policymakers CTA -->
-    <section class="py-16 bg-gradient-to-br from-slate-900 to-slate-800 text-white">
-        <div class="max-w-7xl mx-auto px-4">
+    <section class="py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white relative overflow-hidden">
+        <div class="absolute inset-0">
+            <div class="absolute top-0 left-0 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
             <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <div class="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full text-sm font-medium mb-4">
-                        <i class="fas fa-landmark"></i>
+                <div class="fade-in-up">
+                    <div class="inline-flex items-center gap-2 glass px-4 py-2 rounded-full text-sm font-medium mb-6">
+                        <i class="fas fa-landmark text-yellow-300"></i>
                         <span>For Policymakers</span>
                     </div>
-                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Evidence-Based Policy Insights</h2>
-                    <p class="text-lg text-slate-300 mb-8 leading-relaxed">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Evidence-Based Policy Insights</h2>
+                    <p class="text-xl text-blue-100 mb-8 leading-relaxed">
                         Access interactive analytics, country comparisons, and trend analysis to inform data-driven decision making across Africa.
                     </p>
-                    <a href="insights.html" class="inline-flex items-center gap-2 bg-white text-slate-900 hover:bg-slate-100 px-8 py-4 rounded-lg font-bold transition-colors">
+                    <a href="insights.html" class="inline-flex items-center gap-2 bg-white text-slate-900 hover:bg-blue-50 px-8 py-4 rounded-xl font-bold transition-colors shadow-xl">
                         <i class="fas fa-chart-bar"></i> View Policy Insights
                     </a>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20">
-                        <i class="fas fa-map-marked-alt text-3xl text-blue-400 mb-3"></i>
+                <div class="grid grid-cols-2 gap-4 fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="glass p-6 rounded-2xl hover:bg-white/15 transition-colors">
+                        <i class="fas fa-map-marked-alt text-4xl text-blue-400 mb-3"></i>
                         <h4 class="font-bold mb-2">Country Profiles</h4>
-                        <p class="text-sm text-slate-300">Interactive maps and regional analysis</p>
+                        <p class="text-sm text-blue-200">Interactive maps and regional analysis</p>
                     </div>
-                    <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20">
-                        <i class="fas fa-chart-line text-3xl text-emerald-400 mb-3"></i>
+                    <div class="glass p-6 rounded-2xl hover:bg-white/15 transition-colors">
+                        <i class="fas fa-chart-line text-4xl text-emerald-400 mb-3"></i>
                         <h4 class="font-bold mb-2">Trend Analysis</h4>
-                        <p class="text-sm text-slate-300">Track data availability over time</p>
+                        <p class="text-sm text-blue-200">Track data availability over time</p>
                     </div>
-                    <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20">
-                        <i class="fas fa-download text-3xl text-amber-400 mb-3"></i>
+                    <div class="glass p-6 rounded-2xl hover:bg-white/15 transition-colors">
+                        <i class="fas fa-download text-4xl text-amber-400 mb-3"></i>
                         <h4 class="font-bold mb-2">Export Reports</h4>
-                        <p class="text-sm text-slate-300">Download data for presentations</p>
+                        <p class="text-sm text-blue-200">Download data for presentations</p>
                     </div>
-                    <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20">
-                        <i class="fas fa-balance-scale text-3xl text-purple-400 mb-3"></i>
+                    <div class="glass p-6 rounded-2xl hover:bg-white/15 transition-colors">
+                        <i class="fas fa-balance-scale text-4xl text-purple-400 mb-3"></i>
                         <h4 class="font-bold mb-2">Gap Analysis</h4>
-                        <p class="text-sm text-slate-300">Identify data needs by sector</p>
+                        <p class="text-sm text-blue-200">Identify data needs by sector</p>
                     </div>
                 </div>
             </div>
@@ -223,7 +419,7 @@
             <div class="grid md:grid-cols-4 gap-8 mb-8">
                 <div>
                     <div class="flex items-center gap-3 mb-4">
-                        <span class="text-2xl">🌍</span>
+                        <span class="text-3xl">🌍</span>
                         <div class="font-bold text-white text-lg">Open Data Africa</div>
                     </div>
                     <p class="text-sm leading-relaxed">Empowering African AI research through open, accessible data.</p>
@@ -259,6 +455,118 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        let datasets = [];
+
+        // Load datasets and initialize
+        fetch('datasets.json')
+            .then(res => res.json())
+            .then(data => {
+                datasets = data;
+                animateCounters();
+                renderFeaturedDatasets();
+                initScrollAnimations();
+            });
+
+        // Animate counters
+        function animateCounters() {
+            const uniqueCountries = new Set();
+            datasets.forEach(ds => (ds.countries || []).forEach(c => uniqueCountries.add(c)));
+            const uniqueDomains = new Set(datasets.map(d => d.domain).filter(Boolean));
+
+            animateValue('statDatasets', 0, datasets.length, 2000);
+            animateValue('statCountries', 0, uniqueCountries.size, 2000);
+            animateValue('statDomains', 0, uniqueDomains.size, 2000);
+            
+            document.getElementById('heroDatasetCount').textContent = datasets.length + '+';
+        }
+
+        function animateValue(id, start, end, duration) {
+            const obj = document.getElementById(id);
+            const range = end - start;
+            const increment = range / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= end) {
+                    obj.textContent = end;
+                    clearInterval(timer);
+                } else {
+                    obj.textContent = Math.floor(current);
+                }
+            }, 16);
+        }
+
+        // Render featured datasets
+        function renderFeaturedDatasets() {
+            const featured = datasets.slice(0, 6);
+            const container = document.getElementById('featuredDatasets');
+            
+            container.innerHTML = featured.map(ds => {
+                const countries = (ds.countries || []).slice(0, 2).join(', ') || 'Africa-wide';
+                const domainColor = getDomainColor(ds.domain);
+                
+                return `
+                    <div class="card-hover bg-white p-6 rounded-2xl border border-slate-200 shadow-lg">
+                        <div class="flex items-start justify-between mb-4">
+                            <span class="px-3 py-1 ${domainColor} text-xs font-bold rounded-full">${ds.domain}</span>
+                            <span class="text-xs text-slate-500"><i class="fas fa-calendar mr-1"></i>${ds.last_updated || '2024'}</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 mb-2 line-clamp-2">${ds.dataset_name}</h3>
+                        <p class="text-sm text-slate-600 mb-4 line-clamp-2">${ds.source || 'Unknown Source'}</p>
+                        <div class="flex items-center justify-between text-xs text-slate-500">
+                            <span><i class="fas fa-globe-africa mr-1"></i>${countries}</span>
+                            <a href="${ds.link}" target="_blank" class="text-blue-600 hover:text-blue-800 font-semibold">View →</a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getDomainColor(domain) {
+            const colors = {
+                'NLP': 'bg-blue-100 text-blue-700',
+                'Agriculture': 'bg-emerald-100 text-emerald-700',
+                'Healthcare': 'bg-rose-100 text-rose-700',
+                'Environment and Energy': 'bg-amber-100 text-amber-700',
+                'Climate and Geospatial': 'bg-cyan-100 text-cyan-700',
+                'Socioeconomic': 'bg-purple-100 text-purple-700'
+            };
+            return colors[domain] || 'bg-slate-100 text-slate-700';
+        }
+
+        // Search functionality
+        function performSearch() {
+            const query = document.getElementById('heroSearch').value;
+            if (query.trim()) {
+                window.location.href = `datasets.html?search=${encodeURIComponent(query)}`;
+            }
+        }
+
+        document.getElementById('heroSearch').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') performSearch();
+        });
+
+        // Scroll animations
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+        }
+
+        // Trigger initial animations
+        setTimeout(() => {
+            document.querySelectorAll('.fade-in-up').forEach(el => el.classList.add('visible'));
+        }, 100);
+    </script>
 
 </body>
 </html>
