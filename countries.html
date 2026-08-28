@@ -6,14 +6,14 @@
     <title>Countries | Open Data Africa</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Leaflet CSS & JS (100% Free, No API Key) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
         body { background-color: #f8fafc; color: #0f172a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
         #map { height: 650px; border-radius: 12px; z-index: 1; background: #e2e8f0; }
-        .country-card { transition: all 0.2s ease; }
-        .country-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .country-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
+        .country-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .country-card.active { ring: 2px; ring-color: #3b82f6; border-color: #3b82f6; background: #eff6ff; }
         .leaflet-popup-content-wrapper { border-radius: 8px; padding: 0; overflow: hidden; }
         .leaflet-popup-content { margin: 0; width: 280px !important; }
         .popup-header { background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); color: white; padding: 12px 16px; }
@@ -21,6 +21,34 @@
         .dataset-item { background: #f8fafc; border-left: 3px solid #3b82f6; padding: 8px; margin-bottom: 8px; border-radius: 4px; font-size: 12px; }
         .legend { background: white; padding: 10px 14px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); line-height: 20px; color: #334155; font-size: 12px; }
         .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.8; border-radius: 3px; }
+        
+        /* Custom tooltip for map hover */
+        .map-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .map-tooltip.show { opacity: 1; }
+        .map-tooltip .count { color: #60a5fa; font-size: 16px; margin-left: 6px; }
+        
+        /* Animated counter */
+        .stat-number { font-variant-numeric: tabular-nums; }
+        
+        /* Filter buttons */
+        .filter-btn { transition: all 0.2s; }
+        .filter-btn.active { background: #3b82f6; color: white; }
+        
+        /* Search input animation */
+        .search-input:focus { box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -30,7 +58,7 @@
         <div class="max-w-7xl mx-auto px-4 py-3">
             <div class="flex justify-between items-center">
                 <a href="index.html" class="flex items-center gap-3">
-                    <span class="text-2xl">🌍</span>
+                    <span class="text-2xl"></span>
                     <div>
                         <div class="font-bold text-slate-900 text-lg">Open Data Africa</div>
                         <div class="text-xs text-slate-500">AI-Powered Research Portal</div>
@@ -53,19 +81,77 @@
             <p class="text-lg text-slate-600">Interactive map showing exactly who is building what across all 54 African nations.</p>
         </div>
 
+        <!-- Quick Stats Bar -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                <div class="text-2xl font-bold text-blue-600 stat-number" id="totalCountries">0</div>
+                <div class="text-xs text-slate-500">Total Countries</div>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                <div class="text-2xl font-bold text-emerald-600 stat-number" id="countriesWithData">0</div>
+                <div class="text-xs text-slate-500">With Datasets</div>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                <div class="text-2xl font-bold text-amber-600 stat-number" id="totalDatasets">0</div>
+                <div class="text-xs text-slate-500">Total Datasets</div>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                <div class="text-2xl font-bold text-purple-600 stat-number" id="avgPerCountry">0</div>
+                <div class="text-xs text-slate-500">Avg. per Country</div>
+            </div>
+        </div>
+
         <!-- Map -->
         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm mb-8 relative">
             <div id="map"></div>
+            <div id="mapTooltip" class="map-tooltip"></div>
         </div>
 
-        <!-- All Countries Grid -->
+        <!-- Interactive Countries Section -->
         <div class="mb-6">
-            <h2 class="text-2xl font-bold text-slate-900 mb-2">All African Countries</h2>
-            <p class="text-slate-600 mb-6">See which countries have active datasets and where there are opportunities for new contributions.</p>
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 mb-1">All African Countries</h2>
+                    <p class="text-slate-600">Click to filter datasets • Hover for quick stats</p>
+                </div>
+                
+                <!-- Controls -->
+                <div class="flex flex-wrap gap-3">
+                    <!-- Search -->
+                    <div class="relative">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" id="countrySearch" placeholder="Search countries..." 
+                               class="search-input pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm w-48">
+                    </div>
+                    
+                    <!-- Filter Buttons -->
+                    <div class="flex bg-slate-100 p-1 rounded-lg">
+                        <button onclick="filterCountries('all')" class="filter-btn active px-4 py-2 rounded-md text-sm font-medium" id="filterAll">
+                            All
+                        </button>
+                        <button onclick="filterCountries('with-data')" class="filter-btn px-4 py-2 rounded-md text-sm font-medium" id="filterWithData">
+                            With Data
+                        </button>
+                    </div>
+                    
+                    <!-- Sort -->
+                    <select id="sortCountries" onchange="sortCountries()" class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white text-sm">
+                        <option value="count-desc">Most Datasets</option>
+                        <option value="count-asc">Least Datasets</option>
+                        <option value="name-asc">A-Z</option>
+                        <option value="name-desc">Z-A</option>
+                    </select>
+                </div>
+            </div>
         </div>
 
         <div id="countriesGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-            <!-- Populated by JS -->
+            <!-- Populated by JavaScript -->
+        </div>
+        
+        <!-- Results Info -->
+        <div class="mt-6 text-center text-sm text-slate-500">
+            Showing <span id="visibleCountries" class="font-semibold text-slate-700">0</span> of <span class="font-semibold text-slate-700">54</span> countries
         </div>
     </main>
 
@@ -77,8 +163,10 @@
     <script>
         let datasets = [];
         let countryData = {};
+        let currentFilter = 'all';
+        let currentSort = 'count-desc';
+        let selectedCountry = null;
         
-        // Standard list of 54 African countries
         const allAfricanCountries = [
             "Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cabo Verde", "Cameroon", 
             "Central African Republic", "Chad", "Comoros", "Congo", "Democratic Republic of the Congo", "Djibouti", 
@@ -89,50 +177,31 @@
             "Tunisia", "Uganda", "Zambia", "Zimbabwe"
         ];
 
-        // SMART MATCHING: Fixes the "Wrong Data" issue by mapping GeoJSON names to your JSON names
         function findMatchingCountry(geoJsonName) {
             if (!geoJsonName) return null;
             const lower = geoJsonName.toLowerCase();
-            
-            // Direct match
             if (allAfricanCountries.includes(geoJsonName)) return geoJsonName;
             
-            // Alias map for formal/different names
             const aliases = {
-                "côte d'ivoire": "Ivory Coast",
-                "ivory coast": "Ivory Coast",
-                "cote d'ivoire": "Ivory Coast",
-                "democratic republic of the congo": "Democratic Republic of the Congo",
-                "drc": "Democratic Republic of the Congo",
-                "congo (kinshasa)": "Democratic Republic of the Congo",
-                "republic of the congo": "Congo",
-                "congo": "Congo",
-                "congo (brazzaville)": "Congo",
-                "tanzania, united republic of": "Tanzania",
-                "united republic of tanzania": "Tanzania",
-                "swaziland": "Eswatini",
-                "cabo verde": "Cabo Verde",
-                "cape verde": "Cabo Verde",
-                "central african republic": "Central African Republic",
-                "equatorial guinea": "Equatorial Guinea",
-                "south sudan": "South Sudan",
-                "são tomé and príncipe": "Sao Tome and Principe",
-                "sao tome and principe": "Sao Tome and Principe",
+                "côte d'ivoire": "Ivory Coast", "ivory coast": "Ivory Coast", "cote d'ivoire": "Ivory Coast",
+                "democratic republic of the congo": "Democratic Republic of the Congo", "drc": "Democratic Republic of the Congo",
+                "congo (kinshasa)": "Democratic Republic of the Congo", "republic of the congo": "Congo",
+                "congo": "Congo", "congo (brazzaville)": "Congo", "tanzania, united republic of": "Tanzania",
+                "united republic of tanzania": "Tanzania", "swaziland": "Eswatini", "cabo verde": "Cabo Verde",
+                "cape verde": "Cabo Verde", "central african republic": "Central African Republic",
+                "equatorial guinea": "Equatorial Guinea", "south sudan": "South Sudan",
+                "são tomé and príncipe": "Sao Tome and Principe", "sao tome and principe": "Sao Tome and Principe",
                 "somaliland": "Somalia"
             };
             
             if (aliases[lower]) return aliases[lower];
             
-            // Fuzzy fallback (e.g., if GeoJSON has "Republic of Kenya", match "Kenya")
             for (let country of allAfricanCountries) {
-                if (lower.includes(country.toLowerCase()) || country.toLowerCase().includes(lower)) {
-                    return country;
-                }
+                if (lower.includes(country.toLowerCase()) || country.toLowerCase().includes(lower)) return country;
             }
             return null;
         }
 
-        // 1. Load Datasets
         fetch('datasets.json')
             .then(res => res.json())
             .then(data => {
@@ -140,10 +209,10 @@
                 processCountryData();
                 initMap();
                 renderCountryGrid();
+                updateStats();
             });
 
         function processCountryData() {
-            // Initialize all 54 countries
             allAfricanCountries.forEach(c => {
                 countryData[c] = { count: 0, domains: new Set(), datasets: [] };
             });
@@ -151,10 +220,8 @@
             datasets.forEach(ds => {
                 (ds.countries || []).forEach(country => {
                     if (country.toLowerCase().includes('africa-wide') || country.toLowerCase() === 'africa') return; 
-                    
                     const mappedCountry = findMatchingCountry(country);
                     if (!mappedCountry) return;
-
                     countryData[mappedCountry].count++;
                     if (ds.domain) countryData[mappedCountry].domains.add(ds.domain);
                     countryData[mappedCountry].datasets.push({
@@ -167,7 +234,6 @@
         }
 
         function initMap() {
-            // Lock map to Africa, No API Key required (OpenStreetMap)
             const map = L.map('map', {
                 center: [2, 20],
                 zoom: 3,
@@ -182,11 +248,11 @@
                 maxZoom: 19
             }).addTo(map);
 
-            // Fetch reliable world GeoJSON and filter for Africa
+            const tooltip = document.getElementById('mapTooltip');
+
             fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
                 .then(res => res.json())
                 .then(worldData => {
-                    // Filter only African countries
                     const africaGeoJson = {
                         type: "FeatureCollection",
                         features: worldData.features.filter(f => findMatchingCountry(f.properties.name) !== null)
@@ -209,33 +275,55 @@
                             const mappedName = findMatchingCountry(feature.properties.name);
                             const data = countryData[mappedName] || { count: 0, domains: new Set(), datasets: [] };
                             
-                            // Build Rich Popup Content
+                            // Hover tooltip
+                            layer.on({
+                                mouseover: e => {
+                                    layer.setStyle({ weight: 3, color: '#1e40af', fillOpacity: 0.95 });
+                                    layer.bringToFront();
+                                    
+                                    // Show tooltip
+                                    tooltip.innerHTML = `
+                                        <div>${mappedName}</div>
+                                        <div class="count">${data.count} dataset${data.count !== 1 ? 's' : ''}</div>
+                                    `;
+                                    tooltip.classList.add('show');
+                                    
+                                    // Position tooltip near mouse
+                                    const mousePos = e.originalEvent;
+                                    tooltip.style.left = (mousePos.clientX + 10) + 'px';
+                                    tooltip.style.top = (mousePos.clientY - 30) + 'px';
+                                },
+                                mousemove: e => {
+                                    const mousePos = e.originalEvent;
+                                    tooltip.style.left = (mousePos.clientX + 10) + 'px';
+                                    tooltip.style.top = (mousePos.clientY - 30) + 'px';
+                                },
+                                mouseout: e => {
+                                    layer.setStyle({ weight: 1.5, color: '#ffffff', fillOpacity: 0.8 });
+                                    tooltip.classList.remove('show');
+                                },
+                                click: () => {
+                                    selectCountry(mappedName);
+                                }
+                            });
+                            
+                            // Popup content
                             let popupHtml = `
                                 <div class="popup-header">
                                     <h3 style="margin:0; font-size:18px; font-weight:bold;">${mappedName}</h3>
-                                    <p style="margin:4px 0 0; font-size:13px; opacity:0.9;">${data.count} Dataset(s) Available</p>
+                                    <p style="margin:4px 0 0; font-size:13px; opacity:0.9;">${data.count} Dataset${data.count !== 1 ? 's' : ''} Available</p>
                                 </div>
                                 <div class="popup-body">
                             `;
 
                             if (data.count > 0) {
                                 popupHtml += `<p style="font-size:12px; color:#64748b; margin-bottom:10px;"><strong>Domains:</strong> ${Array.from(data.domains).join(', ')}</p>`;
-                                popupHtml += `<p style="font-size:12px; font-weight:bold; color:#334155; margin-bottom:8px;">Who is doing what:</p>`;
-                                
-                                // Show up to 4 specific datasets
-                                data.datasets.slice(0, 4).forEach(d => {
-                                    popupHtml += `
-                                        <div class="dataset-item">
-                                            <strong style="color:#1e40af;">${d.name}</strong><br>
-                                            <span style="color:#64748b;">by ${d.source}</span>
-                                        </div>
-                                    `;
+                                popupHtml += `<p style="font-size:12px; font-weight:bold; color:#334155; margin-bottom:8px;">Top Projects:</p><ul style="font-size:12px; margin-left:16px; margin-bottom:12px;">`;
+                                data.datasets.slice(0, 3).forEach(d => {
+                                    popupHtml += `<li style="margin-bottom:4px;">${d.name}</li>`;
                                 });
-                                
-                                if (data.datasets.length > 4) {
-                                    popupHtml += `<p style="font-size:11px; color:#94a3b8; text-align:center;">+ ${data.datasets.length - 4} more datasets...</p>`;
-                                }
-                                
+                                if (data.datasets.length > 3) popupHtml += `<li style="color:#94a3b8;">+ ${data.datasets.length - 3} more...</li>`;
+                                popupHtml += `</ul>`;
                                 popupHtml += `
                                     <a href="datasets.html?country=${encodeURIComponent(mappedName)}" style="display:block; text-align:center; margin-top:12px; padding:10px; background:#2563eb; color:white; text-decoration:none; border-radius:6px; font-size:13px; font-weight:600;">
                                         View All ${data.count} Datasets →
@@ -243,25 +331,17 @@
                                 `;
                             } else {
                                 popupHtml += `
-                                    <p style="font-size:13px; color:#94a3b8; margin-bottom:12px; text-align:center;">No datasets currently listed for this country.</p>
+                                    <p style="font-size:13px; color:#94a3b8; margin-bottom:12px; text-align:center;">No datasets currently listed.</p>
                                     <a href="about.html" style="display:block; text-align:center; padding:10px; background:#e2e8f0; color:#475569; text-decoration:none; border-radius:6px; font-size:13px; font-weight:600;">
                                         Contribute Data →
                                     </a>
                                 `;
                             }
                             popupHtml += `</div>`;
-                            
                             layer.bindPopup(popupHtml);
-                            
-                            // Hover effects
-                            layer.on({
-                                mouseover: e => { layer.setStyle({ weight: 3, color: '#1e40af', fillOpacity: 0.95 }); layer.bringToFront(); },
-                                mouseout: e => { layer.setStyle({ weight: 1.5, color: '#ffffff', fillOpacity: 0.8 }); }
-                            });
                         }
                     }).addTo(map);
 
-                    // Add Legend
                     const legend = L.control({ position: 'bottomright' });
                     legend.onAdd = function() {
                         const div = L.DomUtil.create('div', 'legend');
@@ -276,39 +356,126 @@
                         return div;
                     };
                     legend.addTo(map);
-                })
-                .catch(err => console.error("Error loading map data:", err));
+                });
         }
 
         function getColor(count) {
-            return count > 30 ? '#1e3a8a' : 
-                   count > 15 ? '#2563eb' : 
-                   count > 5 ? '#60a5fa' : 
-                   count > 0 ? '#bfdbfe' : 
-                               '#f1f5f9';
+            return count > 30 ? '#1e3a8a' : count > 15 ? '#2563eb' : count > 5 ? '#60a5fa' : count > 0 ? '#bfdbfe' : '#f1f5f9';
         }
 
         function renderCountryGrid() {
             const grid = document.getElementById('countriesGrid');
-            const sortedCountries = allAfricanCountries.sort((a, b) => {
-                const countA = countryData[a] ? countryData[a].count : 0;
-                const countB = countryData[b] ? countryData[b].count : 0;
-                if (countB !== countA) return countB - countA;
-                return a.localeCompare(b);
+            const searchTerm = document.getElementById('countrySearch').value.toLowerCase();
+            
+            let filteredCountries = allAfricanCountries.filter(country => {
+                const data = countryData[country] || { count: 0 };
+                const matchesSearch = country.toLowerCase().includes(searchTerm);
+                const matchesFilter = currentFilter === 'all' || (currentFilter === 'with-data' && data.count > 0);
+                return matchesSearch && matchesFilter;
             });
 
-            grid.innerHTML = sortedCountries.map(country => {
+            // Sort
+            filteredCountries.sort((a, b) => {
+                const countA = countryData[a].count;
+                const countB = countryData[b].count;
+                
+                switch(currentSort) {
+                    case 'count-desc': return countB - countA;
+                    case 'count-asc': return countA - countB;
+                    case 'name-asc': return a.localeCompare(b);
+                    case 'name-desc': return b.localeCompare(a);
+                    default: return 0;
+                }
+            });
+
+            grid.innerHTML = filteredCountries.map(country => {
                 const data = countryData[country] || { count: 0, domains: new Set() };
                 const hasData = data.count > 0;
+                const isSelected = selectedCountry === country;
+                
                 return `
-                    <a href="datasets.html?country=${encodeURIComponent(country)}" class="country-card bg-white p-4 rounded-lg border ${hasData ? 'border-blue-200' : 'border-slate-200'} shadow-sm block text-center">
-                        <div class="font-bold ${hasData ? 'text-blue-700' : 'text-slate-500'} text-sm mb-1">${country}</div>
-                        <div class="text-2xl font-bold ${hasData ? 'text-blue-600' : 'text-slate-300'}">${data.count}</div>
-                        <div class="text-xs ${hasData ? 'text-slate-500' : 'text-slate-400'} mt-1">${data.domains.size} domain(s)</div>
-                    </a>
+                    <div onclick="selectCountry('${country}')" 
+                         class="country-card bg-white p-4 rounded-lg border ${hasData ? 'border-blue-200' : 'border-slate-200'} shadow-sm block text-center ${isSelected ? 'active' : ''}"
+                         onmouseenter="highlightMapCountry('${country}')"
+                         onmouseleave="unhighlightMapCountry()">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="font-bold ${hasData ? 'text-blue-700' : 'text-slate-500'} text-sm">${country}</div>
+                            ${hasData ? '<i class="fas fa-database text-blue-400 text-xs"></i>' : ''}
+                        </div>
+                        <div class="text-2xl font-bold ${hasData ? 'text-blue-600' : 'text-slate-300'} mb-1">${data.count}</div>
+                        <div class="text-xs ${hasData ? 'text-slate-500' : 'text-slate-400'}">${data.domains.size} domain${data.domains.size !== 1 ? 's' : ''}</div>
+                        ${hasData ? `
+                            <div class="mt-2 flex flex-wrap gap-1 justify-center">
+                                ${Array.from(data.domains).slice(0, 2).map(d => `<span class="text-[10px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded">${d}</span>`).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
                 `;
             }).join('');
+            
+            document.getElementById('visibleCountries').textContent = filteredCountries.length;
         }
+
+        function selectCountry(country) {
+            selectedCountry = selectedCountry === country ? null : country;
+            renderCountryGrid();
+            if (country) {
+                window.location.href = `datasets.html?country=${encodeURIComponent(country)}`;
+            }
+        }
+
+        function highlightMapCountry(country) {
+            // Could add map highlighting logic here if needed
+        }
+
+        function unhighlightMapCountry() {
+            // Could remove map highlighting here
+        }
+
+        function filterCountries(filter) {
+            currentFilter = filter;
+            document.getElementById('filterAll').classList.toggle('active', filter === 'all');
+            document.getElementById('filterWithData').classList.toggle('active', filter === 'with-data');
+            renderCountryGrid();
+        }
+
+        function sortCountries() {
+            currentSort = document.getElementById('sortCountries').value;
+            renderCountryGrid();
+        }
+
+        function updateStats() {
+            const countriesWithData = allAfricanCountries.filter(c => countryData[c].count > 0).length;
+            const totalDatasets = datasets.length;
+            const avgPerCountry = countriesWithData > 0 ? (totalDatasets / countriesWithData).toFixed(1) : 0;
+            
+            animateValue('totalCountries', 0, 54, 1000);
+            animateValue('countriesWithData', 0, countriesWithData, 1000);
+            animateValue('totalDatasets', 0, totalDatasets, 1000);
+            animateValue('avgPerCountry', 0, parseFloat(avgPerCountry), 1000);
+        }
+
+        function animateValue(id, start, end, duration) {
+            const obj = document.getElementById(id);
+            const range = end - start;
+            const increment = range / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= end) {
+                    obj.textContent = Math.floor(end);
+                    clearInterval(timer);
+                } else {
+                    obj.textContent = Math.floor(current);
+                }
+            }, 16);
+        }
+
+        // Search functionality
+        document.getElementById('countrySearch').addEventListener('input', () => {
+            renderCountryGrid();
+        });
     </script>
 </body>
 </html>
