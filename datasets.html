@@ -3,18 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open Data Africa | AI-Powered Research Portal</title>
+    <title>Datasets | Open Data Africa</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body { background-color: #f8fafc; color: #0f172a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        .gradient-hero { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #06b6d4 100%); }
-        .card-hover { transition: all 0.3s ease; }
-        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .partner-logo { filter: grayscale(0); opacity: 0.9; transition: all 0.3s; }
-        .partner-logo:hover { filter: grayscale(0); opacity: 1; transform: scale(1.05); }
+        .card-hover { transition: all 0.2s ease; }
+        .card-hover:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
+        .badge { padding: 4px 10px; border-radius: 9999px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 4px; }
+        .author-tag { background-color: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; display: inline-block; margin-right: 6px; margin-bottom: 6px; }
+        details > summary { list-style: none; cursor: pointer; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] summary .chevron-icon { transform: rotate(180deg); }
+        .table-container { overflow-x: auto; }
+        .table-container table { width: 100%; border-collapse: collapse; }
+        .table-container th { background-color: #f1f5f9; text-align: left; padding: 12px 16px; font-weight: 600; color: #475569; border-bottom: 2px solid #e2e8f0; font-size: 0.85rem; }
+        .table-container td { padding: 12px 16px; border-bottom: 1px solid #e2e8f0; color: #334155; vertical-align: top; font-size: 0.9rem; }
+        .table-container tr:hover td { background-color: #f8fafc; }
         .stat-card { transition: all 0.2s ease; }
-        .stat-card:hover { transform: translateY(-2px); }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        .keyword-tag { background: #eff6ff; color: #1e40af; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 500; display: inline-block; margin: 2px; }
+        .use-case-card { background: #fefce8; border-left: 3px solid #eab308; padding: 12px; border-radius: 6px; margin-bottom: 10px; }
+        .filter-select { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 0.5rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; padding-right: 2.5rem; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -23,242 +34,397 @@
     <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 py-3">
             <div class="flex justify-between items-center">
-                <div class="flex items-center gap-3">
+                <a href="index.html" class="flex items-center gap-3">
                     <span class="text-2xl">🌍</span>
                     <div>
                         <div class="font-bold text-slate-900 text-lg">Open Data Africa</div>
                         <div class="text-xs text-slate-500">AI-Powered Research Portal</div>
                     </div>
-                </div>
+                </a>
                 <div class="hidden md:flex items-center gap-6">
-                    <a href="index.html" class="text-blue-600 font-medium">Home</a>
-                    <a href="datasets.html" class="text-slate-600 hover:text-blue-600 font-medium">Datasets</a>
+                    <a href="index.html" class="text-slate-600 hover:text-blue-600 font-medium">Home</a>
+                    <a href="datasets.html" class="text-blue-600 font-medium">Datasets</a>
                     <a href="countries.html" class="text-slate-600 hover:text-blue-600 font-medium">Countries</a>
                     <a href="insights.html" class="text-slate-600 hover:text-blue-600 font-medium">Insights</a>
                     <a href="about.html" class="text-slate-600 hover:text-blue-600 font-medium">About</a>
                 </div>
-                <button class="md:hidden text-slate-600">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="gradient-hero text-white">
-        <div class="max-w-7xl mx-auto px-4 py-16 md:py-24">
-            <div class="max-w-3xl">
-                <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium mb-6">
-                    <i class="fas fa-rocket"></i>
-                    <span>Empowering African AI Research</span>
-                </div>
-                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
-                    Africa's Premier<br>Open Data Hub
-                </h1>
-                <p class="text-lg md:text-xl text-blue-100 mb-8 leading-relaxed">
-                    Discover 296+ high-quality datasets across agriculture, health, NLP, and more. Built for researchers, policymakers, and AI developers driving innovation across the continent.
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="datasets.html" class="bg-white text-blue-700 hover:bg-blue-50 px-8 py-4 rounded-lg font-bold transition-colors shadow-lg flex items-center gap-2">
-                        <i class="fas fa-database"></i> Explore Datasets
-                    </a>
-                    <a href="insights.html" class="bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 px-8 py-4 rounded-lg font-bold transition-colors flex items-center gap-2">
-                        <i class="fas fa-chart-line"></i> View Insights
-                    </a>
-                </div>
-            </div>
+    <main class="flex-1 max-w-7xl mx-auto px-4 py-8 w-full">
+        <!-- Loading State -->
+        <div id="loading" class="text-center py-20">
+            <i class="fas fa-circle-notch fa-spin text-5xl text-blue-600 mb-4"></i>
+            <p class="text-lg text-slate-600">Loading comprehensive data repository...</p>
         </div>
-    </header>
 
-    <!-- Partner Branding Section -->
-    <section class="bg-white border-b border-slate-200 py-8">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-6">
-                <p class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Supported By</p>
-            </div>
-            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-                <div class="flex items-center gap-3 partner-logo">
-                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center text-white font-bold text-xl">
-                        AI
-                    </div>
-                    <div>
-                        <div class="font-bold text-slate-900">AI Made in Africa</div>
-                        <div class="text-xs text-slate-500">Initiative</div>
-                    </div>
-                </div>
-                <div class="flex items-center gap-3 partner-logo">
-                    <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-red-700 rounded-lg flex items-center justify-center text-white font-bold text-lg">
-                        GIZ
-                    </div>
-                    <div>
-                        <div class="font-bold text-slate-900">GIZ</div>
-                        <div class="text-xs text-slate-500">FAIR Forward</div>
-                    </div>
-                </div>
-                <div class="flex items-center gap-3 partner-logo">
-                    <div class="w-12 h-12 bg-gradient-to-br from-green-600 to-yellow-500 rounded-full flex items-center justify-center text-white">
-                        <i class="fas fa-globe-africa"></i>
-                    </div>
-                    <div>
-                        <div class="font-bold text-slate-900">African Union</div>
-                        <div class="text-xs text-slate-500">Data for Development</div>
-                    </div>
-                </div>
-            </div>
+        <!-- Error State -->
+        <div id="error" class="hidden text-center py-20">
+            <i class="fas fa-exclamation-triangle text-5xl text-red-500 mb-4"></i>
+            <p class="text-lg text-red-600 font-bold">Error loading datasets.json</p>
+            <p class="text-slate-500 mt-2">Make sure the file is in the repository root.</p>
         </div>
-    </section>
 
-    <!-- Quick Stats -->
-    <section class="py-12 bg-slate-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="stat-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
-                    <div class="text-4xl font-bold text-blue-600 mb-2" id="statDatasets">296</div>
-                    <div class="text-sm text-slate-600 font-medium">Open Datasets</div>
+        <!-- Dashboard Content -->
+        <div id="dashboardContent" class="hidden">
+            <!-- Stats Row -->
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+                <div class="stat-card bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-3xl font-bold text-blue-600" id="statDatasets">0</div>
+                            <div class="text-xs text-slate-500 font-medium uppercase tracking-wide mt-1">Datasets</div>
+                        </div>
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center"><i class="fas fa-database text-blue-600 text-xl"></i></div>
+                    </div>
                 </div>
-                <div class="stat-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
-                    <div class="text-4xl font-bold text-emerald-600 mb-2">54</div>
-                    <div class="text-sm text-slate-600 font-medium">African Countries</div>
+                <div class="stat-card bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-3xl font-bold text-emerald-600" id="statDomains">0</div>
+                            <div class="text-xs text-slate-500 font-medium uppercase tracking-wide mt-1">Domains</div>
+                        </div>
+                        <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center"><i class="fas fa-layer-group text-emerald-600 text-xl"></i></div>
+                    </div>
                 </div>
-                <div class="stat-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
-                    <div class="text-4xl font-bold text-amber-600 mb-2">12</div>
-                    <div class="text-sm text-slate-600 font-medium">Research Domains</div>
+                <div class="stat-card bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-3xl font-bold text-amber-600" id="statCountries">0</div>
+                            <div class="text-xs text-slate-500 font-medium uppercase tracking-wide mt-1">Countries</div>
+                        </div>
+                        <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center"><i class="fas fa-globe-africa text-amber-600 text-xl"></i></div>
+                    </div>
                 </div>
-                <div class="stat-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
-                    <div class="text-4xl font-bold text-purple-600 mb-2">100%</div>
-                    <div class="text-sm text-slate-600 font-medium">Open Access</div>
+                <div class="stat-card bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-3xl font-bold text-purple-600" id="statDataTypes">0</div>
+                            <div class="text-xs text-slate-500 font-medium uppercase tracking-wide mt-1">Data Types</div>
+                        </div>
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center"><i class="fas fa-shapes text-purple-600 text-xl"></i></div>
+                    </div>
+                </div>
+                <div class="stat-card bg-white p-5 rounded-xl border border-slate-200 shadow-sm col-span-2 md:col-span-1">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-3xl font-bold text-rose-600" id="statAuthors">0</div>
+                            <div class="text-xs text-slate-500 font-medium uppercase tracking-wide mt-1">Sources</div>
+                        </div>
+                        <div class="w-12 h-12 bg-rose-100 rounded-lg flex items-center justify-center"><i class="fas fa-users text-rose-600 text-xl"></i></div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Featured Domains -->
-    <section class="py-16">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Explore by Domain</h2>
-                <p class="text-lg text-slate-600 max-w-2xl mx-auto">High-quality datasets powering AI research across critical sectors</p>
+            <!-- Charts Row -->
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2 text-sm"><i class="fas fa-chart-pie text-blue-500"></i> By Domain</h3>
+                    <div class="relative h-56"><canvas id="domainChart"></canvas></div>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2 text-sm"><i class="fas fa-chart-bar text-emerald-500"></i> By Scale Coverage</h3>
+                    <div class="relative h-56"><canvas id="scaleChart"></canvas></div>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2 text-sm"><i class="fas fa-chart-column text-purple-500"></i> By Data Type</h3>
+                    <div class="relative h-56"><canvas id="dataTypeChart"></canvas></div>
+                </div>
             </div>
-            <div class="grid md:grid-cols-3 gap-6">
-                <a href="datasets.html?domain=NLP" class="card-hover bg-white p-8 rounded-xl border border-slate-200 shadow-sm group">
-                    <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors">
-                        <i class="fas fa-language text-blue-600 text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">Natural Language Processing</h3>
-                    <p class="text-slate-600 mb-4">80+ datasets for African languages, speech recognition, and text analysis</p>
-                    <span class="text-blue-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
-                        Explore NLP Data <i class="fas fa-arrow-right"></i>
-                    </span>
-                </a>
-                <a href="datasets.html?domain=Agriculture" class="card-hover bg-white p-8 rounded-xl border border-slate-200 shadow-sm group">
-                    <div class="w-14 h-14 bg-emerald-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-emerald-200 transition-colors">
-                        <i class="fas fa-seedling text-emerald-600 text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">Agriculture & Food Security</h3>
-                    <p class="text-slate-600 mb-4">120+ datasets on crop monitoring, soil data, and agricultural planning</p>
-                    <span class="text-emerald-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
-                        Explore Agriculture Data <i class="fas fa-arrow-right"></i>
-                    </span>
-                </a>
-                <a href="datasets.html?domain=Healthcare" class="card-hover bg-white p-8 rounded-xl border border-slate-200 shadow-sm group">
-                    <div class="w-14 h-14 bg-rose-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-rose-200 transition-colors">
-                        <i class="fas fa-heartbeat text-rose-600 text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">Healthcare & Public Health</h3>
-                    <p class="text-slate-600 mb-4">60+ datasets on disease tracking, health facilities, and medical research</p>
-                    <span class="text-rose-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
-                        Explore Health Data <i class="fas fa-arrow-right"></i>
-                    </span>
-                </a>
-            </div>
-        </div>
-    </section>
 
-    <!-- For Policymakers CTA -->
-    <section class="py-16 bg-gradient-to-br from-slate-900 to-slate-800 text-white">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
+            <!-- Filter Bar -->
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-6 gap-3">
+                    <div class="md:col-span-2 relative">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" id="searchInput" placeholder="Search datasets, keywords, authors..." class="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm">
+                    </div>
+                    <select id="domainFilter" class="filter-select py-2.5 px-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white text-sm"><option value="All">All Domains</option></select>
+                    <select id="countryFilter" class="filter-select py-2.5 px-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white text-sm"><option value="All">All Countries</option></select>
+                    <select id="dataTypeFilter" class="filter-select py-2.5 px-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white text-sm"><option value="All">All Data Types</option></select>
+                    <div class="flex gap-2">
+                        <button onclick="resetFilters()" class="flex-1 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-lg transition-colors text-sm"><i class="fas fa-undo mr-1"></i> Reset</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View Toggle & Result Count -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                 <div>
-                    <div class="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full text-sm font-medium mb-4">
-                        <i class="fas fa-landmark"></i>
-                        <span>For Policymakers</span>
-                    </div>
-                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Evidence-Based Policy Insights</h2>
-                    <p class="text-lg text-slate-300 mb-8 leading-relaxed">
-                        Access interactive analytics, country comparisons, and trend analysis to inform data-driven decision making across Africa.
-                    </p>
-                    <a href="insights.html" class="inline-flex items-center gap-2 bg-white text-slate-900 hover:bg-slate-100 px-8 py-4 rounded-lg font-bold transition-colors">
-                        <i class="fas fa-chart-bar"></i> View Policy Insights
-                    </a>
+                    <p class="text-slate-600 font-semibold" id="resultCount">Showing 0 Dataset(s)</p>
+                    <p class="text-xs text-slate-400 mt-1" id="filterInfo"></p>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20">
-                        <i class="fas fa-map-marked-alt text-3xl text-blue-400 mb-3"></i>
-                        <h4 class="font-bold mb-2">Country Profiles</h4>
-                        <p class="text-sm text-slate-300">Interactive maps and regional analysis</p>
-                    </div>
-                    <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20">
-                        <i class="fas fa-chart-line text-3xl text-emerald-400 mb-3"></i>
-                        <h4 class="font-bold mb-2">Trend Analysis</h4>
-                        <p class="text-sm text-slate-300">Track data availability over time</p>
-                    </div>
-                    <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20">
-                        <i class="fas fa-download text-3xl text-amber-400 mb-3"></i>
-                        <h4 class="font-bold mb-2">Export Reports</h4>
-                        <p class="text-sm text-slate-300">Download data for presentations</p>
-                    </div>
-                    <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20">
-                        <i class="fas fa-balance-scale text-3xl text-purple-400 mb-3"></i>
-                        <h4 class="font-bold mb-2">Gap Analysis</h4>
-                        <p class="text-sm text-slate-300">Identify data needs by sector</p>
-                    </div>
+                <div class="flex bg-slate-100 p-1 rounded-lg">
+                    <button onclick="switchView('cards')" id="btnCards" class="px-4 py-2 rounded-md text-sm font-medium transition-all bg-white text-blue-600 shadow-sm"><i class="fas fa-th-large mr-2"></i>Cards</button>
+                    <button onclick="switchView('table')" id="btnTable" class="px-4 py-2 rounded-md text-sm font-medium transition-all text-slate-600 hover:text-slate-900"><i class="fas fa-table mr-2"></i>Table</button>
+                </div>
+            </div>
+
+            <!-- CARDS VIEW -->
+            <div id="cardsContainer" class="space-y-4"></div>
+
+            <!-- TABLE VIEW -->
+            <div id="tableContainer" class="hidden bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Dataset Name</th>
+                                <th>Domain</th>
+                                <th>Countries</th>
+                                <th>Data Type</th>
+                                <th>Scale</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
                 </div>
             </div>
         </div>
-    </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-12 mt-auto">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center gap-3 mb-4">
-                        <span class="text-2xl">🌍</span>
-                        <div class="font-bold text-white text-lg">Open Data Africa</div>
-                    </div>
-                    <p class="text-sm leading-relaxed">Empowering African AI research through open, accessible data.</p>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white mb-4">Explore</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="datasets.html" class="hover:text-white transition-colors">All Datasets</a></li>
-                        <li><a href="countries.html" class="hover:text-white transition-colors">Countries</a></li>
-                        <li><a href="insights.html" class="hover:text-white transition-colors">Insights</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white mb-4">Partners</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="about.html" class="hover:text-white transition-colors">AI Made in Africa</a></li>
-                        <li><a href="about.html" class="hover:text-white transition-colors">GIZ FAIR Forward</a></li>
-                        <li><a href="about.html" class="hover:text-white transition-colors">African Union</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white mb-4">Resources</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
-                        <li><a href="https://github.com/opendata-africa/opendata-africa.github.io" target="_blank" class="hover:text-white transition-colors">GitHub</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-slate-800 pt-8 text-center text-sm">
-                <p>© 2026 Open Data Africa. Built with ❤️ for African researchers and policymakers.</p>
-                <p class="mt-2 text-xs">Data licensed under respective open licenses. Platform hosted on GitHub Pages.</p>
-            </div>
-        </div>
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center text-sm mt-auto">
+        <p>© 2026 Open Data Africa. Built with ❤️ for African researchers and policymakers.</p>
     </footer>
 
+    <script>
+        let datasets = [];
+        let currentView = 'cards';
+        let filteredData = [];
+
+        fetch('datasets.json')
+            .then(res => { if (!res.ok) throw new Error('File not found'); return res.json(); })
+            .then(data => {
+                datasets = data;
+                initializeDashboard();
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('dashboardContent').classList.remove('hidden');
+            })
+            .catch(err => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').classList.remove('hidden');
+                console.error('Error:', err);
+            });
+
+        function initializeDashboard() {
+            const domains = [...new Set(datasets.map(d => d.domain).filter(Boolean))];
+            const allCountries = [...new Set(datasets.flatMap(d => d.countries || []))].filter(Boolean);
+            const dataTypes = [...new Set(datasets.map(d => d.data_type).filter(Boolean))];
+            const allAuthors = [...new Set(datasets.flatMap(d => d.authors || []))].filter(Boolean);
+            const scales = [...new Set(datasets.map(d => d.scale_coverage).filter(Boolean))];
+
+            document.getElementById('statDatasets').innerText = datasets.length;
+            document.getElementById('statDomains').innerText = domains.length;
+            document.getElementById('statCountries').innerText = allCountries.length;
+            document.getElementById('statDataTypes').innerText = dataTypes.length;
+            document.getElementById('statAuthors').innerText = allAuthors.length;
+
+            populateSelect('domainFilter', domains);
+            populateSelect('countryFilter', allCountries);
+            populateSelect('dataTypeFilter', dataTypes);
+
+            renderDomainChart(domains);
+            renderScaleChart(scales);
+            renderDataTypeChart(dataTypes);
+
+            // --- URL PARAMETER LOGIC (Fixes the "Explore" buttons) ---
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlDomain = urlParams.get('domain');
+            const urlCountry = urlParams.get('country');
+
+            if (urlDomain) {
+                const domainSelect = document.getElementById('domainFilter');
+                if (domainSelect.querySelector(`option[value="${urlDomain}"]`)) {
+                    domainSelect.value = urlDomain;
+                }
+            }
+            if (urlCountry) {
+                const countrySelect = document.getElementById('countryFilter');
+                if (countrySelect.querySelector(`option[value="${urlCountry}"]`)) {
+                    countrySelect.value = urlCountry;
+                }
+            }
+            // ---------------------------------------------------------
+
+            filterData();
+        }
+
+        function populateSelect(id, items) {
+            const select = document.getElementById(id);
+            items.sort().forEach(item => {
+                const option = document.createElement('option');
+                option.value = item;
+                option.textContent = item;
+                select.appendChild(option);
+            });
+        }
+
+        function renderDomainChart(domains) {
+            const counts = domains.map(d => datasets.filter(ds => ds.domain === d).length);
+            const topDomains = domains.map((d, i) => ({ name: d, count: counts[i] })).sort((a, b) => b.count - a.count).slice(0, 8);
+            new Chart(document.getElementById('domainChart'), {
+                type: 'doughnut',
+                data: { labels: topDomains.map(d => d.name), datasets: [{ data: topDomains.map(d => d.count), backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#14b8a6', '#f97316'], borderWidth: 0 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } } }
+            });
+        }
+
+        function renderScaleChart(scales) {
+            const counts = scales.map(s => datasets.filter(ds => ds.scale_coverage === s).length);
+            new Chart(document.getElementById('scaleChart'), {
+                type: 'bar',
+                data: { labels: scales, datasets: [{ data: counts, backgroundColor: '#10b981', borderRadius: 6 }] },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } }, x: { ticks: { font: { size: 11 } } } } }
+            });
+        }
+
+        function renderDataTypeChart(dataTypes) {
+            const counts = dataTypes.map(dt => datasets.filter(ds => ds.data_type === dt).length);
+            const topTypes = dataTypes.map((dt, i) => ({ name: dt, count: counts[i] })).sort((a, b) => b.count - a.count).slice(0, 6);
+            new Chart(document.getElementById('dataTypeChart'), {
+                type: 'bar',
+                data: { labels: topTypes.map(t => t.name), datasets: [{ data: topTypes.map(t => t.count), backgroundColor: '#8b5cf6', borderRadius: 6 }] },
+                options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+            });
+        }
+
+        function filterData() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const domain = document.getElementById('domainFilter').value;
+            const country = document.getElementById('countryFilter').value;
+            const dataType = document.getElementById('dataTypeFilter').value;
+
+            filteredData = datasets.filter(ds => {
+                const searchableText = [ds.dataset_name, ds.domain, ds.source, ...(ds.keywords || []), ...(ds.authors || []), ...(ds.countries || [])].join(' ').toLowerCase();
+                const matchesSearch = !searchTerm || searchableText.includes(searchTerm);
+                const matchesDomain = domain === 'All' || ds.domain === domain;
+                const matchesCountry = country === 'All' || (ds.countries || []).includes(country);
+                const matchesDataType = dataType === 'All' || ds.data_type === dataType;
+                return matchesSearch && matchesDomain && matchesCountry && matchesDataType;
+            });
+
+            document.getElementById('resultCount').textContent = `Showing ${filteredData.length} of ${datasets.length} Dataset(s)`;
+            const activeFilters = [];
+            if (domain !== 'All') activeFilters.push(domain);
+            if (country !== 'All') activeFilters.push(country);
+            if (dataType !== 'All') activeFilters.push(dataType);
+            document.getElementById('filterInfo').textContent = activeFilters.length > 0 ? `Filtered by: ${activeFilters.join(' • ')}` : '';
+
+            renderCards(filteredData);
+            renderTable(filteredData);
+        }
+
+        function renderCards(data) {
+            const container = document.getElementById('cardsContainer');
+            container.innerHTML = '';
+            if (data.length === 0) {
+                container.innerHTML = `<div class="text-center py-16 bg-white rounded-xl border border-slate-200"><i class="fas fa-search text-4xl text-slate-300 mb-3"></i><p class="text-slate-500">No datasets match your search.</p></div>`;
+                return;
+            }
+
+            data.forEach(ds => {
+                const countriesStr = (ds.countries || []).join(', ') || 'N/A';
+                const authorsStr = (ds.authors || []).join(', ') || 'Unknown';
+                
+                let keywordsHtml = '';
+                if (ds.keywords && ds.keywords.length > 0) {
+                    keywordsHtml = `<div class="flex flex-wrap gap-1 mt-3">` + ds.keywords.slice(0, 8).map(k => `<span class="keyword-tag">#${k}</span>`).join('') + (ds.keywords.length > 8 ? `<span class="keyword-tag">+${ds.keywords.length - 8} more</span>` : '') + `</div>`;
+                }
+
+                let useCasesHtml = '';
+                if (ds.use_cases && ds.use_cases.length > 0) {
+                    useCasesHtml = `<div class="mt-6 pt-6 border-t border-slate-200"><h5 class="font-bold text-slate-800 mb-3 flex items-center gap-2 text-sm"><i class="fas fa-lightbulb text-amber-500"></i> Research Use Cases</h5>`;
+                    ds.use_cases.forEach(uc => {
+                        useCasesHtml += `<div class="use-case-card"><div class="text-sm text-slate-700">${uc.title ? `<strong class="text-slate-900">${uc.title}:</strong> ` : ''}${uc.description}</div><div class="mt-2 flex gap-3 flex-wrap">${uc.paper_link ? `<a href="${uc.paper_link}" target="_blank" class="text-xs text-blue-600 hover:text-blue-800 font-medium"><i class="fas fa-file-alt mr-1"></i>Paper</a>` : ''}${uc.code_repo ? `<a href="${uc.code_repo}" target="_blank" class="text-xs text-slate-600 hover:text-slate-900 font-medium"><i class="fab fa-github mr-1"></i>Code</a>` : ''}</div></div>`;
+                    });
+                    useCasesHtml += `</div>`;
+                }
+
+                const metaDetails = `<div class="grid grid-cols-2 gap-3 mt-4 text-xs text-slate-600"><div><strong class="text-slate-700">File Formats:</strong> ${(ds.file_format || []).join(', ') || 'N/A'}</div><div><strong class="text-slate-700">Access:</strong> ${ds.access_method || 'N/A'}</div><div><strong class="text-slate-700">Temporal:</strong> ${ds.temporal_coverage || 'N/A'}</div><div><strong class="text-slate-700">Updated:</strong> ${ds.last_updated || 'N/A'}</div></div>`;
+                const citation = `${authorsStr} (${ds.last_updated || new Date().getFullYear()}). ${ds.dataset_name}. Retrieved from ${ds.link}`;
+
+                const card = document.createElement('details');
+                card.className = 'card-hover bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden';
+                card.innerHTML = `
+                    <summary class="p-5 flex justify-between items-start focus:outline-none group hover:bg-slate-50 transition-colors">
+                        <div class="flex-1 pr-4">
+                            <div class="flex items-center gap-2 mb-2 flex-wrap">
+                                <span class="badge bg-blue-100 text-blue-800"><i class="fas fa-tag"></i> ${ds.domain || 'General'}</span>
+                                <span class="badge bg-emerald-100 text-emerald-800"><i class="fas fa-globe-africa"></i> ${countriesStr}</span>
+                                <span class="badge bg-purple-100 text-purple-800"><i class="fas fa-shapes"></i> ${ds.data_type || 'N/A'}</span>
+                                <span class="badge bg-slate-100 text-slate-600"><i class="fas fa-expand"></i> ${ds.scale_coverage || 'N/A'}</span>
+                                ${ds.temporal_coverage ? `<span class="badge bg-amber-100 text-amber-800"><i class="fas fa-calendar-alt"></i> ${ds.temporal_coverage}</span>` : ''}
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900 group-hover:text-blue-700 transition-colors">${ds.dataset_name}</h3>
+                            <p class="text-sm text-slate-500 mt-1"><i class="fas fa-building mr-1"></i> ${ds.source || 'Unknown Source'}</p>
+                            ${keywordsHtml}
+                        </div>
+                        <i class="fas fa-chevron-down chevron-icon text-slate-400 transform transition-transform duration-200 flex-shrink-0 mt-1 text-lg"></i>
+                    </summary>
+                    <div class="px-5 pb-5 pt-2 border-t border-slate-100 bg-slate-50/50 grid md:grid-cols-3 gap-6">
+                        <div class="md:col-span-2">${useCasesHtml}${metaDetails}</div>
+                        <div class="bg-white p-4 rounded-lg border border-slate-200 h-fit">
+                            <div class="mb-4 space-y-2">
+                                <a href="${ds.link}" target="_blank" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-lg transition-colors shadow-sm text-sm"><i class="fas fa-external-link-alt mr-2"></i>Access Dataset</a>
+                                ${ds.documentation_link && ds.documentation_link !== ds.link ? `<a href="${ds.documentation_link}" target="_blank" class="block w-full text-center bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 font-medium py-2 px-4 rounded-lg transition-colors text-sm"><i class="fas fa-book mr-2"></i>Documentation</a>` : ''}
+                                ${ds.publication_link ? `<a href="${ds.publication_link}" target="_blank" class="block w-full text-center bg-white border border-blue-200 text-blue-700 hover:bg-blue-50 font-medium py-2 px-4 rounded-lg transition-colors text-sm"><i class="fas fa-file-alt mr-2"></i>Publication</a>` : ''}
+                                ${ds.license_url ? `<a href="${ds.license_url}" target="_blank" class="block w-full text-center text-xs text-slate-500 hover:text-slate-700 py-1"><i class="fas fa-balance-scale mr-1"></i>${ds.license}</a>` : `<div class="text-center text-xs text-slate-500 py-1"><i class="fas fa-balance-scale mr-1"></i>${ds.license || 'License N/A'}</div>`}
+                            </div>
+                            <h5 class="font-bold text-slate-800 mb-2 text-xs uppercase tracking-wider flex items-center gap-2"><i class="fas fa-users text-slate-400"></i> Authors</h5>
+                            <div class="text-xs mb-4">${(ds.authors || []).length > 0 ? (ds.authors || []).map(a => `<span class="author-tag text-xs"><i class="fas fa-user mr-1 text-slate-400"></i>${a}</span>`).join('') : '<span class="text-slate-400">Not specified</span>'}</div>
+                            <h5 class="font-bold text-slate-800 mb-2 text-xs uppercase tracking-wider flex items-center gap-2"><i class="fas fa-quote-right text-slate-400"></i> Cite</h5>
+                            <code class="block bg-slate-50 border border-slate-200 p-2 rounded text-xs text-slate-600 break-all select-all cursor-pointer hover:bg-slate-100 transition-colors font-mono leading-relaxed" onclick="navigator.clipboard.writeText(this.innerText); this.innerHTML='<i class=\\'fas fa-check text-green-600\\'></i> Copied!'; setTimeout(() => this.innerText = \`${citation.replace(/`/g, '\\`')}\`, 1500)">${citation}</code>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="6" class="text-center py-12 text-slate-500">No datasets match your search.</td></tr>'; return; }
+            data.forEach(ds => {
+                const row = `<tr><td><div class="font-bold text-slate-900">${ds.dataset_name}</div><div class="text-xs text-slate-500 mt-1"><i class="fas fa-building mr-1"></i>${ds.source || 'Unknown'}</div></td><td><span class="badge bg-blue-100 text-blue-800">${ds.domain || 'N/A'}</span></td><td class="text-sm">${(ds.countries || []).join(', ') || 'N/A'}</td><td><span class="badge bg-purple-100 text-purple-800">${ds.data_type || 'N/A'}</span></td><td><span class="badge bg-slate-100 text-slate-600">${ds.scale_coverage || 'N/A'}</span></td><td><div class="flex gap-2"><a href="${ds.link}" target="_blank" class="inline-flex items-center px-3 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-md text-xs font-medium transition-colors"><i class="fas fa-external-link-alt mr-1"></i> View</a></div></td></tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function switchView(view) {
+            currentView = view;
+            const cardsContainer = document.getElementById('cardsContainer');
+            const tableContainer = document.getElementById('tableContainer');
+            const btnCards = document.getElementById('btnCards');
+            const btnTable = document.getElementById('btnTable');
+            if (view === 'cards') {
+                cardsContainer.classList.remove('hidden'); tableContainer.classList.add('hidden');
+                btnCards.classList.add('bg-white', 'text-blue-600', 'shadow-sm'); btnCards.classList.remove('text-slate-600');
+                btnTable.classList.remove('bg-white', 'text-blue-600', 'shadow-sm'); btnTable.classList.add('text-slate-600');
+            } else {
+                cardsContainer.classList.add('hidden'); tableContainer.classList.remove('hidden');
+                btnTable.classList.add('bg-white', 'text-blue-600', 'shadow-sm'); btnTable.classList.remove('text-slate-600');
+                btnCards.classList.remove('bg-white', 'text-blue-600', 'shadow-sm'); btnCards.classList.add('text-slate-600');
+            }
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('domainFilter').value = 'All';
+            document.getElementById('countryFilter').value = 'All';
+            document.getElementById('dataTypeFilter').value = 'All';
+            // Clear URL params visually
+            window.history.replaceState({}, document.title, window.location.pathname);
+            filterData();
+        }
+
+        document.getElementById('searchInput').addEventListener('input', filterData);
+        document.getElementById('domainFilter').addEventListener('change', filterData);
+        document.getElementById('countryFilter').addEventListener('change', filterData);
+        document.getElementById('dataTypeFilter').addEventListener('change', filterData);
+    </script>
 </body>
 </html>
