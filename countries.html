@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countries | Open Data Africa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        body { background-color: #f8fafc; color: #0f172a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        #map { height: 600px; border-radius: 12px; }
+        .country-card { transition: all 0.2s ease; }
+        .country-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Navigation (Same as index.html) -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">🌍</span>
+                    <div>
+                        <div class="font-bold text-slate-900 text-lg">Open Data Africa</div>
+                        <div class="text-xs text-slate-500">AI-Powered Research Portal</div>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="index.html" class="text-slate-600 hover:text-blue-600 font-medium">Home</a>
+                    <a href="datasets.html" class="text-slate-600 hover:text-blue-600 font-medium">Datasets</a>
+                    <a href="countries.html" class="text-blue-600 font-medium">Countries</a>
+                    <a href="insights.html" class="text-slate-600 hover:text-blue-600 font-medium">Insights</a>
+                    <a href="about.html" class="text-slate-600 hover:text-blue-600 font-medium">About</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 max-w-7xl mx-auto px-4 py-8 w-full">
+        <div class="mb-8">
+            <h1 class="text-4xl font-bold text-slate-900 mb-3">Explore by Country</h1>
+            <p class="text-lg text-slate-600">Interactive map showing dataset availability across Africa</p>
+        </div>
+
+        <!-- Map -->
+        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm mb-8">
+            <div id="map"></div>
+        </div>
+
+        <!-- Country Stats Grid -->
+        <div class="mb-6">
+            <h2 class="text-2xl font-bold text-slate-900 mb-4">Country Overview</h2>
+            <p class="text-slate-600 mb-6">Click on a country card to filter datasets</p>
+        </div>
+
+        <div id="countriesGrid" class="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <!-- Populated by JavaScript -->
+        </div>
+    </main>
+
+    <!-- Footer (Same as index.html) -->
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center text-sm mt-auto">
+        <p>© 2026 Open Data Africa. Built with ❤️ for African researchers and policymakers.</p>
+    </footer>
+
+    <script>
+        let datasets = [];
+        let countryData = {};
+
+        // Load datasets
+        fetch('datasets.json')
+            .then(res => res.json())
+            .then(data => {
+                datasets = data;
+                processCountryData();
+                renderMap();
+                renderCountryGrid();
+            });
+
+        function processCountryData() {
+            datasets.forEach(ds => {
+                (ds.countries || []).forEach(country => {
+                    if (!countryData[country]) {
+                        countryData[country] = { count: 0, domains: new Set(), datasets: [] };
+                    }
+                    countryData[country].count++;
+                    if (ds.domain) countryData[country].domains.add(ds.domain);
+                    countryData[country].datasets.push(ds.dataset_name);
+                });
+            });
+        }
+
+        function renderMap() {
+            // Initialize map centered on Africa
+            const map = L.map('map').setView([2, 20], 3);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Country coordinates (simplified - you can expand this)
+            const countryCoords = {
+                'Ethiopia': [9.145, 40.4897],
+                'Kenya': [-0.0236, 37.9062],
+                'Nigeria': [9.082, 8.6753],
+                'South Africa': [-30.5595, 22.9375],
+                'Ghana': [7.9465, -1.0232],
+                'Tanzania': [-6.369, 34.8888],
+                'Uganda': [1.3733, 32.2903],
+                'Senegal': [14.4974, -14.4524],
+                'Morocco': [31.7917, -7.0926],
+                'Egypt': [26.8206, 30.8025]
+            };
+
+            // Add markers for countries with datasets
+            Object.keys(countryData).forEach(country => {
+                if (countryCoords[country]) {
+                    const coords = countryCoords[country];
+                    const data = countryData[country];
+                    
+                    const marker = L.circleMarker(coords, {
+                        radius: Math.min(data.count * 2, 20),
+                        fillColor: '#3b82f6',
+                        color: '#fff',
+                        weight: 2,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    }).addTo(map);
+
+                    marker.bindPopup(`
+                        <div style="min-width: 200px;">
+                            <h3 style="font-weight: bold; font-size: 16px; margin-bottom: 8px;">${country}</h3>
+                            <p style="margin-bottom: 8px;"><strong>${data.count}</strong> datasets available</p>
+                            <p style="font-size: 12px; color: #666;">Domains: ${Array.from(data.domains).slice(0, 5).join(', ')}</p>
+                            <a href="datasets.html?country=${country}" style="display: inline-block; margin-top: 8px; padding: 6px 12px; background: #3b82f6; color: white; text-decoration: none; border-radius: 4px; font-size: 12px;">View Datasets →</a>
+                        </div>
+                    `);
+                }
+            });
+        }
+
+        function renderCountryGrid() {
+            const grid = document.getElementById('countriesGrid');
+            const sortedCountries = Object.keys(countryData).sort((a, b) => countryData[b].count - countryData[a].count);
+            
+            grid.innerHTML = sortedCountries.map(country => {
+                const data = countryData[country];
+                return `
+                    <a href="datasets.html?country=${country}" class="country-card bg-white p-5 rounded-xl border border-slate-200 shadow-sm block">
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="font-bold text-slate-900 text-lg">${country}</h3>
+                            <div class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-bold">
+                                ${data.count}
+                            </div>
+                        </div>
+                        <div class="text-sm text-slate-600 mb-3">
+                            <i class="fas fa-layer-group mr-1"></i> ${data.domains.size} domains
+                        </div>
+                        <div class="flex flex-wrap gap-1">
+                            ${Array.from(data.domains).slice(0, 3).map(d => 
+                                `<span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">${d}</span>`
+                            ).join('')}
+                            ${data.domains.size > 3 ? `<span class="text-xs text-slate-400">+${data.domains.size - 3} more</span>` : ''}
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+    </script>
+
+</body>
+</html>
