@@ -4,8 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Open Data Africa | Research Portal</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- PapaParse & Chart.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
         body { background-color: #f8fafc; color: #0f172a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
         .card { transition: all 0.2s ease; }
@@ -14,60 +21,144 @@
         .author-tag { background-color: #f1f5f9; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; display: inline-block; margin-right: 6px; margin-bottom: 6px; }
         details > summary { list-style: none; cursor: pointer; }
         details > summary::-webkit-details-marker { display: none; }
-        details[open] summary svg { transform: rotate(180deg); }
+        details[open] summary i.fa-chevron-down { transform: rotate(180deg); }
+        
+        /* Table specific styles */
+        .table-container { overflow-x: auto; }
+        .table-container table { width: 100%; border-collapse: collapse; }
+        .table-container th { background-color: #f1f5f9; text-align: left; padding: 12px 16px; font-weight: 600; color: #475569; border-bottom: 2px solid #e2e8f0; }
+        .table-container td { padding: 12px 16px; border-bottom: 1px solid #e2e8f0; color: #334155; vertical-align: top; }
+        .table-container tr:hover td { background-color: #f8fafc; }
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- 1. HERO SECTION (Change your Title and Description here) -->
+    <!-- 1. HERO SECTION -->
     <header class="bg-white border-b border-slate-200">
-        <div class="max-w-5xl mx-auto px-4 py-16 text-center">
-            <h1 class="text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">🌍 Open Data Africa</h1>
-            <p class="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+        <div class="max-w-6xl mx-auto px-4 py-12 text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">🌍 Open Data Africa</h1>
+            <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
                 A centralized, interactive portal for researchers, policymakers, and developers to discover, explore, and cite high-quality open datasets across the continent.
             </p>
             
             <!-- About Box -->
             <div class="mt-8 bg-blue-50 border border-blue-100 rounded-xl p-6 max-w-3xl mx-auto text-left">
                 <h3 class="font-bold text-blue-900 mb-2 flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    About This Portal
+                    <i class="fas fa-info-circle"></i> About This Portal
                 </h3>
                 <p class="text-blue-800 text-sm leading-relaxed">
                     This platform aggregates open datasets with verified metadata, including author provenance, licensing (e.g., CC-BY, CC0), and real-world research use cases. All data is freely accessible to accelerate evidence-based research and innovation.
                 </p>
             </div>
-
-            <!-- Search and Filter -->
-            <div class="max-w-3xl mx-auto mt-10 flex flex-col sm:flex-row gap-4">
-                <input type="text" id="searchInput" placeholder="Search datasets by title, keyword, or description..." 
-                       class="flex-1 px-5 py-4 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent shadow-sm text-lg">
-                <select id="categoryFilter" class="px-5 py-4 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white shadow-sm text-lg font-medium">
-                    <option value="All">All Categories</option>
-                </select>
-            </div>
-        </div.
+        </div>
     </header>
 
-    <!-- 2. MAIN CONTENT (Dataset Cards) -->
-    <main class="flex-1 max-w-5xl mx-auto px-4 py-10 w-full">
-        <div class="flex justify-between items-center mb-6">
-            <p class="text-slate-600 font-semibold text-lg" id="resultCount">Loading datasets...</p>
-        </div>
+    <!-- 2. DASHBOARD & FILTERS -->
+    <main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
         
+        <!-- Loading State -->
         <div id="loading" class="text-center py-16 text-slate-500">
-            <svg class="animate-spin h-8 w-8 text-blue-600 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            Loading data from repository...
+            <i class="fas fa-circle-notch fa-spin text-4xl text-blue-600 mb-4"></i>
+            <p class="text-lg">Loading data from repository...</p>
         </div>
-        
-        <div id="datasetContainer" class="space-y-6"></div>
+
+        <!-- Dashboard Content (Hidden until loaded) -->
+        <div id="dashboardContent" class="hidden">
+            
+            <!-- Stats Row -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                    <div class="text-3xl font-bold text-blue-600" id="statDatasets">0</div>
+                    <div class="text-sm text-slate-500 font-medium">Total Datasets</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                    <div class="text-3xl font-bold text-emerald-600" id="statCategories">0</div>
+                    <div class="text-sm text-slate-500 font-medium">Categories</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                    <div class="text-3xl font-bold text-amber-600" id="statCountries">0</div>
+                    <div class="text-sm text-slate-500 font-medium">Countries/Regions</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                    <div class="text-3xl font-bold text-purple-600" id="statAuthors">0</div>
+                    <div class="text-sm text-slate-500 font-medium">Contributing Authors</div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2"><i class="fas fa-chart-pie text-blue-500"></i> Datasets by Category</h3>
+                    <div class="relative h-64"><canvas id="categoryChart"></canvas></div>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2"><i class="fas fa-chart-bar text-emerald-500"></i> Datasets by Year</h3>
+                    <div class="relative h-64"><canvas id="yearChart"></canvas></div>
+                </div>
+            </div>
+
+            <!-- Search and Filter Bar -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm mb-6">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-1 relative">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" id="searchInput" placeholder="Search datasets by title, keyword, or description..." 
+                               class="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+                    </div>
+                    <select id="categoryFilter" class="md:w-48 px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white">
+                        <option value="All">All Categories</option>
+                    </select>
+                    <select id="countryFilter" class="md:w-48 px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white">
+                        <option value="All">All Countries</option>
+                    </select>
+                    <button onclick="resetFilters()" class="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-lg transition-colors">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- View Toggle & Result Count -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                <p class="text-slate-600 font-semibold" id="resultCount">Showing 0 Dataset(s)</p>
+                <div class="flex bg-slate-100 p-1 rounded-lg">
+                    <button onclick="switchView('cards')" id="btnCards" class="px-4 py-2 rounded-md text-sm font-medium transition-all bg-white text-blue-600 shadow-sm">
+                        <i class="fas fa-th-large mr-2"></i>Cards
+                    </button>
+                    <button onclick="switchView('table')" id="btnTable" class="px-4 py-2 rounded-md text-sm font-medium transition-all text-slate-600 hover:text-slate-900">
+                        <i class="fas fa-table mr-2"></i>Table
+                    </button>
+                </div>
+            </div>
+
+            <!-- CARDS VIEW -->
+            <div id="cardsContainer" class="space-y-6"></div>
+
+            <!-- TABLE VIEW -->
+            <div id="tableContainer" class="hidden bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title & Description</th>
+                                <th>Category</th>
+                                <th>Country</th>
+                                <th>License</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
     </main>
 
     <!-- 3. FOOTER -->
-    <footer class="bg-white border-t border-slate-200 py-8 text-center text-slate-500 text-sm">
+    <footer class="bg-white border-t border-slate-200 py-8 text-center text-slate-500 text-sm mt-auto">
         <p>© <span id="year"></span> Open Data Africa. Built with ❤️ for researchers.</p>
         <p class="mt-2">Hosted openly on GitHub Pages.</p>
     </footer>
@@ -75,7 +166,9 @@
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
         let datasets = [], authors = [], usecases = [];
+        let currentView = 'cards';
 
+        // Load Data
         Promise.all([
             fetch('datasets.csv').then(res => { if(!res.ok) throw new Error('datasets.csv not found'); return res.text(); }),
             fetch('authors.csv').then(res => { if(!res.ok) throw new Error('authors.csv not found'); return res.text(); }),
@@ -85,29 +178,89 @@
             authors = Papa.parse(authText, { header: true, skipEmptyLines: true }).data;
             usecases = Papa.parse(ucText, { header: true, skipEmptyLines: true }).data;
             
-            populateCategories();
-            renderDatasets(datasets);
+            initializeDashboard();
             document.getElementById('loading').style.display = 'none';
+            document.getElementById('dashboardContent').classList.remove('hidden');
         }).catch(err => {
             document.getElementById('loading').innerHTML = `<span class="text-red-600 font-bold">Error loading data.</span><br><small class="text-slate-500">Make sure datasets.csv, authors.csv, and usecases.csv are in this repository.<br>Details: ${err.message}</small>`;
         });
 
-        function populateCategories() {
-            const categories = [...new Set(datasets.map(d => d.category).filter(Boolean))].sort();
-            const select = document.getElementById('categoryFilter');
-            categories.forEach(cat => {
-                const option = document.createElement('option');
-                option.value = cat;
-                option.textContent = cat;
-                select.appendChild(option);
+        function initializeDashboard() {
+            // 1. Calculate Stats
+            const categories = [...new Set(datasets.map(d => d.category).filter(Boolean))];
+            const countries = [...new Set(datasets.map(d => d.country || d.Country).filter(Boolean))]; 
+            const uniqueAuthors = [...new Set(authors.map(a => a.author_name).filter(Boolean))];
+
+            document.getElementById('statDatasets').innerText = datasets.length;
+            document.getElementById('statCategories').innerText = categories.length;
+            document.getElementById('statCountries').innerText = countries.length;
+            document.getElementById('statAuthors').innerText = uniqueAuthors.length;
+
+            // 2. Populate Filters
+            const catSelect = document.getElementById('categoryFilter');
+            categories.sort().forEach(cat => {
+                catSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
+            });
+
+            const countrySelect = document.getElementById('countryFilter');
+            countries.sort().forEach(country => {
+                countrySelect.innerHTML += `<option value="${country}">${country}</option>`;
+            });
+
+            // 3. Render Charts
+            renderCharts(categories, countries);
+
+            // 4. Initial Render
+            filterData();
+        }
+
+        function renderCharts(categories, countries) {
+            // Category Chart
+            const catCounts = categories.map(cat => datasets.filter(d => d.category === cat).length);
+            new Chart(document.getElementById('categoryChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: categories,
+                    datasets: [{ data: catCounts, backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'], borderWidth: 0 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } } }
+            });
+
+            // Year Chart (Assuming 'year' or 'Year' column exists)
+            const years = [...new Set(datasets.map(d => d.year || d.Year).filter(Boolean))].sort();
+            const yearCounts = years.map(year => datasets.filter(d => (d.year || d.Year) == year).length);
+            
+            new Chart(document.getElementById('yearChart'), {
+                type: 'bar',
+                data: {
+                    labels: years.length ? years : ['N/A'],
+                    datasets: [{ label: 'Datasets', data: years.length ? yearCounts : [datasets.length], backgroundColor: '#10b981', borderRadius: 4 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }, plugins: { legend: { display: false } } }
             });
         }
 
-        function renderDatasets(data) {
-            const container = document.getElementById('datasetContainer');
-            const countLabel = document.getElementById('resultCount');
+        function filterData() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+            const country = document.getElementById('countryFilter').value;
+
+            const filtered = datasets.filter(ds => {
+                const dsCountry = ds.country || ds.Country || '';
+                const matchesSearch = (ds.title + ' ' + ds.description + ' ' + ds.authors).toLowerCase().includes(searchTerm);
+                const matchesCategory = category === 'All' || ds.category === category;
+                const matchesCountry = country === 'All' || dsCountry === country;
+                return matchesSearch && matchesCategory && matchesCountry;
+            });
+
+            document.getElementById('resultCount').textContent = `Showing ${filtered.length} Dataset(s)`;
+            renderCards(filtered);
+            renderTable(filtered);
+        }
+
+        function renderCards(data) {
+            const container = document.getElementById('cardsContainer');
             container.innerHTML = '';
-            countLabel.textContent = `Showing ${data.length} Dataset(s)`;
 
             if (data.length === 0) {
                 container.innerHTML = '<div class="text-center py-12 text-slate-500 bg-white rounded-xl border border-slate-200">No datasets match your search. Try different keywords.</div>';
@@ -117,15 +270,16 @@
             data.forEach(ds => {
                 const dsUseCases = usecases.filter(uc => uc.dataset_id === ds.dataset_id);
                 const authorNames = ds.authors ? ds.authors.split(',').map(a => a.trim()) : [];
+                const dsCountry = ds.country || ds.Country || 'N/A';
                 
                 let useCasesHtml = '';
                 if (dsUseCases.length > 0) {
-                    useCasesHtml = `<div class="mt-6 pt-6 border-t border-slate-100"><h5 class="font-bold text-slate-800 mb-3 flex items-center gap-2">💡 Potential Use Cases</h5>`;
+                    useCasesHtml = `<div class="mt-6 pt-6 border-t border-slate-100"><h5 class="font-bold text-slate-800 mb-3 flex items-center gap-2"><i class="fas fa-lightbulb text-amber-500"></i> Potential Use Cases</h5>`;
                     dsUseCases.forEach(uc => {
                         useCasesHtml += `<div class="mb-4 text-sm text-slate-700 bg-slate-50 p-3 rounded-lg border border-slate-100">
                             <strong class="text-slate-900">• ${uc.title}:</strong> ${uc.description}<br>`;
-                        if (uc.paper_link) useCasesHtml += `<a href="${uc.paper_link}" target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline ml-4 inline-block mt-2 font-medium">📄 Read Paper</a> `;
-                        if (uc.code_repo) useCasesHtml += `<a href="${uc.code_repo}" target="_blank" class="text-slate-600 hover:text-slate-900 hover:underline ml-2 inline-block mt-2 font-medium">💻 View Code</a>`;
+                        if (uc.paper_link) useCasesHtml += `<a href="${uc.paper_link}" target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline ml-4 inline-block mt-2 font-medium"><i class="fas fa-file-alt mr-1"></i> Read Paper</a> `;
+                        if (uc.code_repo) useCasesHtml += `<a href="${uc.code_repo}" target="_blank" class="text-slate-600 hover:text-slate-900 hover:underline ml-2 inline-block mt-2 font-medium"><i class="fab fa-github mr-1"></i> View Code</a>`;
                         useCasesHtml += `</div>`;
                     });
                     useCasesHtml += `</div>`;
@@ -136,15 +290,15 @@
                     const auth = authors.find(a => a.author_name === name);
                     if (auth) {
                         authorsHtml += `<div class="mb-3">
-                            <span class="author-tag font-medium text-slate-700">👤 ${auth.author_name}</span>
+                            <span class="author-tag font-medium text-slate-700"><i class="fas fa-user mr-1 text-slate-400"></i> ${auth.author_name}</span>
                             <div class="text-xs text-slate-600 mt-1 ml-1"><strong>${auth.affiliation}</strong> • ${auth.role}</div>`;
-                        if (auth.orcid) authorsHtml += `<a href="https://orcid.org/${auth.orcid}" target="_blank" class="text-xs text-blue-600 hover:underline ml-1 inline-block mt-1">🔗 ORCID: ${auth.orcid}</a>`;
+                        if (auth.orcid) authorsHtml += `<a href="https://orcid.org/${auth.orcid}" target="_blank" class="text-xs text-blue-600 hover:underline ml-1 inline-block mt-1"><i class="fas fa-link mr-1"></i> ORCID: ${auth.orcid}</a>`;
                         authorsHtml += `</div>`;
                     }
                 });
 
                 const year = new Date().getFullYear();
-                const citation = `${ds.authors} (${year}). ${ds.title}. Retrieved from ${ds.data_url}`;
+                const citation = `${ds.authors || 'Unknown Author'} (${year}). ${ds.title}. Retrieved from ${ds.data_url}`;
 
                 const card = document.createElement('details');
                 card.className = 'card bg-white border border-slate-200 rounded-xl p-6 shadow-sm';
@@ -153,12 +307,13 @@
                         <div class="flex-1 pr-4">
                             <div class="flex items-center gap-3 mb-3 flex-wrap">
                                 <span class="badge">${ds.category}</span>
+                                <span class="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded"><i class="fas fa-globe-africa mr-1"></i> ${dsCountry}</span>
                                 <span class="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded">⚖️ ${ds.license}</span>
                             </div>
                             <h3 class="text-xl font-bold text-slate-900 group-hover:text-blue-700 transition-colors">${ds.title}</h3>
                             <p class="text-slate-600 mt-3 leading-relaxed">${ds.description}</p>
                         </div>
-                        <svg class="w-6 h-6 text-slate-400 transform transition-transform duration-200 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        <i class="fas fa-chevron-down text-slate-400 transform transition-transform duration-200 flex-shrink-0 mt-1 text-xl"></i>
                     </summary>
                     
                     <div class="mt-8 pt-6 border-t border-slate-200 grid md:grid-cols-3 gap-8">
@@ -168,14 +323,14 @@
                         <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 h-fit">
                             <div class="mb-6">
                                 <a href="${ds.data_url}" target="_blank" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors shadow-sm">
-                                    View / Download Dataset →
+                                    <i class="fas fa-external-link-alt mr-2"></i>View / Download Dataset
                                 </a>
                             </div>
-                            <h5 class="font-bold text-slate-800 mb-3 text-xs uppercase tracking-wider">👥 Authors & Provenance</h5>
+                            <h5 class="font-bold text-slate-800 mb-3 text-xs uppercase tracking-wider flex items-center gap-2"><i class="fas fa-users text-slate-400"></i> Authors & Provenance</h5>
                             <div class="text-sm mb-6">${authorsHtml || '<span class="text-slate-500">No author details found.</span>'}</div>
                             
-                            <h5 class="font-bold text-slate-800 mb-2 text-xs uppercase tracking-wider">📝 Cite this Dataset</h5>
-                            <code class="block bg-white border border-slate-300 p-3 rounded-lg text-xs text-slate-700 break-all select-all cursor-pointer hover:bg-slate-50 transition-colors font-mono" onclick="navigator.clipboard.writeText(this.innerText); alert('Citation copied to clipboard!')">${citation}</code>
+                            <h5 class="font-bold text-slate-800 mb-2 text-xs uppercase tracking-wider flex items-center gap-2"><i class="fas fa-quote-right text-slate-400"></i> Cite this Dataset</h5>
+                            <code class="block bg-white border border-slate-300 p-3 rounded-lg text-xs text-slate-700 break-all select-all cursor-pointer hover:bg-slate-50 transition-colors font-mono" onclick="navigator.clipboard.writeText(this.innerText); alert('Citation copied!')">${citation}</code>
                         </div>
                     </div>
                 `;
@@ -183,20 +338,71 @@
             });
         }
 
-        function filterData() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const category = document.getElementById('categoryFilter').value;
+        function renderTable(data) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center py-8 text-slate-500">No datasets match your search.</td></tr>';
+                return;
+            }
 
-            const filtered = datasets.filter(ds => {
-                const matchesSearch = ds.title.toLowerCase().includes(searchTerm) || ds.description.toLowerCase().includes(searchTerm);
-                const matchesCategory = category === 'All' || ds.category === category;
-                return matchesSearch && matchesCategory;
+            data.forEach(ds => {
+                const dsCountry = ds.country || ds.Country || 'N/A';
+                const row = `
+                    <tr>
+                        <td>
+                            <div class="font-bold text-slate-900">${ds.title}</div>
+                            <div class="text-sm text-slate-500 mt-1 line-clamp-2">${ds.description}</div>
+                        </td>
+                        <td><span class="badge">${ds.category}</span></td>
+                        <td class="text-sm"><i class="fas fa-map-marker-alt text-slate-400 mr-1"></i> ${dsCountry}</td>
+                        <td><span class="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">${ds.license}</span></td>
+                        <td>
+                            <a href="${ds.data_url}" target="_blank" class="inline-flex items-center px-3 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-md text-sm font-medium transition-colors">
+                                <i class="fas fa-external-link-alt mr-1.5"></i> View
+                            </a>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
             });
-            renderDatasets(filtered);
+        }
+
+        function switchView(view) {
+            currentView = view;
+            const cardsContainer = document.getElementById('cardsContainer');
+            const tableContainer = document.getElementById('tableContainer');
+            const btnCards = document.getElementById('btnCards');
+            const btnTable = document.getElementById('btnTable');
+
+            if (view === 'cards') {
+                cardsContainer.classList.remove('hidden');
+                tableContainer.classList.add('hidden');
+                btnCards.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
+                btnCards.classList.remove('text-slate-600');
+                btnTable.classList.remove('bg-white', 'text-blue-600', 'shadow-sm');
+                btnTable.classList.add('text-slate-600');
+            } else {
+                cardsContainer.classList.add('hidden');
+                tableContainer.classList.remove('hidden');
+                btnTable.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
+                btnTable.classList.remove('text-slate-600');
+                btnCards.classList.remove('bg-white', 'text-blue-600', 'shadow-sm');
+                btnCards.classList.add('text-slate-600');
+            }
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('categoryFilter').value = 'All';
+            document.getElementById('countryFilter').value = 'All';
+            filterData();
         }
 
         document.getElementById('searchInput').addEventListener('input', filterData);
         document.getElementById('categoryFilter').addEventListener('change', filterData);
+        document.getElementById('countryFilter').addEventListener('change', filterData);
     </script>
 </body>
 </html>
