@@ -16,6 +16,13 @@
         .form-input.error { border-color: #ef4444; background-color: #fef2f2; }
         .error-message { color: #ef4444; font-size: 0.875rem; margin-top: 0.25rem; display: none; }
         .error-message.show { display: block; }
+        .github-link { 
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            50% { box-shadow: 0 0 0 12px rgba(34, 197, 94, 0); }
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -209,8 +216,8 @@
                                 <div>
                                     <h4 class="font-bold text-blue-900 mb-1">How Submission Works</h4>
                                     <p class="text-sm text-blue-800 leading-relaxed">
-                                        When you click "Submit Dataset", we will open a new tab with a <strong>pre-filled GitHub Issue</strong> containing all your details. 
-                                        Please click the green <strong>"Submit new issue"</strong> button in that tab to finalize your contribution. Our team will review it within 3-5 business days!
+                                        When you click "Submit Dataset", we'll prepare your details and show you a <strong>direct link to GitHub</strong>. 
+                                        Simply click the link to open a pre-filled issue, then click the green <strong>"Submit new issue"</strong> button on GitHub to finalize your contribution.
                                     </p>
                                 </div>
                             </div>
@@ -228,20 +235,42 @@
                 </div>
             </form>
 
-            <!-- Success Message (Hidden by default) -->
+            <!-- Success Message with Direct Link (Hidden by default) -->
             <div id="successMessage" class="hidden text-center py-8">
                 <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
                     <i class="fas fa-check text-emerald-600 text-4xl"></i>
                 </div>
-                <h2 class="text-3xl font-bold text-slate-900 mb-3">Thank You!</h2>
-                <p class="text-lg text-slate-600 mb-6 max-w-lg mx-auto">Your dataset details have been prepared.</p>
-                <div class="bg-amber-50 border border-amber-200 rounded-xl p-6 max-w-md mx-auto mb-6">
-                    <p class="text-amber-800 font-medium mb-2"><i class="fas fa-exclamation-triangle mr-2"></i>Almost done!</p>
-                    <p class="text-sm text-amber-700">A new browser tab was opened with your pre-filled GitHub issue. Please click the green <strong>"Submit new issue"</strong> button in that tab to finalize your contribution.</p>
-                </div>
-                <a href="datasets.html" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
-                    <i class="fas fa-database"></i> Browse All Datasets
+                <h2 class="text-3xl font-bold text-slate-900 mb-3">Your Dataset is Ready!</h2>
+                <p class="text-lg text-slate-600 mb-8 max-w-lg mx-auto">We've prepared your submission. Click the button below to complete it on GitHub.</p>
+                
+                <!-- THE FIX: A real, clickable link instead of window.open() -->
+                <a id="githubIssueLink" href="#" target="_blank" rel="noopener noreferrer" 
+                   class="github-link inline-flex items-center gap-3 bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-5 rounded-xl font-bold text-lg transition-all shadow-2xl hover:scale-105 mb-6">
+                    <i class="fab fa-github text-2xl"></i>
+                    <span>Continue to GitHub to Submit</span>
+                    <i class="fas fa-external-link-alt"></i>
                 </a>
+                
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-6 max-w-2xl mx-auto mb-6 text-left">
+                    <h4 class="font-bold text-amber-900 mb-3 flex items-center gap-2">
+                        <i class="fas fa-list-ol"></i> Final Steps on GitHub:
+                    </h4>
+                    <ol class="text-sm text-amber-800 space-y-2 list-decimal list-inside">
+                        <li>Click the green button above to open GitHub in a new tab</li>
+                        <li>Review your pre-filled dataset details in the issue body</li>
+                        <li>Click the green <strong>"Submit new issue"</strong> button at the bottom</li>
+                        <li>That's it! Our team will review your submission within 3-5 business days</li>
+                    </ol>
+                </div>
+                
+                <div class="flex flex-wrap gap-3 justify-center mt-6">
+                    <button onclick="copyLink()" class="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-6 py-3 rounded-lg font-medium transition-colors">
+                        <i class="fas fa-copy"></i> <span id="copyBtnText">Copy Link</span>
+                    </button>
+                    <a href="datasets.html" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                        <i class="fas fa-database"></i> Browse All Datasets
+                    </a>
+                </div>
             </div>
         </div>
     </main>
@@ -253,6 +282,7 @@
 
     <script>
         let currentStep = 1;
+        let generatedIssueUrl = '';
 
         function validateStep(step) {
             const currentContent = document.getElementById(`step${step}Content`);
@@ -279,9 +309,7 @@
         }
 
         function nextStep(step) {
-            // Validate current step
             if (!validateStep(currentStep)) {
-                // Scroll to first error
                 const firstError = document.querySelector(`#step${currentStep}Content .error`);
                 if (firstError) {
                     firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -290,10 +318,7 @@
                 return;
             }
             
-            // Hide current step
             document.getElementById(`step${currentStep}Content`).classList.add('hidden');
-            
-            // Update step indicators
             document.getElementById(`step${currentStep}`).classList.add('completed');
             document.getElementById(`step${currentStep}`).classList.remove('active');
             document.getElementById(`step${currentStep}`).innerHTML = '<i class="fas fa-check"></i>';
@@ -302,28 +327,20 @@
             
             currentStep = step;
             
-            // Show next step
             document.getElementById(`step${currentStep}Content`).classList.remove('hidden');
             document.getElementById(`step${currentStep}`).classList.add('active');
-            
-            // Scroll to top of form
             document.querySelector('main').scrollIntoView({ behavior: 'smooth' });
         }
 
         function prevStep(step) {
-            // Hide current step
             document.getElementById(`step${currentStep}Content`).classList.add('hidden');
             document.getElementById(`step${currentStep}`).classList.remove('active');
-            
-            // Update step indicators
             document.getElementById(`line${step}`).classList.remove('bg-emerald-500');
             document.getElementById(`line${step}`).classList.add('bg-slate-300');
             document.getElementById(`step${step + 1}`).classList.remove('completed');
             document.getElementById(`step${step + 1}`).innerHTML = step + 1;
             
             currentStep = step;
-            
-            // Show previous step
             document.getElementById(`step${currentStep}Content`).classList.remove('hidden');
             document.getElementById(`step${currentStep}`).classList.add('active');
         }
@@ -333,15 +350,14 @@
             
             const formData = new FormData(e.target);
             
-            // Format the data into a clean, readable Markdown template for GitHub
             const issueTitle = `📊 New Dataset Submission: ${formData.get('dataset_name')}`;
             
-            const issueBody = `
-## 🌍 New Dataset Submission
+            // Shortened body to avoid URL length limits in some browsers
+            const issueBody = `## 🌍 New Dataset Submission
 
 **Dataset Name:** ${formData.get('dataset_name')}
 **Domain:** ${formData.get('domain')}
-**Source / Organization:** ${formData.get('source')}
+**Source:** ${formData.get('source')}
 **Countries:** ${formData.get('countries')}
 
 ### ⚙️ Technical Details
@@ -355,36 +371,39 @@
 ### 📝 Description
 ${formData.get('description')}
 
-### 💡 Potential Use Cases
-${formData.get('use_cases') ? formData.get('use_cases').split('\n').map(line => line.trim() ? `- ${line}` : '').join('\n') : 'None provided'}
+### 💡 Use Cases
+${formData.get('use_cases') || 'None provided'}
 
 ### ⚠️ Challenges / Notes
 ${formData.get('challenges') || 'None provided'}
 
 ---
-*Submitted via the Open Data Africa Contribute Page*
-*Please review and add to datasets.json upon approval.*
-            `.trim();
+*Submitted via Open Data Africa Contribute Page*`;
 
-            // Encode the title and body for the URL
             const encodedTitle = encodeURIComponent(issueTitle);
             const encodedBody = encodeURIComponent(issueBody);
             
             const githubRepo = 'opendata-africa/opendata-africa.github.io'; 
-            const issueUrl = `https://github.com/${githubRepo}/issues/new?title=${encodedTitle}&body=${encodedBody}&labels=new-dataset,awaiting-review`;
+            generatedIssueUrl = `https://github.com/${githubRepo}/issues/new?title=${encodedTitle}&body=${encodedBody}&labels=new-dataset,awaiting-review`;
             
-            // Open the GitHub Issue page in a new tab
-            window.open(issueUrl, '_blank');
+            // THE FIX: Set the href of a real <a> tag instead of using window.open()
+            document.getElementById('githubIssueLink').href = generatedIssueUrl;
             
-            // Hide form and show success message
+            // Hide form, show success with the clickable link
             document.getElementById('contributeForm').classList.add('hidden');
             document.getElementById('successMessage').classList.remove('hidden');
-            
-            // Scroll to success message
             document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Remove error styling when user starts typing
+        function copyLink() {
+            navigator.clipboard.writeText(generatedIssueUrl).then(() => {
+                const btn = document.getElementById('copyBtnText');
+                btn.textContent = '✓ Copied!';
+                setTimeout(() => { btn.textContent = 'Copy Link'; }, 2000);
+            });
+        }
+
+        // Remove error styling on input
         document.querySelectorAll('.form-input').forEach(input => {
             input.addEventListener('input', function() {
                 this.classList.remove('error');
