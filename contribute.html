@@ -13,6 +13,7 @@
         .step-indicator.completed { background: #10b981; color: white; }
         .form-input { transition: all 0.2s; }
         .form-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        .form-input.error { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -44,14 +45,14 @@
                 <i class="fas fa-upload"></i>
                 <span>Share Your Data</span>
             </div>
-            <h1 class="text-5xl font-bold text-slate-900 mb-4">Contribute a Dataset</h1>
-            <p class="text-xl text-slate-600 max-w-2xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">Contribute a Dataset</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">
                 Help build Africa's most comprehensive open data repository. Share your datasets to empower researchers, developers, and policymakers across the continent.
             </p>
         </div>
 
         <!-- Progress Steps -->
-        <div class="flex items-center justify-center mb-12">
+        <div class="flex items-center justify-center mb-10">
             <div class="flex items-center gap-4">
                 <div class="step-indicator active w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold" id="step1">1</div>
                 <div class="w-16 h-1 bg-slate-300" id="line1"></div>
@@ -62,56 +63,48 @@
         </div>
 
         <!-- Form Container -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-lg p-8">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-lg p-6 md:p-8">
             <form id="contributeForm" onsubmit="handleSubmit(event)">
+                
                 <!-- Step 1: Basic Information -->
                 <div id="step1Content" class="step-content">
-                    <h2 class="text-2xl font-bold text-slate-900 mb-6">Basic Information</h2>
-                    
-                    <div class="space-y-6">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                        <i class="fas fa-info-circle text-blue-600"></i> Basic Information
+                    </h2>
+                    <div class="space-y-5">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">Dataset Name *</label>
-                            <input type="text" name="dataset_name" required
-                                   class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none"
-                                   placeholder="e.g., Ethiopian Crop Yield Dataset">
+                            <input type="text" name="dataset_name" required class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none" placeholder="e.g., Common Voice (African Languages)">
                         </div>
-                        
+                        <div class="grid md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Domain *</label>
+                                <select name="domain" required class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none bg-white">
+                                    <option value="">Select Domain</option>
+                                    <option value="NLP">NLP (Natural Language Processing)</option>
+                                    <option value="Agriculture">Agriculture</option>
+                                    <option value="Healthcare">Healthcare</option>
+                                    <option value="Environment and Energy">Environment & Energy</option>
+                                    <option value="Climate and Geospatial">Climate & Geospatial</option>
+                                    <option value="Socioeconomic">Socioeconomic</option>
+                                    <option value="Education">Education</option>
+                                    <option value="Genomics">Genomics</option>
+                                    <option value="Multiple">Multiple</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Source / Organization *</label>
+                                <input type="text" name="source" required class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none" placeholder="e.g., Mozilla, Ministry of Health">
+                            </div>
+                        </div>
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">Domain *</label>
-                            <select name="domain" required
-                                    class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none">
-                                <option value="">Select Domain</option>
-                                <option value="NLP">NLP (Natural Language Processing)</option>
-                                <option value="Agriculture">Agriculture</option>
-                                <option value="Healthcare">Healthcare</option>
-                                <option value="Environment and Energy">Environment & Energy</option>
-                                <option value="Climate and Geospatial">Climate & Geospatial</option>
-                                <option value="Socioeconomic">Socioeconomic</option>
-                                <option value="Education">Education</option>
-                                <option value="Genomics">Genomics</option>
-                                <option value="Multiple">Multiple</option>
-                            </select>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Country / Countries *</label>
+                            <input type="text" name="countries" required class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none" placeholder="e.g., Kenya, Ethiopia (or 'Africa-wide')">
+                            <p class="text-xs text-slate-500 mt-1">Separate multiple countries with commas.</p>
                         </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">Source / Organization *</label>
-                            <input type="text" name="source" required
-                                   class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none"
-                                   placeholder="e.g., Ministry of Agriculture, Ethiopia">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">Country/Countries *</label>
-                            <input type="text" name="countries" required
-                                   class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none"
-                                   placeholder="e.g., Ethiopia, Kenya (separate multiple with commas)">
-                            <p class="text-xs text-slate-500 mt-1">For Africa-wide datasets, enter "Africa-wide"</p>
-                        </div>
-                        
-                        <div class="flex justify-end">
-                            <button type="button" onclick="nextStep(2)"
-                                    class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
-                                Next Step <i class="fas fa-arrow-right ml-2"></i>
+                        <div class="flex justify-end pt-4">
+                            <button type="button" onclick="nextStep(2)" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors flex items-center gap-2">
+                                Next Step <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
                     </div>
@@ -119,146 +112,127 @@
 
                 <!-- Step 2: Technical Details -->
                 <div id="step2Content" class="step-content hidden">
-                    <h2 class="text-2xl font-bold text-slate-900 mb-6">Technical Details</h2>
-                    
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">Data Type *</label>
-                            <select name="data_type" required
-                                    class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none">
-                                <option value="">Select Data Type</option>
-                                <option value="Tabular">Tabular (CSV, Excel)</option>
-                                <option value="Image">Image</option>
-                                <option value="Audio">Audio</option>
-                                <option value="Video">Video</option>
-                                <option value="Text">Text</option>
-                                <option value="Geospatial">Geospatial</option>
-                                <option value="Mixed Formats">Mixed Formats</option>
-                            </select>
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                        <i class="fas fa-cogs text-emerald-600"></i> Technical Details
+                    </h2>
+                    <div class="space-y-5">
+                        <div class="grid md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Data Type *</label>
+                                <select name="data_type" required class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none bg-white">
+                                    <option value="">Select Data Type</option>
+                                    <option value="Tabular">Tabular (CSV, Excel)</option>
+                                    <option value="Image">Image</option>
+                                    <option value="Audio">Audio</option>
+                                    <option value="Video">Video</option>
+                                    <option value="Text">Text</option>
+                                    <option value="Geospatial">Geospatial</option>
+                                    <option value="Mixed Formats">Mixed Formats</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">License *</label>
+                                <select name="license" required class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none bg-white">
+                                    <option value="">Select License</option>
+                                    <option value="CC BY 4.0">CC BY 4.0 (Attribution)</option>
+                                    <option value="CC BY-SA 4.0">CC BY-SA 4.0 (ShareAlike)</option>
+                                    <option value="CC BY-NC 4.0">CC BY-NC 4.0 (Non-Commercial)</option>
+                                    <option value="CC0 1.0">CC0 1.0 (Public Domain)</option>
+                                    <option value="MIT">MIT License</option>
+                                    <option value="Apache 2.0">Apache 2.0</option>
+                                    <option value="ODC-By 1.0">ODC-By 1.0</option>
+                                    <option value="Other">Other (specify in notes)</option>
+                                </select>
+                            </div>
                         </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">License *</label>
-                            <select name="license" required
-                                    class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none">
-                                <option value="">Select License</option>
-                                <option value="CC BY 4.0">CC BY 4.0 (Attribution)</option>
-                                <option value="CC BY-SA 4.0">CC BY-SA 4.0 (ShareAlike)</option>
-                                <option value="CC BY-NC 4.0">CC BY-NC 4.0 (Non-Commercial)</option>
-                                <option value="CC0 1.0">CC0 1.0 (Public Domain)</option>
-                                <option value="MIT">MIT License</option>
-                                <option value="Apache 2.0">Apache 2.0</option>
-                                <option value="ODC-By 1.0">ODC-By 1.0</option>
-                                <option value="Other">Other (specify in notes)</option>
-                            </select>
-                        </div>
-                        
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">Dataset URL / Download Link *</label>
-                            <input type="url" name="link" required
-                                   class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none"
-                                   placeholder="https://...">
+                            <input type="url" name="link" required class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none" placeholder="https://...">
                         </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">Documentation Link</label>
-                            <input type="url" name="documentation_link"
-                                   class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none"
-                                   placeholder="https://...">
+                        <div class="grid md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Documentation Link</label>
+                                <input type="url" name="documentation_link" class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none" placeholder="https://...">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Publication / Paper Link</label>
+                                <input type="url" name="publication_link" class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none" placeholder="https://arxiv.org/... or DOI">
+                            </div>
                         </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">Publication Link</label>
-                            <input type="url" name="publication_link"
-                                   class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none"
-                                   placeholder="https://arxiv.org/... or DOI">
-                        </div>
-                        
-                        <div class="flex justify-between">
-                            <button type="button" onclick="prevStep(1)"
-                                    class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-8 py-3 rounded-lg font-medium transition-colors">
-                                <i class="fas fa-arrow-left mr-2"></i> Previous
+                        <div class="flex justify-between pt-4">
+                            <button type="button" onclick="prevStep(1)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-8 py-3 rounded-lg font-medium transition-colors flex items-center gap-2">
+                                <i class="fas fa-arrow-left"></i> Previous
                             </button>
-                            <button type="button" onclick="nextStep(3)"
-                                    class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
-                                Next Step <i class="fas fa-arrow-right ml-2"></i>
+                            <button type="button" onclick="nextStep(3)" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors flex items-center gap-2">
+                                Next Step <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Step 3: Description & Use Cases -->
+                <!-- Step 3: Description & Impact -->
                 <div id="step3Content" class="step-content hidden">
-                    <h2 class="text-2xl font-bold text-slate-900 mb-6">Description & Impact</h2>
-                    
-                    <div class="space-y-6">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                        <i class="fas fa-lightbulb text-amber-500"></i> Description & Impact
+                    </h2>
+                    <div class="space-y-5">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">Description *</label>
-                            <textarea name="description" required rows="4"
-                                      class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none"
-                                      placeholder="Describe the dataset, its contents, collection methodology, and potential applications..."></textarea>
+                            <textarea name="description" required rows="4" class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none" placeholder="Describe the dataset, its contents, collection methodology, and potential applications..."></textarea>
                         </div>
-                        
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">Use Cases</label>
-                            <textarea name="use_cases" rows="4"
-                                      class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none"
-                                      placeholder="Describe potential or actual use cases for this dataset (one per line)&#10;Example:&#10;- Crop disease detection using machine learning&#10;- Training ASR models for local languages"></textarea>
+                            <textarea name="use_cases" rows="4" class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none" placeholder="Describe potential or actual use cases (one per line)&#10;Example:&#10;- Crop disease detection using machine learning&#10;- Training ASR models for local languages"></textarea>
                         </div>
-                        
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">Challenges / Notes</label>
-                            <textarea name="challenges" rows="3"
-                                      class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none"
-                                      placeholder="Any limitations, data quality issues, or important notes for users..."></textarea>
+                            <textarea name="challenges" rows="3" class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none" placeholder="Any limitations, data quality issues, or important notes for users..."></textarea>
                         </div>
-                        
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">Last Updated</label>
-                            <input type="text" name="last_updated"
-                                   class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none"
-                                   placeholder="e.g., 2024 or 2024-03-15">
+                            <input type="text" name="last_updated" class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none" placeholder="e.g., 2024 or 2024-03-15">
                         </div>
                         
-                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
                             <div class="flex items-start gap-3">
-                                <i class="fas fa-info-circle text-blue-600 mt-1"></i>
+                                <i class="fas fa-info-circle text-blue-600 mt-1 text-lg"></i>
                                 <div>
-                                    <h4 class="font-medium text-blue-900 mb-1">Submission Process</h4>
-                                    <p class="text-sm text-blue-800">
-                                        After submission, your dataset will be reviewed by our team within 3-5 business days. 
-                                        You'll receive a confirmation email once it's published on the platform.
+                                    <h4 class="font-bold text-blue-900 mb-1">How Submission Works</h4>
+                                    <p class="text-sm text-blue-800 leading-relaxed">
+                                        When you click "Submit Dataset", we will open a new tab with a <strong>pre-filled GitHub Issue</strong> containing all your details. 
+                                        Please click the green <strong>"Submit new issue"</strong> button in that tab to finalize your contribution. Our team will review it within 3-5 business days!
                                     </p>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="flex justify-between">
-                            <button type="button" onclick="prevStep(2)"
-                                    class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-8 py-3 rounded-lg font-medium transition-colors">
-                                <i class="fas fa-arrow-left mr-2"></i> Previous
+                        <div class="flex justify-between pt-4">
+                            <button type="button" onclick="prevStep(2)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-8 py-3 rounded-lg font-medium transition-colors flex items-center gap-2">
+                                <i class="fas fa-arrow-left"></i> Previous
                             </button>
-                            <button type="submit"
-                                    class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
-                                <i class="fas fa-check mr-2"></i> Submit Dataset
+                            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-lg font-medium transition-colors flex items-center gap-2 shadow-lg hover:shadow-xl">
+                                <i class="fas fa-paper-plane"></i> Submit Dataset
                             </button>
                         </div>
                     </div>
                 </div>
             </form>
-        </div>
 
-        <!-- Success Message (Hidden by default) -->
-        <div id="successMessage" class="hidden mt-8 bg-emerald-50 border border-emerald-200 rounded-2xl p-8 text-center">
-            <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-check text-emerald-600 text-3xl"></i>
+            <!-- Success Message (Hidden by default) -->
+            <div id="successMessage" class="hidden text-center py-8">
+                <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-check text-emerald-600 text-4xl"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-slate-900 mb-3">Thank You!</h2>
+                <p class="text-lg text-slate-600 mb-6 max-w-lg mx-auto">Your dataset details have been prepared.</p>
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-6 max-w-md mx-auto mb-6">
+                    <p class="text-amber-800 font-medium mb-2"><i class="fas fa-exclamation-triangle mr-2"></i>Almost done!</p>
+                    <p class="text-sm text-amber-700">A new browser tab was opened with your pre-filled GitHub issue. Please click the green <strong>"Submit new issue"</strong> button in that tab to finalize your contribution.</p>
+                </div>
+                <a href="datasets.html" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
+                    <i class="fas fa-database"></i> Browse All Datasets
+                </a>
             </div>
-            <h2 class="text-2xl font-bold text-emerald-900 mb-2">Thank You!</h2>
-            <p class="text-emerald-800 mb-4">Your dataset has been submitted successfully.</p>
-            <p class="text-sm text-emerald-700">We'll review it and get back to you within 3-5 business days.</p>
-            <a href="datasets.html" class="inline-block mt-6 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
-                Browse Datasets
-            </a>
         </div>
     </main>
 
@@ -278,15 +252,15 @@
             
             requiredFields.forEach(field => {
                 if (!field.value.trim()) {
-                    field.classList.add('border-red-500');
+                    field.classList.add('error');
                     isValid = false;
                 } else {
-                    field.classList.remove('border-red-500');
+                    field.classList.remove('error');
                 }
             });
             
             if (!isValid) {
-                alert('Please fill in all required fields');
+                alert('Please fill in all required fields marked with *');
                 return;
             }
             
@@ -296,6 +270,7 @@
             // Update step indicators
             document.getElementById(`step${currentStep}`).classList.add('completed');
             document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById(`step${currentStep}`).innerHTML = '<i class="fas fa-check"></i>';
             document.getElementById(`line${currentStep}`).classList.add('bg-emerald-500');
             document.getElementById(`line${currentStep}`).classList.remove('bg-slate-300');
             
@@ -304,6 +279,9 @@
             // Show next step
             document.getElementById(`step${currentStep}Content`).classList.remove('hidden');
             document.getElementById(`step${currentStep}`).classList.add('active');
+            
+            // Scroll to top of form
+            document.querySelector('main').scrollIntoView({ behavior: 'smooth' });
         }
 
         function prevStep(step) {
@@ -315,6 +293,7 @@
             document.getElementById(`line${step}`).classList.remove('bg-emerald-500');
             document.getElementById(`line${step}`).classList.add('bg-slate-300');
             document.getElementById(`step${step + 1}`).classList.remove('completed');
+            document.getElementById(`step${step + 1}`).innerHTML = step + 1;
             
             currentStep = step;
             
@@ -326,51 +305,58 @@
         function handleSubmit(e) {
             e.preventDefault();
             
-            // Get form data
             const formData = new FormData(e.target);
-            const dataset = {
-                dataset_name: formData.get('dataset_name'),
-                domain: formData.get('domain'),
-                source: formData.get('source'),
-                country: formData.get('countries'),
-                data_type: formData.get('data_type'),
-                license: formData.get('license'),
-                link: formData.get('link'),
-                documentation_link: formData.get('documentation_link'),
-                publication_link: formData.get('publication_link'),
-                description: formData.get('description'),
-                use_cases: parseUseCases(formData.get('use_cases')),
-                challenges: formData.get('challenges'),
-                last_updated: formData.get('last_updated') || new Date().getFullYear().toString()
-            };
             
-            // Here you would normally send to a backend
-            // For now, we'll just show success message
-            console.log('Dataset to submit:', dataset);
+            // Format the data into a clean, readable Markdown template for GitHub
+            const issueTitle = `📊 New Dataset Submission: ${formData.get('dataset_name')}`;
             
-            // Hide form and show success
-            document.querySelector('form').parentElement.classList.add('hidden');
+            const issueBody = `
+## 🌍 New Dataset Submission
+
+**Dataset Name:** ${formData.get('dataset_name')}
+**Domain:** ${formData.get('domain')}
+**Source / Organization:** ${formData.get('source')}
+**Countries:** ${formData.get('countries')}
+
+### ⚙️ Technical Details
+- **Data Type:** ${formData.get('data_type')}
+- **License:** ${formData.get('license')}
+- **Download Link:** ${formData.get('link')}
+- **Documentation:** ${formData.get('documentation_link') || 'N/A'}
+- **Publication:** ${formData.get('publication_link') || 'N/A'}
+- **Last Updated:** ${formData.get('last_updated') || 'N/A'}
+
+### 📝 Description
+${formData.get('description')}
+
+### 💡 Potential Use Cases
+${formData.get('use_cases') ? formData.get('use_cases').split('\\n').map(line => line.trim() ? \`- \${line}\` : '').join('\\n') : 'None provided'}
+
+### ⚠️ Challenges / Notes
+${formData.get('challenges') || 'None provided'}
+
+---
+*Submitted via the Open Data Africa Contribute Page*
+*Please review and add to datasets.json upon approval.*
+            `.trim();
+
+            // Encode the title and body for the URL
+            const encodedTitle = encodeURIComponent(issueTitle);
+            const encodedBody = encodeURIComponent(issueBody);
+            
+            // IMPORTANT: Replace with your actual GitHub username/repo name if different
+            const githubRepo = 'opendata-africa/opendata-africa.github.io'; 
+            const issueUrl = `https://github.com/${githubRepo}/issues/new?title=${encodedTitle}&body=${encodedBody}&labels=new-dataset,awaiting-review`;
+            
+            // Open the GitHub Issue page in a new tab
+            window.open(issueUrl, '_blank');
+            
+            // Hide form and show success message
+            document.getElementById('contributeForm').classList.add('hidden');
             document.getElementById('successMessage').classList.remove('hidden');
             
-            // In production, you would:
-            // 1. Send to GitHub API or backend
-            // 2. Create a GitHub issue
-            // 3. Or save to a JSON file
-        }
-
-        function parseUseCases(text) {
-            if (!text) return [];
-            return text.split('\n')
-                .filter(line => line.trim())
-                .map(line => {
-                    const cleaned = line.replace(/^[-•]\s*/, '').trim();
-                    return {
-                        title: '',
-                        description: cleaned,
-                        paper_link: '',
-                        code_repo: ''
-                    };
-                });
+            // Scroll to success message
+            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
         }
     </script>
 </body>
