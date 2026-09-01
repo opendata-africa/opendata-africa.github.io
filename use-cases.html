@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Use Cases | Open Data Africa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { background-color: #f8fafc; color: #0f172a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .use-case-card { transition: all 0.3s ease; }
+        .use-case-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .domain-badge { transition: all 0.2s; }
+        .domain-badge:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center gap-3">
+                    <span class="text-2xl">🌍</span>
+                    <div>
+                        <div class="font-bold text-slate-900 text-lg">Open Data Africa</div>
+                        <div class="text-xs text-slate-500">AI-Powered Research Portal</div>
+                    </div>
+                </a>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="index.html" class="text-slate-600 hover:text-blue-600 font-medium">Home</a>
+                    <a href="datasets.html" class="text-slate-600 hover:text-blue-600 font-medium">Datasets</a>
+                    <a href="countries.html" class="text-slate-600 hover:text-blue-600 font-medium">Countries</a>
+                    <a href="use-cases.html" class="text-blue-600 font-medium">Use Cases</a>
+                    <a href="resources.html" class="text-slate-600 hover:text-blue-600 font-medium">Resources</a>
+                    <a href="about.html" class="text-slate-600 hover:text-blue-600 font-medium">About</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 max-w-7xl mx-auto px-4 py-12 w-full">
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-bold text-slate-900 mb-4">Real-World Use Cases</h1>
+            <p class="text-xl text-slate-600 max-w-3xl mx-auto">
+                Discover how African researchers, developers, and organizations are using open datasets to solve real problems and drive innovation across the continent.
+            </p>
+        </div>
+
+        <!-- Filter & Search -->
+        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm mb-8">
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="relative">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="searchInput" placeholder="Search use cases..." 
+                           class="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                </div>
+                <select id="domainFilter" class="px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                    <option value="All">All Domains</option>
+                </select>
+                <select id="countryFilter" class="px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                    <option value="All">All Countries</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Use Cases Grid -->
+        <div id="useCasesGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Populated by JavaScript -->
+        </div>
+
+        <!-- Stats Section -->
+        <div class="mt-12 grid md:grid-cols-4 gap-6">
+            <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-xl shadow-lg">
+                <div class="text-4xl font-bold mb-2" id="totalUseCases">0</div>
+                <div class="text-blue-100">Total Use Cases</div>
+            </div>
+            <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white p-6 rounded-xl shadow-lg">
+                <div class="text-4xl font-bold mb-2" id="totalDomains">0</div>
+                <div class="text-emerald-100">Domains Covered</div>
+            </div>
+            <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-6 rounded-xl shadow-lg">
+                <div class="text-4xl font-bold mb-2" id="totalCountries">0</div>
+                <div class="text-purple-100">Countries Impacted</div>
+            </div>
+            <div class="bg-gradient-to-br from-amber-500 to-amber-600 text-white p-6 rounded-xl shadow-lg">
+                <div class="text-4xl font-bold mb-2" id="totalDatasets">0</div>
+                <div class="text-amber-100">Datasets Used</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center text-sm mt-auto">
+        <p>© 2026 Open Data Africa. Built with ❤️ for African researchers and policymakers.</p>
+    </footer>
+
+    <script>
+        let datasets = [];
+        let useCases = [];
+
+        fetch('datasets.json')
+            .then(res => res.json())
+            .then(data => {
+                datasets = data;
+                extractUseCases();
+                renderUseCases(useCases);
+                updateStats();
+                populateFilters();
+            });
+
+        function extractUseCases() {
+            datasets.forEach(ds => {
+                if (ds.use_cases && ds.use_cases.length > 0) {
+                    ds.use_cases.forEach(uc => {
+                        useCases.push({
+                            dataset_name: ds.dataset_name,
+                            domain: ds.domain,
+                            countries: ds.countries || ['Africa-wide'],
+                            source: ds.source,
+                            use_case: uc,
+                            link: ds.link
+                        });
+                    });
+                }
+            });
+        }
+
+        function renderUseCases(cases) {
+            const grid = document.getElementById('useCasesGrid');
+            grid.innerHTML = cases.map(uc => {
+                const domainColors = {
+                    'NLP': 'from-blue-500 to-blue-600',
+                    'Agriculture': 'from-emerald-500 to-emerald-600',
+                    'Healthcare': 'from-rose-500 to-rose-600',
+                    'Environment and Energy': 'from-amber-500 to-amber-600',
+                    'Climate and Geospatial': 'from-cyan-500 to-cyan-600',
+                    'Socioeconomic': 'from-purple-500 to-purple-600'
+                };
+                const gradient = domainColors[uc.domain] || 'from-slate-500 to-slate-600';
+                
+                return `
+                    <div class="use-case-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div class="h-2 bg-gradient-to-r ${gradient}"></div>
+                        <div class="p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <span class="domain-badge px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold">${uc.domain}</span>
+                                <i class="fas fa-lightbulb text-amber-500 text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-900 mb-2 line-clamp-2">${uc.dataset_name}</h3>
+                            <div class="text-sm text-slate-600 mb-4">
+                                <strong class="text-slate-900">${uc.use_case.title || 'Application'}:</strong>
+                                <p class="mt-1 text-slate-600">${uc.use_case.description}</p>
+                            </div>
+                            <div class="flex items-center justify-between text-xs text-slate-500 mb-4">
+                                <span><i class="fas fa-building mr-1"></i>${uc.source}</span>
+                            </div>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                ${uc.countries.slice(0, 3).map(c => `<span class="px-2 py-1 bg-slate-100 text-slate-600 rounded text-xs"><i class="fas fa-map-marker-alt mr-1"></i>${c}</span>`).join('')}
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="${uc.link}" target="_blank" class="flex-1 text-center bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg text-sm font-medium transition-colors">
+                                    <i class="fas fa-external-link-alt mr-1"></i> View Dataset
+                                </a>
+                                ${uc.use_case.paper_link ? `<a href="${uc.use_case.paper_link}" target="_blank" class="flex-1 text-center bg-slate-100 hover:bg-slate-200 text-slate-700 py-2 rounded-lg text-sm font-medium transition-colors">
+                                    <i class="fas fa-file-alt mr-1"></i> Paper
+                                </a>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function populateFilters() {
+            const domains = [...new Set(useCases.map(uc => uc.domain))].sort();
+            const countries = [...new Set(useCases.flatMap(uc => uc.countries))].sort();
+            
+            const domainSelect = document.getElementById('domainFilter');
+            domains.forEach(d => {
+                domainSelect.innerHTML += `<option value="${d}">${d}</option>`;
+            });
+            
+            const countrySelect = document.getElementById('countryFilter');
+            countries.forEach(c => {
+                countrySelect.innerHTML += `<option value="${c}">${c}</option>`;
+            });
+        }
+
+        function updateStats() {
+            document.getElementById('totalUseCases').textContent = useCases.length;
+            document.getElementById('totalDomains').textContent = [...new Set(useCases.map(uc => uc.domain))].length;
+            document.getElementById('totalCountries').textContent = [...new Set(useCases.flatMap(uc => uc.countries))].length;
+            document.getElementById('totalDatasets').textContent = [...new Set(useCases.map(uc => uc.dataset_name))].length;
+        }
+
+        // Filter functionality
+        document.getElementById('searchInput').addEventListener('input', filterUseCases);
+        document.getElementById('domainFilter').addEventListener('change', filterUseCases);
+        document.getElementById('countryFilter').addEventListener('change', filterUseCases);
+
+        function filterUseCases() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const domain = document.getElementById('domainFilter').value;
+            const country = document.getElementById('countryFilter').value;
+            
+            const filtered = useCases.filter(uc => {
+                const matchesSearch = (uc.dataset_name + ' ' + uc.use_case.description + ' ' + uc.use_case.title).toLowerCase().includes(search);
+                const matchesDomain = domain === 'All' || uc.domain === domain;
+                const matchesCountry = country === 'All' || uc.countries.includes(country);
+                return matchesSearch && matchesDomain && matchesCountry;
+            });
+            
+            renderUseCases(filtered);
+        }
+    </script>
+</body>
+</html>
