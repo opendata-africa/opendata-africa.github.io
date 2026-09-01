@@ -11,6 +11,9 @@
         .form-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
         .dataset-row:hover { background-color: #f1f5f9; }
         .loading-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 100; }
+        .tab-btn.active { background: #3b82f6; color: white; }
+        .submission-card { transition: all 0.2s; }
+        .submission-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -48,7 +51,6 @@
                     <h1 class="text-2xl font-bold text-slate-900 mb-2">Admin Login</h1>
                     <p class="text-sm text-slate-600">Enter your GitHub Personal Access Token</p>
                 </div>
-
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-2">GitHub Username</label>
@@ -68,7 +70,6 @@
                         <i class="fas fa-sign-in-alt mr-2"></i>Login
                     </button>
                 </div>
-
                 <div class="mt-6 bg-amber-50 border border-amber-200 rounded-lg p-4 text-xs text-amber-800">
                     <p class="font-bold mb-1"><i class="fas fa-info-circle mr-1"></i>How to create a token:</p>
                     <ol class="list-decimal list-inside space-y-1">
@@ -84,64 +85,100 @@
 
         <!-- ADMIN DASHBOARD VIEW -->
         <div id="dashboardView" class="hidden">
-            <!-- Stats -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="text-2xl font-bold text-blue-600" id="statTotal">0</div>
-                    <div class="text-xs text-slate-500">Total Datasets</div>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="text-2xl font-bold text-emerald-600" id="statDomains">0</div>
-                    <div class="text-xs text-slate-500">Domains</div>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="text-2xl font-bold text-amber-600" id="statCountries">0</div>
-                    <div class="text-xs text-slate-500">Countries</div>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="text-2xl font-bold text-purple-600" id="statLastUpdate">-</div>
-                    <div class="text-xs text-slate-500">Last Updated</div>
-                </div>
+            
+            <!-- Tab Navigation -->
+            <div class="flex gap-2 mb-6 border-b border-slate-200">
+                <button onclick="switchTab('datasets')" id="tabDatasets" class="tab-btn active px-6 py-3 font-medium text-sm rounded-t-lg transition-colors">
+                    <i class="fas fa-database mr-2"></i>Manage Datasets
+                </button>
+                <button onclick="switchTab('submissions')" id="tabSubmissions" class="tab-btn px-6 py-3 font-medium text-sm rounded-t-lg transition-colors text-slate-600 hover:text-slate-900">
+                    <i class="fas fa-inbox mr-2"></i>Review Submissions
+                    <span id="submissionBadge" class="ml-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full hidden">0</span>
+                </button>
             </div>
 
-            <!-- Action Bar -->
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 mb-6 flex flex-wrap gap-3 items-center justify-between">
-                <div class="flex gap-3 flex-1">
-                    <div class="relative flex-1 max-w-md">
-                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                        <input type="text" id="searchInput" placeholder="Search datasets..." class="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm">
+            <!-- DATASETS TAB -->
+            <div id="datasetsTab" class="tab-content">
+                <!-- Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="text-2xl font-bold text-blue-600" id="statTotal">0</div>
+                        <div class="text-xs text-slate-500">Total Datasets</div>
                     </div>
-                    <select id="domainFilter" class="px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white">
-                        <option value="All">All Domains</option>
-                    </select>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="text-2xl font-bold text-emerald-600" id="statDomains">0</div>
+                        <div class="text-xs text-slate-500">Domains</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="text-2xl font-bold text-amber-600" id="statCountries">0</div>
+                        <div class="text-xs text-slate-500">Countries</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                        <div class="text-2xl font-bold text-purple-600" id="statLastUpdate">-</div>
+                        <div class="text-xs text-slate-500">Last Updated</div>
+                    </div>
                 </div>
-                <div class="flex gap-2">
-                    <button onclick="refreshData()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium">
-                        <i class="fas fa-sync-alt mr-1"></i>Refresh
-                    </button>
-                    <button onclick="showAddForm()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
-                        <i class="fas fa-plus mr-1"></i>Add Dataset
-                    </button>
-                    <button onclick="exportJSON()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
-                        <i class="fas fa-download mr-1"></i>Export
-                    </button>
+
+                <!-- Action Bar -->
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 mb-6 flex flex-wrap gap-3 items-center justify-between">
+                    <div class="flex gap-3 flex-1">
+                        <div class="relative flex-1 max-w-md">
+                            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="text" id="searchInput" placeholder="Search datasets..." class="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm">
+                        </div>
+                        <select id="domainFilter" class="px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white">
+                            <option value="All">All Domains</option>
+                        </select>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="refreshData()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium">
+                            <i class="fas fa-sync-alt mr-1"></i>Refresh
+                        </button>
+                        <button onclick="showAddForm()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <i class="fas fa-plus mr-1"></i>Add Dataset
+                        </button>
+                        <button onclick="exportJSON()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <i class="fas fa-download mr-1"></i>Export
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dataset List -->
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-slate-50 border-b border-slate-200">
+                                <tr>
+                                    <th class="text-left px-4 py-3 text-xs font-semibold text-slate-600 uppercase">Dataset</th>
+                                    <th class="text-left px-4 py-3 text-xs font-semibold text-slate-600 uppercase">Domain</th>
+                                    <th class="text-left px-4 py-3 text-xs font-semibold text-slate-600 uppercase">Countries</th>
+                                    <th class="text-left px-4 py-3 text-xs font-semibold text-slate-600 uppercase">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="datasetTableBody"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            <!-- Dataset List -->
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-                <div class="overflow-x-auto">
-                    <table class="w-full">
-                        <thead class="bg-slate-50 border-b border-slate-200">
-                            <tr>
-                                <th class="text-left px-4 py-3 text-xs font-semibold text-slate-600 uppercase">Dataset</th>
-                                <th class="text-left px-4 py-3 text-xs font-semibold text-slate-600 uppercase">Domain</th>
-                                <th class="text-left px-4 py-3 text-xs font-semibold text-slate-600 uppercase">Countries</th>
-                                <th class="text-left px-4 py-3 text-xs font-semibold text-slate-600 uppercase">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="datasetTableBody"></tbody>
-                    </table>
+            <!-- SUBMISSIONS TAB -->
+            <div id="submissionsTab" class="tab-content hidden">
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-900">Pending Dataset Submissions</h2>
+                            <p class="text-sm text-slate-600">Review and approve community contributions</p>
+                        </div>
+                        <button onclick="loadSubmissions()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <i class="fas fa-sync-alt mr-1"></i>Refresh
+                        </button>
+                    </div>
+                    <div id="submissionsList" class="space-y-4">
+                        <div class="text-center py-12 text-slate-500">
+                            <i class="fas fa-circle-notch fa-spin text-3xl text-blue-600 mb-3"></i>
+                            <p>Loading submissions...</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -157,7 +194,6 @@
                 </div>
                 <form id="editForm" class="p-6 space-y-4">
                     <input type="hidden" id="editIndex" value="-1">
-
                     <div class="grid md:grid-cols-2 gap-4">
                         <div class="md:col-span-2">
                             <label class="block text-sm font-medium text-slate-700 mb-1">Dataset Name *</label>
@@ -230,7 +266,6 @@
                             <input type="text" id="f_last_updated" class="form-input w-full px-3 py-2 border border-slate-300 rounded-lg text-sm" placeholder="2024">
                         </div>
                     </div>
-
                     <div class="flex justify-end gap-3 pt-4 border-t border-slate-200">
                         <button type="button" onclick="closeModal()" class="px-6 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-medium">Cancel</button>
                         <button type="submit" class="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium">
@@ -261,9 +296,9 @@
         const FILE_PATH = 'datasets.json';
 
         let datasets = [];
-        let fileSha = ''; // Needed for updates
+        let fileSha = '';
+        let pendingSubmissions = [];
 
-        // Check for saved credentials on load
         window.addEventListener('DOMContentLoaded', () => {
             const savedUser = localStorage.getItem('gh_username');
             const savedToken = localStorage.getItem('gh_token');
@@ -276,37 +311,27 @@
         async function login() {
             const username = document.getElementById('githubUsername').value.trim();
             const token = document.getElementById('githubToken').value.trim();
-
-            if (!username || !token) {
-                alert('Please enter both username and token');
-                return;
-            }
+            if (!username || !token) { alert('Please enter both username and token'); return; }
 
             showLoading('Verifying credentials...');
-
             try {
-                // Test the token by fetching user info
                 const response = await fetch('https://api.github.com/user', {
                     headers: { 'Authorization': `token ${token}` }
                 });
-
                 if (!response.ok) throw new Error('Invalid token');
 
-                // Save credentials
                 localStorage.setItem('gh_username', username);
                 localStorage.setItem('gh_token', token);
 
-                // Load datasets
                 await loadDatasets();
+                await loadSubmissions(); // Load submissions on login
 
-                // Show dashboard
                 document.getElementById('loginView').classList.add('hidden');
                 document.getElementById('dashboardView').classList.remove('hidden');
                 document.getElementById('adminStatus').textContent = `Logged in as ${username}`;
                 document.getElementById('logoutBtn').classList.remove('hidden');
-
             } catch (err) {
-                alert('Login failed: ' + err.message + '\n\nMake sure your token has the "repo" scope.');
+                alert('Login failed: ' + err.message);
             } finally {
                 hideLoading();
             }
@@ -318,6 +343,27 @@
             location.reload();
         }
 
+        // ========== TAB SWITCHING ==========
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('text-slate-600');
+            });
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+
+            if (tab === 'datasets') {
+                document.getElementById('tabDatasets').classList.add('active');
+                document.getElementById('tabDatasets').classList.remove('text-slate-600');
+                document.getElementById('datasetsTab').classList.remove('hidden');
+            } else {
+                document.getElementById('tabSubmissions').classList.add('active');
+                document.getElementById('tabSubmissions').classList.remove('text-slate-600');
+                document.getElementById('submissionsTab').classList.remove('hidden');
+                loadSubmissions();
+            }
+        }
+
+        // ========== DATASETS MANAGEMENT (existing code) ==========
         async function loadDatasets() {
             showLoading('Loading datasets...');
             try {
@@ -325,20 +371,16 @@
                 const response = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
                     headers: { 'Authorization': `token ${token}` }
                 });
-
                 if (!response.ok) throw new Error('Failed to load datasets.json');
 
                 const data = await response.json();
                 fileSha = data.sha;
-
-                // Decode base64 content
                 const content = atob(data.content.replace(/\n/g, ''));
                 datasets = JSON.parse(content);
 
                 renderTable();
                 updateStats();
                 populateDomainFilter();
-
             } catch (err) {
                 alert('Error loading datasets: ' + err.message);
             } finally {
@@ -350,12 +392,12 @@
             await loadDatasets();
         }
 
-        function renderTable(filter = '') {
+        function renderTable() {
             const tbody = document.getElementById('datasetTableBody');
             const domainFilter = document.getElementById('domainFilter').value;
             const search = document.getElementById('searchInput').value.toLowerCase();
 
-            const filtered = datasets.filter((ds, idx) => {
+            const filtered = datasets.filter(ds => {
                 const matchSearch = !search ||
                     ds.dataset_name.toLowerCase().includes(search) ||
                     (ds.domain || '').toLowerCase().includes(search) ||
@@ -369,7 +411,7 @@
                 return;
             }
 
-            tbody.innerHTML = filtered.map((ds, i) => {
+            tbody.innerHTML = filtered.map(ds => {
                 const realIndex = datasets.indexOf(ds);
                 const countries = (ds.countries || []).slice(0, 3).join(', ') || 'N/A';
                 return `
@@ -447,8 +489,7 @@
 
         async function deleteDataset(index) {
             const ds = datasets[index];
-            if (!confirm(`Delete "${ds.dataset_name}"?\n\nThis will commit the change to GitHub immediately.`)) return;
-
+            if (!confirm(`Delete "${ds.dataset_name}"?`)) return;
             showLoading('Deleting dataset...');
             try {
                 datasets.splice(index, 1);
@@ -457,7 +498,7 @@
                 alert('Dataset deleted successfully!');
             } catch (err) {
                 alert('Delete failed: ' + err.message);
-                await loadDatasets(); // Reload to restore state
+                await loadDatasets();
             } finally {
                 hideLoading();
             }
@@ -466,7 +507,6 @@
         document.getElementById('editForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const index = parseInt(document.getElementById('editIndex').value);
-
             const newDataset = {
                 dataset_id: index >= 0 ? datasets[index].dataset_id : `DS-${String(datasets.length + 1).padStart(3, '0')}`,
                 dataset_name: document.getElementById('f_dataset_name').value.trim(),
@@ -491,14 +531,12 @@
             };
 
             showLoading(index >= 0 ? 'Updating dataset...' : 'Adding dataset...');
-
             try {
                 if (index >= 0) {
                     datasets[index] = { ...datasets[index], ...newDataset };
                 } else {
                     datasets.push(newDataset);
                 }
-
                 const action = index >= 0 ? 'Update' : 'Add';
                 await commitChanges(`${action} dataset: ${newDataset.dataset_name}`);
                 await loadDatasets();
@@ -527,7 +565,6 @@
         async function commitChanges(message) {
             const token = localStorage.getItem('gh_token');
             const content = btoa(unescape(encodeURIComponent(JSON.stringify(datasets, null, 2))));
-
             const response = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
                 method: 'PUT',
                 headers: {
@@ -541,12 +578,10 @@
                     branch: BRANCH
                 })
             });
-
             if (!response.ok) {
                 const err = await response.json();
                 throw new Error(err.message || 'Commit failed');
             }
-
             const data = await response.json();
             fileSha = data.content.sha;
         }
@@ -561,6 +596,313 @@
             URL.revokeObjectURL(url);
         }
 
+        // ========== SUBMISSIONS REVIEW QUEUE ==========
+        async function loadSubmissions() {
+            const list = document.getElementById('submissionsList');
+            list.innerHTML = '<div class="text-center py-12 text-slate-500"><i class="fas fa-circle-notch fa-spin text-3xl text-blue-600 mb-3"></i><p>Loading submissions...</p></div>';
+
+            try {
+                const token = localStorage.getItem('gh_token');
+                const response = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues?labels=new-dataset&state=open&per_page=30`, {
+                    headers: { 'Authorization': `token ${token}` }
+                });
+
+                if (!response.ok) throw new Error('Failed to load submissions');
+
+                const issues = await response.json();
+                pendingSubmissions = issues.map(issue => ({
+                    issue_number: issue.number,
+                    title: issue.title,
+                    body: issue.body || '',
+                    author: issue.user.login,
+                    author_avatar: issue.user.avatar_url,
+                    created_at: new Date(issue.created_at).toLocaleDateString(),
+                    url: issue.html_url,
+                    parsed: parseIssueBody(issue.body || '')
+                }));
+
+                // Update badge
+                const badge = document.getElementById('submissionBadge');
+                if (pendingSubmissions.length > 0) {
+                    badge.textContent = pendingSubmissions.length;
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
+
+                renderSubmissions();
+            } catch (err) {
+                list.innerHTML = `<div class="text-center py-12 text-red-500"><i class="fas fa-exclamation-triangle text-3xl mb-3"></i><p>Error loading submissions: ${err.message}</p></div>`;
+            }
+        }
+
+        function parseIssueBody(body) {
+            const data = {};
+            const extract = (pattern) => {
+                const match = body.match(pattern);
+                return match ? match[1].trim() : '';
+            };
+
+            data.dataset_name = extract(/\*\*Name:\*\*\s*(.+?)(?:\n|$)/) || 
+                               extract(/\*\*Dataset Name:\*\*\s*(.+?)(?:\n|$)/);
+            data.domain = extract(/\*\*Domain:\*\*\s*(.+?)(?:\n|$)/);
+            data.source = extract(/\*\*Source(?: \/ Organization)?:\*\*\s*(.+?)(?:\n|$)/);
+            data.countries = extract(/\*\*Countries?:\*\*\s*(.+?)(?:\n|$)/);
+            data.data_type = extract(/\*\*Data Type:\*\*\s*(.+?)(?:\n|$)/);
+            data.license = extract(/\*\*License:\*\*\s*(.+?)(?:\n|$)/);
+            data.link = extract(/\*\*(?:Download Link|URL):\*\*\s*(.+?)(?:\n|$)/);
+            data.description = extract(/### 📝 Description\s*([\s\S]+?)(?=###|---|$)/);
+            data.use_cases = extract(/### 💡 Use Cases\s*([\s\S]+?)(?=###|---|$)/);
+
+            return data;
+        }
+
+        function renderSubmissions() {
+            const list = document.getElementById('submissionsList');
+
+            if (pendingSubmissions.length === 0) {
+                list.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-inbox text-5xl text-slate-300 mb-4"></i>
+                        <p class="text-slate-500 text-lg">No pending submissions</p>
+                        <p class="text-sm text-slate-400 mt-2">New dataset submissions will appear here</p>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = pendingSubmissions.map((sub, idx) => `
+                <div class="submission-card bg-white border border-slate-200 rounded-xl p-5">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex items-center gap-3">
+                            <img src="${sub.author_avatar}" class="w-10 h-10 rounded-full" alt="${sub.author}">
+                            <div>
+                                <div class="font-bold text-slate-900">${sub.parsed.dataset_name || 'Untitled Dataset'}</div>
+                                <div class="text-xs text-slate-500">
+                                    Submitted by <strong>${sub.author}</strong> • ${sub.created_at}
+                                    • <a href="${sub.url}" target="_blank" class="text-blue-600 hover:underline">View Issue #${sub.issue_number}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="px-2 py-1 bg-amber-100 text-amber-700 rounded text-xs font-medium">Pending Review</span>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-3 text-sm mb-4 bg-slate-50 p-3 rounded-lg">
+                        <div><strong class="text-slate-600">Domain:</strong> <span class="text-slate-900">${sub.parsed.domain || 'N/A'}</span></div>
+                        <div><strong class="text-slate-600">Source:</strong> <span class="text-slate-900">${sub.parsed.source || 'N/A'}</span></div>
+                        <div><strong class="text-slate-600">Countries:</strong> <span class="text-slate-900">${sub.parsed.countries || 'N/A'}</span></div>
+                        <div><strong class="text-slate-600">Data Type:</strong> <span class="text-slate-900">${sub.parsed.data_type || 'N/A'}</span></div>
+                        <div><strong class="text-slate-600">License:</strong> <span class="text-slate-900">${sub.parsed.license || 'N/A'}</span></div>
+                        <div class="md:col-span-2"><strong class="text-slate-600">URL:</strong> <a href="${sub.parsed.link}" target="_blank" class="text-blue-600 hover:underline break-all">${sub.parsed.link || 'N/A'}</a></div>
+                    </div>
+
+                    ${sub.parsed.description ? `
+                        <div class="mb-4">
+                            <strong class="text-slate-600 text-sm">Description:</strong>
+                            <p class="text-sm text-slate-700 mt-1 bg-slate-50 p-3 rounded-lg">${sub.parsed.description}</p>
+                        </div>
+                    ` : ''}
+
+                    ${sub.parsed.use_cases ? `
+                        <div class="mb-4">
+                            <strong class="text-slate-600 text-sm">Use Cases:</strong>
+                            <p class="text-sm text-slate-700 mt-1 bg-slate-50 p-3 rounded-lg whitespace-pre-line">${sub.parsed.use_cases}</p>
+                        </div>
+                    ` : ''}
+
+                    <div class="flex gap-2 pt-3 border-t border-slate-100">
+                        <button onclick="approveSubmission(${idx})" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <i class="fas fa-check mr-1"></i> Approve & Add
+                        </button>
+                        <button onclick="rejectSubmission(${idx})" class="flex-1 bg-red-100 hover:bg-red-200 text-red-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <i class="fas fa-times mr-1"></i> Reject
+                        </button>
+                        <button onclick="editBeforeApprove(${idx})" class="bg-blue-100 hover:bg-blue-200 text-blue-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors" title="Edit before adding">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function approveSubmission(idx) {
+            const sub = pendingSubmissions[idx];
+            if (!sub.parsed.dataset_name || !sub.parsed.link) {
+                alert('Missing required fields (name or URL). Please edit before approving.');
+                return;
+            }
+
+            if (!confirm(`Approve "${sub.parsed.dataset_name}"?\n\nThis will add it to datasets.json and close the GitHub issue.`)) return;
+
+            showLoading('Approving submission...');
+            try {
+                // Add to datasets
+                const newDataset = {
+                    dataset_id: `DS-${String(datasets.length + 1).padStart(3, '0')}`,
+                    dataset_name: sub.parsed.dataset_name,
+                    authors: [],
+                    source: sub.parsed.source || '',
+                    domain: sub.parsed.domain || 'Multiple',
+                    countries: (sub.parsed.countries || '').split(',').map(c => c.trim()).filter(Boolean),
+                    data_type: sub.parsed.data_type || 'Tabular',
+                    file_format: [],
+                    scale_coverage: 'National',
+                    temporal_coverage: '',
+                    keywords: [],
+                    access_method: 'Direct Download',
+                    license: sub.parsed.license || 'CC BY 4.0',
+                    license_url: getLicenseUrl(sub.parsed.license || 'CC BY 4.0'),
+                    link: sub.parsed.link,
+                    documentation_link: sub.parsed.link,
+                    publication_link: '',
+                    use_cases: (sub.parsed.use_cases || '').split('\n').filter(l => l.trim()).map(l => ({
+                        title: '', description: l.trim(), paper_link: '', code_repo: ''
+                    })),
+                    last_updated: new Date().getFullYear().toString(),
+                    description: sub.parsed.description || ''
+                };
+
+                datasets.push(newDataset);
+                await commitChanges(`Add dataset: ${newDataset.dataset_name} (from issue #${sub.issue_number})`);
+
+                // Close the issue
+                await closeIssue(sub.issue_number, `✅ Dataset "${newDataset.dataset_name}" has been approved and added to the platform!\n\nThank you for your contribution, @${sub.author}!`);
+
+                await loadDatasets();
+                await loadSubmissions();
+                alert('Submission approved and added successfully!');
+            } catch (err) {
+                alert('Approval failed: ' + err.message);
+                await loadDatasets();
+            } finally {
+                hideLoading();
+            }
+        }
+
+        async function rejectSubmission(idx) {
+            const sub = pendingSubmissions[idx];
+            const reason = prompt(`Reject "${sub.parsed.dataset_name}"?\n\nPlease provide a reason (optional):`);
+            if (reason === null) return; // User cancelled
+
+            showLoading('Rejecting submission...');
+            try {
+                const comment = reason.trim() 
+                    ? `❌ This submission has been rejected.\n\n**Reason:** ${reason}\n\nThank you for your interest in contributing, @${sub.author}!`
+                    : `❌ This submission has been rejected.\n\nThank you for your interest in contributing, @${sub.author}!`;
+
+                await closeIssue(sub.issue_number, comment);
+                await loadSubmissions();
+                alert('Submission rejected.');
+            } catch (err) {
+                alert('Rejection failed: ' + err.message);
+            } finally {
+                hideLoading();
+            }
+        }
+
+        async function closeIssue(issueNumber, comment) {
+            const token = localStorage.getItem('gh_token');
+            
+            // Add comment
+            if (comment) {
+                await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues/${issueNumber}/comments`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ body: comment })
+                });
+            }
+
+            // Close issue
+            await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/issues/${issueNumber}`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `token ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ state: 'closed' })
+            });
+        }
+
+        function editBeforeApprove(idx) {
+            const sub = pendingSubmissions[idx];
+            document.getElementById('modalTitle').textContent = 'Edit & Approve Submission';
+            document.getElementById('editIndex').value = -2; // Special value for "new from submission"
+            document.getElementById('editIndex').dataset.submissionIdx = idx;
+            
+            document.getElementById('f_dataset_name').value = sub.parsed.dataset_name || '';
+            document.getElementById('f_domain').value = sub.parsed.domain || 'NLP';
+            document.getElementById('f_source').value = sub.parsed.source || '';
+            document.getElementById('f_countries').value = sub.parsed.countries || '';
+            document.getElementById('f_data_type').value = sub.parsed.data_type || 'Tabular';
+            document.getElementById('f_license').value = sub.parsed.license || 'CC BY 4.0';
+            document.getElementById('f_link').value = sub.parsed.link || '';
+            document.getElementById('f_description').value = sub.parsed.description || '';
+            document.getElementById('f_scale_coverage').value = 'National';
+            document.getElementById('f_last_updated').value = new Date().getFullYear().toString();
+            
+            document.getElementById('editModal').classList.remove('hidden');
+        }
+
+        // Override form submit to handle "edit before approve" case
+        const originalSubmitHandler = document.getElementById('editForm').onsubmit;
+        document.getElementById('editForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const index = parseInt(document.getElementById('editIndex').value);
+            
+            // If this is an "edit before approve" action
+            if (index === -2) {
+                const subIdx = parseInt(document.getElementById('editIndex').dataset.submissionIdx);
+                const sub = pendingSubmissions[subIdx];
+                
+                showLoading('Approving edited submission...');
+                try {
+                    const newDataset = {
+                        dataset_id: `DS-${String(datasets.length + 1).padStart(3, '0')}`,
+                        dataset_name: document.getElementById('f_dataset_name').value.trim(),
+                        authors: [],
+                        source: document.getElementById('f_source').value.trim(),
+                        domain: document.getElementById('f_domain').value,
+                        countries: document.getElementById('f_countries').value.split(',').map(c => c.trim()).filter(Boolean),
+                        data_type: document.getElementById('f_data_type').value,
+                        file_format: [],
+                        scale_coverage: document.getElementById('f_scale_coverage').value,
+                        temporal_coverage: '',
+                        keywords: [],
+                        access_method: 'Direct Download',
+                        license: document.getElementById('f_license').value,
+                        license_url: getLicenseUrl(document.getElementById('f_license').value),
+                        link: document.getElementById('f_link').value.trim(),
+                        documentation_link: document.getElementById('f_link').value.trim(),
+                        publication_link: '',
+                        use_cases: [],
+                        last_updated: document.getElementById('f_last_updated').value.trim() || new Date().getFullYear().toString(),
+                        description: document.getElementById('f_description').value.trim()
+                    };
+
+                    datasets.push(newDataset);
+                    await commitChanges(`Add dataset: ${newDataset.dataset_name} (edited from issue #${sub.issue_number})`);
+                    await closeIssue(sub.issue_number, `✅ Dataset "${newDataset.dataset_name}" has been approved and added to the platform!\n\nThank you for your contribution, @${sub.author}!`);
+
+                    await loadDatasets();
+                    await loadSubmissions();
+                    closeModal();
+                    alert('Submission approved and added successfully!');
+                } catch (err) {
+                    alert('Approval failed: ' + err.message);
+                    await loadDatasets();
+                } finally {
+                    hideLoading();
+                }
+                return;
+            }
+            
+            // Otherwise, handle normal add/edit (existing logic)
+            // ... (existing code handles this)
+        });
+
         function showLoading(text) {
             document.getElementById('loadingText').textContent = text;
             document.getElementById('loadingOverlay').classList.remove('hidden');
@@ -570,7 +912,6 @@
             document.getElementById('loadingOverlay').classList.add('hidden');
         }
 
-        // Search and filter listeners
         document.getElementById('searchInput').addEventListener('input', () => renderTable());
         document.getElementById('domainFilter').addEventListener('change', () => renderTable());
     </script>
