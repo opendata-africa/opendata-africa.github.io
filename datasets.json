@@ -22,7 +22,7 @@
       "audio"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CC0 â Public Domain)",
+    "license": "Open Access (CC0 Ã¢ÂÂ Public Domain)",
     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "link": "https://www.mozillafoundation.org/en/common-voice/",
     "documentation_link": "https://www.mozillafoundation.org/en/common-voice/",
@@ -351,7 +351,7 @@
       },
       {
         "title": "",
-        "description": "Building MT (Machine Translation) from Bemba â English",
+        "description": "Building MT (Machine Translation) from Bemba Ã¢ÂÂ English",
         "paper_link": "",
         "code_repo": ""
       }
@@ -445,7 +445,7 @@
   },
   {
     "dataset_id": "DS-011",
-    "dataset_name": "Tatoeba â Multilingual Sentence Pairs",
+    "dataset_name": "Tatoeba Ã¢ÂÂ Multilingual Sentence Pairs",
     "authors": [
       "Tatoeba Project"
     ],
@@ -509,7 +509,7 @@
       "training"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CC0 â Public Domain)",
+    "license": "Open Access (CC0 Ã¢ÂÂ Public Domain)",
     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "link": "https://opus.nlpl.eu/tico-19/corpus/version/tico-19",
     "documentation_link": "https://opus.nlpl.eu/tico-19/corpus/version/tico-19",
@@ -551,7 +551,7 @@
       "computer vision"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CC0 1.0 â Public Domain)",
+    "license": "Open Access (CC0 1.0 Ã¢ÂÂ Public Domain)",
     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "link": "https://huggingface.co/datasets/a3xrfgb/EHQ-Dataset",
     "documentation_link": "https://huggingface.co/datasets/a3xrfgb/EHQ-Dataset",
@@ -572,10 +572,10 @@
     "authors": [
       "Research team\n(Ahmed El-Kishky",
       "Vishrav Chaudhary",
-      "Francisco GuzmÃ¡n",
+      "Francisco GuzmÃÂ¡n",
       "Philipp Koehn)"
     ],
-    "source": "Research team\n(Ahmed El-Kishky, Vishrav Chaudhary, Francisco GuzmÃ¡n, Philipp Koehn)",
+    "source": "Research team\n(Ahmed El-Kishky, Vishrav Chaudhary, Francisco GuzmÃÂ¡n, Philipp Koehn)",
     "domain": "NLP",
     "countries": [
       "Africa-wide"
@@ -869,17 +869,17 @@
   },
   {
     "dataset_id": "DS-021",
-    "dataset_name": "Kallaama â Agricultural Speech Dataset",
+    "dataset_name": "Kallaama Ã¢ÂÂ Agricultural Speech Dataset",
     "authors": [
       "Elodie Gauthier",
       "Aminata Ndiaye Diallo",
-      "Abdoulaye GuissÃ©",
+      "Abdoulaye GuissÃÂ©",
       "Boubacar Diallo",
       "Maimouna Dial",
       "Houleye Amadou Kane",
       "Fatou Diouf"
     ],
-    "source": "Elodie Gauthier, Aminata Ndiaye Diallo, Abdoulaye GuissÃ©, Boubacar Diallo, Maimouna Dial, Houleye Amadou Kane, Fatou Diouf",
+    "source": "Elodie Gauthier, Aminata Ndiaye Diallo, Abdoulaye GuissÃÂ©, Boubacar Diallo, Maimouna Dial, Houleye Amadou Kane, Fatou Diouf",
     "domain": "NLP",
     "countries": [
       "Senegal"
@@ -1657,7 +1657,7 @@
   },
   {
     "dataset_id": "DS-040",
-    "dataset_name": "AFCD: Annual Cropland Extent Dataset for Africa (2000â2022)",
+    "dataset_name": "AFCD: Annual Cropland Extent Dataset for Africa (2000Ã¢ÂÂ2022)",
     "authors": [
       "Zenodo (research repository)"
     ],
@@ -1728,7 +1728,7 @@
       "agriculture"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CC0 1.0 â Public Domain)",
+    "license": "Open Access (CC0 1.0 Ã¢ÂÂ Public Domain)",
     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "link": "https://dataverse.harvard.edu/dataverse/africarice",
     "documentation_link": "https://dataverse.harvard.edu/dataverse/africarice",
@@ -1785,7 +1785,7 @@
   },
   {
     "dataset_id": "DS-043",
-    "dataset_name": "Cane Yield of Estates, Metayer and Owner Planters by Region, Island of Mauritius (2015â2019",
+    "dataset_name": "Cane Yield of Estates, Metayer and Owner Planters by Region, Island of Mauritius (2015Ã¢ÂÂ2019",
     "authors": [
       "Government of Mauritius"
     ],
@@ -1814,7 +1814,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Analyze productivity trends in Mauritiusâs sugar industry",
+        "description": "Analyze productivity trends in MauritiusÃ¢ÂÂs sugar industry",
         "paper_link": "",
         "code_repo": ""
       },
@@ -2034,7 +2034,7 @@
   },
   {
     "dataset_id": "DS-049",
-    "dataset_name": "Agricultural Households Panel Survey (Ethiopia, 2012â2015)",
+    "dataset_name": "Agricultural Households Panel Survey (Ethiopia, 2012Ã¢ÂÂ2015)",
     "authors": [
       "Ethiopia Development Research Group (EDRG)",
       "Harvard Dataverse"
@@ -2056,7 +2056,7 @@
       "tabular"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CC0 1.0 â Public Domain)",
+    "license": "Open Access (CC0 1.0 Ã¢ÂÂ Public Domain)",
     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "link": "https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VQOO17",
     "documentation_link": "https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VQOO17",
@@ -2073,7 +2073,7 @@
   },
   {
     "dataset_id": "DS-050",
-    "dataset_name": "Afrint Survey â Agricultural Households in Sub-Saharan Africa",
+    "dataset_name": "Afrint Survey Ã¢ÂÂ Agricultural Households in Sub-Saharan Africa",
     "authors": [
       "Harvard Dataverse (Afrint Research Project)"
     ],
@@ -2094,7 +2094,7 @@
       "tabular"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CC0 1.0 â Public Domain)",
+    "license": "Open Access (CC0 1.0 Ã¢ÂÂ Public Domain)",
     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "link": "https://dataverse.harvard.edu/dataset.xhtml?spm=a2ty_o01.29997173.0.0.1526c921OnT7uo&persistentId=doi:10.7910/DVN/J0OS9R",
     "documentation_link": "https://dataverse.harvard.edu/dataset.xhtml?spm=a2ty_o01.29997173.0.0.1526c921OnT7uo&persistentId=doi:10.7910/DVN/J0OS9R",
@@ -2258,7 +2258,7 @@
       "geospatial"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CC0 â Public Domain)",
+    "license": "Open Access (CC0 Ã¢ÂÂ Public Domain)",
     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "link": "https://access.earthdata.nasa.gov/collections/C2781412511-MLHUB",
     "documentation_link": "https://access.earthdata.nasa.gov/collections/C2781412511-MLHUB",
@@ -2275,7 +2275,7 @@
   },
   {
     "dataset_id": "DS-055",
-    "dataset_name": "Livestock Production Index â Sub-Saharan Africa",
+    "dataset_name": "Livestock Production Index Ã¢ÂÂ Sub-Saharan Africa",
     "authors": [
       "TheGlobalEconomy.com (data sourced from FAO)"
     ],
@@ -2375,7 +2375,7 @@
       "tabular"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CCâ¯BYâNCâSAâ¯ 4.0)",
+    "license": "Open Access (CCÃ¢ÂÂ¯BYÃ¢ÂÂNCÃ¢ÂÂSAÃ¢ÂÂ¯ 4.0)",
     "license_url": "",
     "link": "https://www.yieldgap.org/harvest-choice",
     "documentation_link": "https://www.yieldgap.org/harvest-choice",
@@ -2470,11 +2470,11 @@
   },
   {
     "dataset_id": "DS-060",
-    "dataset_name": "SoilGrids â Digital Soil Mapping Data",
+    "dataset_name": "SoilGrids Ã¢ÂÂ Digital Soil Mapping Data",
     "authors": [
-      "ISRIC â World Soil Information Service"
+      "ISRIC Ã¢ÂÂ World Soil Information Service"
     ],
-    "source": "ISRIC â World Soil Information Service",
+    "source": "ISRIC Ã¢ÂÂ World Soil Information Service",
     "domain": "Agriculture",
     "countries": [
       "Africa-wide"
@@ -2631,7 +2631,7 @@
   },
   {
     "dataset_id": "DS-064",
-    "dataset_name": "Leopard ID â Individual Identification Dataset",
+    "dataset_name": "Leopard ID Ã¢ÂÂ Individual Identification Dataset",
     "authors": [
       "Botswana Predator Conservation Trust",
       "Kasim Rafiq",
@@ -2657,7 +2657,7 @@
       "training"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CDLAâPermissiveâ2.0)",
+    "license": "Open Access (CDLAÃ¢ÂÂPermissiveÃ¢ÂÂ2.0)",
     "license_url": "https://cdla.io/permissive-2-0/",
     "link": "https://lila.science/datasets/leopard-id-2022/",
     "documentation_link": "https://lila.science/datasets/leopard-id-2022/",
@@ -2700,7 +2700,7 @@
       "agriculture"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CDLAâPermissiveâ2.0)",
+    "license": "Open Access (CDLAÃ¢ÂÂPermissiveÃ¢ÂÂ2.0)",
     "license_url": "https://cdla.io/permissive-2-0/",
     "link": "https://lila.science/datasets/aerial-seabirds-west-africa/",
     "documentation_link": "https://lila.science/datasets/aerial-seabirds-west-africa/",
@@ -2741,7 +2741,7 @@
       "detection"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CDLAâPermissiveâ2.0)",
+    "license": "Open Access (CDLAÃ¢ÂÂPermissiveÃ¢ÂÂ2.0)",
     "license_url": "https://cdla.io/permissive-2-0/",
     "link": "https://lila.science/datasets/desert-lion-conservation-camera-traps/",
     "documentation_link": "https://lila.science/datasets/desert-lion-conservation-camera-traps/",
@@ -2760,12 +2760,12 @@
     "dataset_id": "DS-067",
     "dataset_name": "Africa Biomass dataset",
     "authors": [
-      "Field measurements conducted by researchers in CÃ´te d'Ivoire"
+      "Field measurements conducted by researchers in CÃÂ´te d'Ivoire"
     ],
-    "source": "Field measurements conducted by researchers in CÃ´te d'Ivoire",
+    "source": "Field measurements conducted by researchers in CÃÂ´te d'Ivoire",
     "domain": "Agriculture",
     "countries": [
-      "CÃ´te d'Ivoire"
+      "CÃÂ´te d'Ivoire"
     ],
     "data_type": "Tabular",
     "file_format": [
@@ -2852,7 +2852,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Mapping tree cover beyond dense forests â critical for savannahs and agroforestry",
+        "description": "Mapping tree cover beyond dense forests Ã¢ÂÂ critical for savannahs and agroforestry",
         "paper_link": "",
         "code_repo": ""
       }
@@ -2887,7 +2887,7 @@
       "image"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CDLAâPermissiveâ2.0)",
+    "license": "Open Access (CDLAÃ¢ÂÂPermissiveÃ¢ÂÂ2.0)",
     "license_url": "https://cdla.io/permissive-2-0/",
     "link": "https://lila.science/datasets/snapshot-safari-2024-expansion/",
     "documentation_link": "https://lila.science/datasets/snapshot-safari-2024-expansion/",
@@ -3420,7 +3420,7 @@
   },
   {
     "dataset_id": "DS-083",
-    "dataset_name": "Bird Atlas of Kenya â Digitized Breeding Records",
+    "dataset_name": "Bird Atlas of Kenya Ã¢ÂÂ Digitized Breeding Records",
     "authors": [
       "Lewis & Pomeroy (1989)",
       "digitization by Rafnuss et al."
@@ -3690,7 +3690,7 @@
       "tabular"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CC0 1.0 â Public Domain)",
+    "license": "Open Access (CC0 1.0 Ã¢ÂÂ Public Domain)",
     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "link": "https://agdatacommons.nal.usda.gov/articles/dataset/International_Food_Security/24660480",
     "documentation_link": "https://agdatacommons.nal.usda.gov/articles/dataset/International_Food_Security/24660480",
@@ -3747,10 +3747,10 @@
     "dataset_name": "African Plums Quality and Defect Assessment Data",
     "authors": [
       "Arnaud Fadja (Researcher)",
-      "University of YaoundÃ© I",
+      "University of YaoundÃÂ© I",
       "Cameroon"
     ],
-    "source": "Arnaud Fadja (Researcher), University of YaoundÃ© I, Cameroon",
+    "source": "Arnaud Fadja (Researcher), University of YaoundÃÂ© I, Cameroon",
     "domain": "Agriculture",
     "countries": [
       "Cameroon"
@@ -3831,7 +3831,7 @@
   },
   {
     "dataset_id": "DS-092",
-    "dataset_name": "RCMRD â Africa Biomes Dataset",
+    "dataset_name": "RCMRD Ã¢ÂÂ Africa Biomes Dataset",
     "authors": [
       "Regional Centre for Mapping of Resources for Development (RCMRD)"
     ],
@@ -3988,7 +3988,7 @@
   },
   {
     "dataset_id": "DS-096",
-    "dataset_name": "SLAPIS-Niger â Local Early Warning & Agricultural Planning System",
+    "dataset_name": "SLAPIS-Niger Ã¢ÂÂ Local Early Warning & Agricultural Planning System",
     "authors": [
       "Government of Niger",
       "WFP",
@@ -4012,7 +4012,7 @@
       "tabular"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CC0 â Public Domain)",
+    "license": "Open Access (CC0 Ã¢ÂÂ Public Domain)",
     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "link": "https://www.slapis-niger.org/fr",
     "documentation_link": "https://www.slapis-niger.org/fr",
@@ -4148,7 +4148,7 @@
   },
   {
     "dataset_id": "DS-100",
-    "dataset_name": "Crop Disease Dataset â Ghana",
+    "dataset_name": "Crop Disease Dataset Ã¢ÂÂ Ghana",
     "authors": [
       "Responsible AI Lab",
       "Ashesi University (Ghana)"
@@ -4378,7 +4378,7 @@
   },
   {
     "dataset_id": "DS-105",
-    "dataset_name": "CHAMPS HD SSLC â Health & Demographic Surveillance Data",
+    "dataset_name": "CHAMPS HD SSLC Ã¢ÂÂ Health & Demographic Surveillance Data",
     "authors": [
       "University of California",
       "Santa Barbara (UCSB)",
@@ -4468,7 +4468,7 @@
   },
   {
     "dataset_id": "DS-107",
-    "dataset_name": "A labeled Clinical-MRI dataset of Nigerian brains â Brain Masks",
+    "dataset_name": "A labeled Clinical-MRI dataset of Nigerian brains Ã¢ÂÂ Brain Masks",
     "authors": [
       "University of Ibadan",
       "Federal Neuropsychiatric Hospital (Nigeria)",
@@ -4513,7 +4513,7 @@
   },
   {
     "dataset_id": "DS-108",
-    "dataset_name": "Malaria Parasite Image Dataset â Malaria Species Classification",
+    "dataset_name": "Malaria Parasite Image Dataset Ã¢ÂÂ Malaria Species Classification",
     "authors": [
       "Kaggle User: Saife Hasan (community-contributed)"
     ],
@@ -4595,7 +4595,7 @@
   },
   {
     "dataset_id": "DS-110",
-    "dataset_name": "Wazimap â COVID-19 Data Subsets",
+    "dataset_name": "Wazimap Ã¢ÂÂ COVID-19 Data Subsets",
     "authors": [
       "Africa Data Hub (adh)"
     ],
@@ -4819,7 +4819,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Malaria surveillance and early-warning systems; Seasonal transmission modeling; Health policy planning; Climateâhealth research; AI/ML models for disease forecasting",
+        "description": "Malaria surveillance and early-warning systems; Seasonal transmission modeling; Health policy planning; ClimateÃ¢ÂÂhealth research; AI/ML models for disease forecasting",
         "paper_link": "",
         "code_repo": ""
       }
@@ -5161,7 +5161,7 @@
       "healthcare"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CCâ¯BYâNCâSAâ¯ 4.0)",
+    "license": "Open Access (CCÃ¢ÂÂ¯BYÃ¢ÂÂNCÃ¢ÂÂSAÃ¢ÂÂ¯ 4.0)",
     "license_url": "",
     "link": "https://dashboards.stoptb.org/country-profile.html",
     "documentation_link": "https://dashboards.stoptb.org/country-profile.html",
@@ -5239,7 +5239,7 @@
       "healthcare"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CCâ¯BYâNCâSAâ¯ 4.0)",
+    "license": "Open Access (CCÃ¢ÂÂ¯BYÃ¢ÂÂNCÃ¢ÂÂSAÃ¢ÂÂ¯ 4.0)",
     "license_url": "",
     "link": "https://data.internationalmidwives.org/search",
     "documentation_link": "https://data.internationalmidwives.org/search",
@@ -5765,7 +5765,7 @@
   },
   {
     "dataset_id": "DS-140",
-    "dataset_name": "AFRO_ENERGYPOL â Database of African Renewable Energy Policies",
+    "dataset_name": "AFRO_ENERGYPOL Ã¢ÂÂ Database of African Renewable Energy Policies",
     "authors": [
       "Mendeley Data (based on research by Lisa Neubaum)"
     ],
@@ -6061,7 +6061,7 @@
   },
   {
     "dataset_id": "DS-147",
-    "dataset_name": "NamPower â Open Energy and Infrastructure Datasets",
+    "dataset_name": "NamPower Ã¢ÂÂ Open Energy and Infrastructure Datasets",
     "authors": [
       "Namibia Power Corporation (NamPower)"
     ],
@@ -6673,7 +6673,7 @@
   },
   {
     "dataset_id": "DS-161",
-    "dataset_name": "GCRO â Urban & Regional Development Datasets",
+    "dataset_name": "GCRO Ã¢ÂÂ Urban & Regional Development Datasets",
     "authors": [
       "Global Change Research Office (GCRO)",
       "South Africa"
@@ -6715,9 +6715,9 @@
     "dataset_id": "DS-162",
     "dataset_name": "National Resilience Data Catalogue (Madagascar) ",
     "authors": [
-      "Direction de la RÃ©silience Nationale (ResilienceMada)"
+      "Direction de la RÃÂ©silience Nationale (ResilienceMada)"
     ],
-    "source": "Direction de la RÃ©silience Nationale (ResilienceMada)",
+    "source": "Direction de la RÃÂ©silience Nationale (ResilienceMada)",
     "domain": "Climate and Geospatial",
     "countries": [
       "Madagascar"
@@ -6930,7 +6930,7 @@
       "climate and geospatial"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CC0 â Public Domain)",
+    "license": "Open Access (CC0 Ã¢ÂÂ Public Domain)",
     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "link": "https://doi.org/10.7910/DVN/TPTVQG",
     "documentation_link": "https://doi.org/10.7910/DVN/TPTVQG",
@@ -7600,7 +7600,7 @@
   },
   {
     "dataset_id": "DS-185",
-    "dataset_name": "Global MPI 2024 â Multidimensional Poverty Index",
+    "dataset_name": "Global MPI 2024 Ã¢ÂÂ Multidimensional Poverty Index",
     "authors": [
       "Oxford Poverty & Human Development Initiative (OPHI)",
       "United Nations Development Programme (UNDP)"
@@ -7622,7 +7622,7 @@
       "socioeconomic"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CCâ¯BYâNCâSAâ¯ 4.0)",
+    "license": "Open Access (CCÃ¢ÂÂ¯BYÃ¢ÂÂNCÃ¢ÂÂSAÃ¢ÂÂ¯ 4.0)",
     "license_url": "",
     "link": "https://ophi.org.uk/global-mpi/2024/",
     "documentation_link": "https://ophi.org.uk/global-mpi/2024/",
@@ -7639,7 +7639,7 @@
   },
   {
     "dataset_id": "DS-186",
-    "dataset_name": "Temporary Migration Dataset â Mobile Phone Data, Senegal",
+    "dataset_name": "Temporary Migration Dataset Ã¢ÂÂ Mobile Phone Data, Senegal",
     "authors": [
       "Springer Nature (via Figshare)",
       "Authors: Elodie Gauthier",
@@ -7725,9 +7725,9 @@
     "dataset_id": "DS-188",
     "dataset_name": "The Impacts of the Africa Continental Free Trade Area on the Kenyan Economy",
     "authors": [
-      "Joint Research Centre (JRC)\nâ European Commission"
+      "Joint Research Centre (JRC)\nÃ¢ÂÂ European Commission"
     ],
-    "source": "Joint Research Centre (JRC)\nâ European Commission",
+    "source": "Joint Research Centre (JRC)\nÃ¢ÂÂ European Commission",
     "domain": "Socioeconomic",
     "countries": [
       "Kenya"
@@ -7846,7 +7846,7 @@
       "image"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CC0 â Public Domain)",
+    "license": "Open Access (CC0 Ã¢ÂÂ Public Domain)",
     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "link": "https://universe.roboflow.com/browse/transportation",
     "documentation_link": "https://universe.roboflow.com/browse/transportation",
@@ -7863,7 +7863,7 @@
   },
   {
     "dataset_id": "DS-191",
-    "dataset_name": "Africa Regional Out-of-School Rates (1970â2018)",
+    "dataset_name": "Africa Regional Out-of-School Rates (1970Ã¢ÂÂ2018)",
     "authors": [
       "UNICEF",
       "UNESCO",
@@ -7924,7 +7924,7 @@
       "socioeconomic"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CC0 â Public Domain)",
+    "license": "Open Access (CC0 Ã¢ÂÂ Public Domain)",
     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "link": "https://www.kaggle.com/datasets/godwinalbert/nigeria-employment-survey",
     "documentation_link": "https://www.kaggle.com/datasets/godwinalbert/nigeria-employment-survey",
@@ -8389,7 +8389,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Evaluate impact of USAIDâs flagship literacy programs (Itegure Gusoma, Mureke Dusome)",
+        "description": "Evaluate impact of USAIDÃ¢ÂÂs flagship literacy programs (Itegure Gusoma, Mureke Dusome)",
         "paper_link": "",
         "code_repo": ""
       },
@@ -8478,7 +8478,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Evaluate impact of USAIDâs literacy and inclusion programs (LPT, Passerelles)",
+        "description": "Evaluate impact of USAIDÃ¢ÂÂs literacy and inclusion programs (LPT, Passerelles)",
         "paper_link": "",
         "code_repo": ""
       },
@@ -8524,7 +8524,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Evaluate impact of USAIDâs multi-year literacy and teacher training initiatives (AQE, EGRA Plus, READ Liberia, LTTP II)",
+        "description": "Evaluate impact of USAIDÃ¢ÂÂs multi-year literacy and teacher training initiatives (AQE, EGRA Plus, READ Liberia, LTTP II)",
         "paper_link": "",
         "code_repo": ""
       },
@@ -8569,13 +8569,13 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Evaluate impact of USAIDâs gender-focused and literacy programs (GLEE, SIRA)",
+        "description": "Evaluate impact of USAIDÃ¢ÂÂs gender-focused and literacy programs (GLEE, SIRA)",
         "paper_link": "",
         "code_repo": ""
       },
       {
         "title": "",
-        "description": "Analyze girlsâ enrollment, retention, and learning outcomes in a high-risk context",
+        "description": "Analyze girlsÃ¢ÂÂ enrollment, retention, and learning outcomes in a high-risk context",
         "paper_link": "",
         "code_repo": ""
       },
@@ -8620,7 +8620,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Evaluate impact of USAIDâs early-grade math and reading interventions",
+        "description": "Evaluate impact of USAIDÃ¢ÂÂs early-grade math and reading interventions",
         "paper_link": "",
         "code_repo": ""
       },
@@ -8715,7 +8715,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Evaluate impact of USAIDâs literacy and access programs in Northern Nigeria (NEI+, RARA)",
+        "description": "Evaluate impact of USAIDÃ¢ÂÂs literacy and access programs in Northern Nigeria (NEI+, RARA)",
         "paper_link": "",
         "code_repo": ""
       },
@@ -8760,7 +8760,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Evaluate impact of USAIDâs literacy and youth development programs in a fragile state context",
+        "description": "Evaluate impact of USAIDÃ¢ÂÂs literacy and youth development programs in a fragile state context",
         "paper_link": "",
         "code_repo": ""
       },
@@ -8810,7 +8810,7 @@
       },
       {
         "title": "",
-        "description": "Analyze foundational literacy outcomes in South Africaâs multilingual, diverse education system",
+        "description": "Analyze foundational literacy outcomes in South AfricaÃ¢ÂÂs multilingual, diverse education system",
         "paper_link": "",
         "code_repo": ""
       },
@@ -8855,7 +8855,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Evaluate impact of USAIDâs early childhood and literacy programs (ECE, RTS, TTL)",
+        "description": "Evaluate impact of USAIDÃ¢ÂÂs early childhood and literacy programs (ECE, RTS, TTL)",
         "paper_link": "",
         "code_repo": ""
       },
@@ -8900,7 +8900,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Evaluate impact of USAIDâs literacy programs (ApaL, Eu Leio) on early-grade reading outcomes",
+        "description": "Evaluate impact of USAIDÃ¢ÂÂs literacy programs (ApaL, Eu Leio) on early-grade reading outcomes",
         "paper_link": "",
         "code_repo": ""
       },
@@ -9008,7 +9008,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Evaluate impact of USAIDâs literacy and education programs (Tusome Pamoja, TZ21)",
+        "description": "Evaluate impact of USAIDÃ¢ÂÂs literacy and education programs (Tusome Pamoja, TZ21)",
         "paper_link": "",
         "code_repo": ""
       },
@@ -9059,7 +9059,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Evaluate impact of USAIDâs multi-faceted literacy and education programs (LARA, SHRP, LASER)",
+        "description": "Evaluate impact of USAIDÃ¢ÂÂs multi-faceted literacy and education programs (LARA, SHRP, LASER)",
         "paper_link": "",
         "code_repo": ""
       },
@@ -9110,7 +9110,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Evaluate impact of USAIDâs literacy and gender-focused education programs in Egypt",
+        "description": "Evaluate impact of USAIDÃ¢ÂÂs literacy and gender-focused education programs in Egypt",
         "paper_link": "",
         "code_repo": ""
       },
@@ -9166,7 +9166,7 @@
       },
       {
         "title": "",
-        "description": "Analyze educational access and performance in one of the worldâs most fragile states",
+        "description": "Analyze educational access and performance in one of the worldÃ¢ÂÂs most fragile states",
         "paper_link": "",
         "code_repo": ""
       }
@@ -9205,7 +9205,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Evaluate impact of USAIDâs flagship education programs (PRIMR, Tusome, EMACK II)",
+        "description": "Evaluate impact of USAIDÃ¢ÂÂs flagship education programs (PRIMR, Tusome, EMACK II)",
         "paper_link": "",
         "code_repo": ""
       },
@@ -9628,7 +9628,7 @@
       "multiple"
     ],
     "access_method": "Direct Download",
-    "license": "Open Access (CC0 â Public Domain)",
+    "license": "Open Access (CC0 Ã¢ÂÂ Public Domain)",
     "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "link": "https://opendata.go.ke/",
     "documentation_link": "https://opendata.go.ke/",
@@ -9913,10 +9913,10 @@
     "dataset_id": "DS-239",
     "dataset_name": "BenMangroves2425: Multidimensional open datasets for developing AI-based models on mangroves health and carbon stock",
     "authors": [
-      "Powered by / Provided by: Laboratoire de BiomathÃ©matiques et d'Estimations ForestiÃ¨res\nCatalyzed by: Lacuna-Fund / Meridian (Climate-call) & FAIR Forward - AI for All",
+      "Powered by / Provided by: Laboratoire de BiomathÃÂ©matiques et d'Estimations ForestiÃÂ¨res\nCatalyzed by: Lacuna-Fund / Meridian (Climate-call) & FAIR Forward - AI for All",
       "GIZ\nFinanced by: BMZ"
     ],
-    "source": "Powered by / Provided by: Laboratoire de BiomathÃ©matiques et d'Estimations ForestiÃ¨res\nCatalyzed by: Lacuna-Fund / Meridian (Climate-call) & FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
+    "source": "Powered by / Provided by: Laboratoire de BiomathÃÂ©matiques et d'Estimations ForestiÃÂ¨res\nCatalyzed by: Lacuna-Fund / Meridian (Climate-call) & FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
     "domain": "Healthcare",
     "countries": [
       "Benin",
@@ -9951,7 +9951,7 @@
       },
       {
         "title": "",
-        "description": "High-resolution drone imagery (multispectral and hyperspectral) for mangrovâ¦",
+        "description": "High-resolution drone imagery (multispectral and hyperspectral) for mangrovÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -9998,7 +9998,7 @@
   },
   {
     "dataset_id": "DS-241",
-    "dataset_name": "AI for Mangrove Carbon Credits: Turning Forest Data into Climate Action in CÃ´te dâIvoire",
+    "dataset_name": "AI for Mangrove Carbon Credits: Turning Forest Data into Climate Action in CÃÂ´te dÃ¢ÂÂIvoire",
     "authors": [
       "Powered by / Provided by: Data354\nCatalyzed by: Lacuna-Fund / Meridian (Climate-call) & FAIR Forward - AI for All",
       "GIZ\nFinanced by: BMZ"
@@ -10030,7 +10030,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "This dataset contains biomass and carbon stock records from mangroves in CÃ´te dâIvoire (sites of Sassandra and Fresco). It includes measurements of aboveground and belowground biomass and carbon stock, soil carbon stock, as well as bands derived from Sentinel-2 and Sentinel-1â¦",
+        "description": "This dataset contains biomass and carbon stock records from mangroves in CÃÂ´te dÃ¢ÂÂIvoire (sites of Sassandra and Fresco). It includes measurements of aboveground and belowground biomass and carbon stock, soil carbon stock, as well as bands derived from Sentinel-2 and Sentinel-1Ã¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10074,7 +10074,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "The Ltome-Katip datasets are the first Indigenous-labelled bioacoustic datasets designed specifically to support the development of ethical AI for biodiversity monitoring. Co-created by Indigenous data stewards from the Samburu tribe in northern Kenya and the Shuar Nation in tâ¦",
+        "description": "The Ltome-Katip datasets are the first Indigenous-labelled bioacoustic datasets designed specifically to support the development of ethical AI for biodiversity monitoring. Co-created by Indigenous data stewards from the Samburu tribe in northern Kenya and the Shuar Nation in tÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10116,7 +10116,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Imagine, that you are a small-holder farmer in Ghana fearing  crop disease in your Cashew farm. You also know that early intervention could increase yields by up to 30%  - The Cashew Disease Identification (CADI AI) dataset and application is there to make early detection of dâ¦",
+        "description": "Imagine, that you are a small-holder farmer in Ghana fearing  crop disease in your Cashew farm. You also know that early intervention could increase yields by up to 30%  - The Cashew Disease Identification (CADI AI) dataset and application is there to make early detection of dÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10156,7 +10156,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "The Accent Classification Dataset (Ghana) is a collection of audio recordings from native and non-native English speakers across Ghana's diverse regions. Participants read the same three scripts, capturing distinct regional accents and speech patterns. This consistent datasetâ¦",
+        "description": "The Accent Classification Dataset (Ghana) is a collection of audio recordings from native and non-native English speakers across Ghana's diverse regions. Participants read the same three scripts, capturing distinct regional accents and speech patterns. This consistent datasetÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10199,7 +10199,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "This dataset was produced by the Centre for Remote Sensing and Geographic Information Services (CERSGIS) as part of the project Reference Data Collection for Improving Land Use Change Mapping in Ghana. The primary objective was to develop high-quality reference data to enhanceâ¦",
+        "description": "This dataset was produced by the Centre for Remote Sensing and Geographic Information Services (CERSGIS) as part of the project Reference Data Collection for Improving Land Use Change Mapping in Ghana. The primary objective was to develop high-quality reference data to enhanceÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10239,7 +10239,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "The Agrivoltaic system offers a transformative solution for farming communities by providing a means to generate electricity without sacrificing agricultural productivity. The dataset showcases the effectivenesss of Solar PVs and also crop yield under solar PVs and in the openâ¦",
+        "description": "The Agrivoltaic system offers a transformative solution for farming communities by providing a means to generate electricity without sacrificing agricultural productivity. The dataset showcases the effectivenesss of Solar PVs and also crop yield under solar PVs and in the openÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10284,7 +10284,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "The health of tropical forest ecosystems faces pressures from climate change, threatening the sustainable supply of leaves, flowers and fruits which provide important resources for wildlife, domestic animals and human settlements. Monitoring the timing of plant life cycle evenâ¦",
+        "description": "The health of tropical forest ecosystems faces pressures from climate change, threatening the sustainable supply of leaves, flowers and fruits which provide important resources for wildlife, domestic animals and human settlements. Monitoring the timing of plant life cycle evenÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10295,7 +10295,7 @@
     "dataset_id": "DS-248",
     "dataset_name": "Imarika - Translating weather information into actionable advisory for farmers through AI in Kenya",
     "authors": [
-      "Powered by / Provided by: Strathmore Universityâs iLabAfrica\nCatalyzed by: Smart Africa (https://smartafrica.org/)",
+      "Powered by / Provided by: Strathmore UniversityÃ¢ÂÂs iLabAfrica\nCatalyzed by: Smart Africa (https://smartafrica.org/)",
       "FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/)",
       "GIZ",
       "Intellecap",
@@ -10304,7 +10304,7 @@
       "Mozilla Foundation\nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/)",
       "Gates Foundation"
     ],
-    "source": "Powered by / Provided by: Strathmore Universityâs iLabAfrica\nCatalyzed by: Smart Africa (https://smartafrica.org/), FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/), GIZ , Intellecap, intel.liftoff, Climate Change AI; Mozilla Foundation\nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/), Gates Foundation",
+    "source": "Powered by / Provided by: Strathmore UniversityÃ¢ÂÂs iLabAfrica\nCatalyzed by: Smart Africa (https://smartafrica.org/), FAIR Forward - AI for All (https://www.bmz-digital.global/en/overview-of-initiatives/fair-forward/), GIZ , Intellecap, intel.liftoff, Climate Change AI; Mozilla Foundation\nFinanced by: BMZ (https://www.bmz-digital.global/en/digital-transformation-and-development-cooperation/), Gates Foundation",
     "domain": "NLP",
     "countries": [
       "Kenya"
@@ -10333,7 +10333,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "IMARIKA by Strathmore Universityâs iLabAfricaÂ is building low-cost automatic weather station networks to provide access to accurate, local weather information in rural Kenya. This granular data allows advisory services for small-holder farmers to shift from using generic inforâ¦",
+        "description": "IMARIKA by Strathmore UniversityÃ¢ÂÂs iLabAfricaÃÂ is building low-cost automatic weather station networks to provide access to accurate, local weather information in rural Kenya. This granular data allows advisory services for small-holder farmers to shift from using generic inforÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10380,7 +10380,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "The Early Warning System (EWS) is an AI-powered platform that monitors farming activities and supports climate-smart precision agriculture for smallholder farms. It uses geo-referenced data collected from farms through mobile phones and high-resolution satellite imagery. The sâ¦",
+        "description": "The Early Warning System (EWS) is an AI-powered platform that monitors farming activities and supports climate-smart precision agriculture for smallholder farms. It uses geo-referenced data collected from farms through mobile phones and high-resolution satellite imagery. The sÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10421,7 +10421,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "The citizen chatbot enables the Kenyan public to access information about Kenya's data protection laws and regulation in an easily accessible conversation on the ODPC's website. The aim is to make legal information more understandable and facilitate access. The content databasâ¦",
+        "description": "The citizen chatbot enables the Kenyan public to access information about Kenya's data protection laws and regulation in an easily accessible conversation on the ODPC's website. The aim is to make legal information more understandable and facilitate access. The content databasÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10464,7 +10464,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "The project is developing a chatbot and an interactive voice response service that will provide voice-enabled services in the domain of business registration and raise awareness about the use of collateral (security) to access credit in Kenya. The main objective is to increaseâ¦",
+        "description": "The project is developing a chatbot and an interactive voice response service that will provide voice-enabled services in the domain of business registration and raise awareness about the use of collateral (security) to access credit in Kenya. The main objective is to increaseÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10504,7 +10504,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "There is a significant opportunity to make digitized government services in Kenya more easily discoverable and, by extension, enhance their accessibility and use by citizens through chatbot technology. Based on NLP technology, chatbots can help citizens access information on Kâ¦",
+        "description": "There is a significant opportunity to make digitized government services in Kenya more easily discoverable and, by extension, enhance their accessibility and use by citizens through chatbot technology. Based on NLP technology, chatbots can help citizens access information on KÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10549,7 +10549,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "The dataset was created to enable translation from Kiswahili, which is the national language in Kenya, into three indigenous languages, namely, Kidaw'ida, Kalenjin, and Dholuo. All three languages are low resource, especially Kidaw'ida, which has only around 400,000 speakers aâ¦",
+        "description": "The dataset was created to enable translation from Kiswahili, which is the national language in Kenya, into three indigenous languages, namely, Kidaw'ida, Kalenjin, and Dholuo. All three languages are low resource, especially Kidaw'ida, which has only around 400,000 speakers aÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10592,7 +10592,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Miti360 is an integrated, machine-learning ready dataset for individual-tree and stand-level reforestation monitoring that fuses high-resolution drone orthophotos, terrestrial stereo and single images, precise ground measurements (tree height, crown diameter, basal diameter anâ¦",
+        "description": "Miti360 is an integrated, machine-learning ready dataset for individual-tree and stand-level reforestation monitoring that fuses high-resolution drone orthophotos, terrestrial stereo and single images, precise ground measurements (tree height, crown diameter, basal diameter anÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10636,7 +10636,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "The Agrof4Resilience geospatial datasets are open-access utilized by artificial intelligence (AI) and machine learning (ML) algorithms that are aimed at creating more robust, productive, resilient and diverse agro-ecological systems to achieve productive agro-ecosystems that hâ¦",
+        "description": "The Agrof4Resilience geospatial datasets are open-access utilized by artificial intelligence (AI) and machine learning (ML) algorithms that are aimed at creating more robust, productive, resilient and diverse agro-ecological systems to achieve productive agro-ecosystems that hÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10682,7 +10682,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "LivHealth Kiswahili Corpus aims to empower local communities to correctly identify livestock syndromes and get timely interventions from qualified livestock practitioners. Using Natural Language Processing (NLP), Machine Learning (ML), and Artificial Intelligence (AI), the proâ¦",
+        "description": "LivHealth Kiswahili Corpus aims to empower local communities to correctly identify livestock syndromes and get timely interventions from qualified livestock practitioners. Using Natural Language Processing (NLP), Machine Learning (ML), and Artificial Intelligence (AI), the proÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10725,7 +10725,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "This Swahili audio chatbot provides agricultural information for women farmers and does not need internet connectivity . It is developed in collaboration with rural small-holder women farmers in Kenya. Using the Mozilla Swahili data sets, the mobile-enabled chatbot can be usedâ¦",
+        "description": "This Swahili audio chatbot provides agricultural information for women farmers and does not need internet connectivity . It is developed in collaboration with rural small-holder women farmers in Kenya. Using the Mozilla Swahili data sets, the mobile-enabled chatbot can be usedÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10767,7 +10767,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "A Chama management system with a chatbot that interacts with members and gives voice replies in Kiswahili via SMS and Whatsapp. It connects to the group Payment API, ie M-Pesa API. Members can interact with the Chama admin bot on a variety of functions, including instance checâ¦",
+        "description": "A Chama management system with a chatbot that interacts with members and gives voice replies in Kiswahili via SMS and Whatsapp. It connects to the group Payment API, ie M-Pesa API. Members can interact with the Chama admin bot on a variety of functions, including instance checÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10814,7 +10814,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "The BRS-chatbot is an AI-powered chatbot that streamlines the business registration process in Kenya. It aimes to enhance access to information, simplify the registration process, improve user experience through Human-Centered Design principles, and promote compliance with posâ¦",
+        "description": "The BRS-chatbot is an AI-powered chatbot that streamlines the business registration process in Kenya. It aimes to enhance access to information, simplify the registration process, improve user experience through Human-Centered Design principles, and promote compliance with posÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10873,7 +10873,7 @@
       },
       {
         "title": "",
-        "description": "Focused on rice, wheat, and maize, DynAG's platform uses a RAG pipeline powered by LLMs like the GPT suite to provide farmers with advisory servicesâ¦",
+        "description": "Focused on rice, wheat, and maize, DynAG's platform uses a RAG pipeline powered by LLMs like the GPT suite to provide farmers with advisory servicesÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10921,7 +10921,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "By collecting more than 1064 hours of AI recorded speech in Kiswahili (by 03/2026), this effort created the largest open-source voice dataset of diverse Swahili speakers for speech recognition (speech-to-text). You can use this resource to build AI systems understanding spokenâ¦",
+        "description": "By collecting more than 1064 hours of AI recorded speech in Kiswahili (by 03/2026), this effort created the largest open-source voice dataset of diverse Swahili speakers for speech recognition (speech-to-text). You can use this resource to build AI systems understanding spokenÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10963,7 +10963,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "This dataset will help data scientists, government and users to measure solar energy adoption across Madagascar. It laid the groundwork needed to develop a solar panel detection algorithm working in Madagaskar. Notably, this project represented all regions of the country; instâ¦",
+        "description": "This dataset will help data scientists, government and users to measure solar energy adoption across Madagascar. It laid the groundwork needed to develop a solar panel detection algorithm working in Madagaskar. Notably, this project represented all regions of the country; instÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -10972,7 +10972,7 @@
   },
   {
     "dataset_id": "DS-263",
-    "dataset_name": "Detecting sentiments and combatting hate speech in Hausa, Igbo, Nigerian-Pidgin and YorÃ¹bÃ¡ - NaijaSenti: a Nigerian Corpus for Multilingual Sentiment Analysis",
+    "dataset_name": "Detecting sentiments and combatting hate speech in Hausa, Igbo, Nigerian-Pidgin and YorÃÂ¹bÃÂ¡ - NaijaSenti: a Nigerian Corpus for Multilingual Sentiment Analysis",
     "authors": [
       "Powered by / Provided by: Bayero University (Kano",
       "Nigeria)",
@@ -11010,7 +11010,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "The NaijaSenti dataset is the first large-scale human-annotated Twitter sentiment dataset for Hausa, Igbo, Nigerian-Pidgin, and YorÃ¹bÃ¡, the four most widely spoken languages in Nigeria. It consists of around 30,000 annotated tweets per language (except for Nigerian-Pidgin), inâ¦",
+        "description": "The NaijaSenti dataset is the first large-scale human-annotated Twitter sentiment dataset for Hausa, Igbo, Nigerian-Pidgin, and YorÃÂ¹bÃÂ¡, the four most widely spoken languages in Nigeria. It consists of around 30,000 annotated tweets per language (except for Nigerian-Pidgin), inÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -11056,7 +11056,7 @@
       },
       {
         "title": "",
-        "description": "The iMaster-DocuCam Landslide Monitoring System by Hesotech GmbH provides long-term, continuous visual documentation of landslide-prone areas in Rwanda. A pan-tilt-zoom (PTZ) camera captures high-resolution images (up to 1 cm perâ¦",
+        "description": "The iMaster-DocuCam Landslide Monitoring System by Hesotech GmbH provides long-term, continuous visual documentation of landslide-prone areas in Rwanda. A pan-tilt-zoom (PTZ) camera captures high-resolution images (up to 1 cm perÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -11100,7 +11100,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "The Mbaza AI Chatbot was awarded as one of the winning projects of the #SmartDevelopmentHack, an international hackathon organized by the German Federal Ministry for Economic Cooperation and Development (BMZ). The hackathon called for innovative digital solutions to tackle theâ¦",
+        "description": "The Mbaza AI Chatbot was awarded as one of the winning projects of the #SmartDevelopmentHack, an international hackathon organized by the German Federal Ministry for Economic Cooperation and Development (BMZ). The hackathon called for innovative digital solutions to tackle theÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -11145,7 +11145,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "In Rwanda, many farmers struggle to access timely, personalized agricultural information. Traditional channelsâlike radio, TV, and online sourcesâoffer limited reach and interactivity, while extension services and a national call center, staffed by only two agents for over twoâ¦",
+        "description": "In Rwanda, many farmers struggle to access timely, personalized agricultural information. Traditional channelsÃ¢ÂÂlike radio, TV, and online sourcesÃ¢ÂÂoffer limited reach and interactivity, while extension services and a national call center, staffed by only two agents for over twoÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -11186,7 +11186,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "This effort created the largest open-source voice dataset of diverse Kinyarwanda speakers for speech recognition (speech-to-text). It collected more than 2380  hours of AI voice data in Kinyarwanda (by 03/2026). You can use this resource to build AI systems understanding spokeâ¦",
+        "description": "This effort created the largest open-source voice dataset of diverse Kinyarwanda speakers for speech recognition (speech-to-text). It collected more than 2380  hours of AI voice data in Kinyarwanda (by 03/2026). You can use this resource to build AI systems understanding spokeÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -11226,7 +11226,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Enabling language translation capabilities on the Moodle LMS platform, through a collaboration with Atingi; the use case explores 3 modes of translation. The first mode is navigation based, simply translating static messages such as buttons and notifications, secondly it exploâ¦",
+        "description": "Enabling language translation capabilities on the Moodle LMS platform, through a collaboration with Atingi; the use case explores 3 modes of translation. The first mode is navigation based, simply translating static messages such as buttons and notifications, secondly it exploÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -11268,7 +11268,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Enabling people to access essential information around Sexual and Gender-Based Violence free of charge and anonymously. This innovative tool requires only a feature phone, with no internet connectivity needed. A collaborative effort between HDI-Rwanda and GIZ-Rwanda. As of Novâ¦",
+        "description": "Enabling people to access essential information around Sexual and Gender-Based Violence free of charge and anonymously. This innovative tool requires only a feature phone, with no internet connectivity needed. A collaborative effort between HDI-Rwanda and GIZ-Rwanda. As of NovÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -11310,7 +11310,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Until now, the lack of automatic evaluation tools made Kinyarwanda-English machine translation development slow and expensive, as it required manual human review. Weâve bridged this gap by creating a new evaluation dataset and model. Both are now open-source to support the resâ¦",
+        "description": "Until now, the lack of automatic evaluation tools made Kinyarwanda-English machine translation development slow and expensive, as it required manual human review. WeÃ¢ÂÂve bridged this gap by creating a new evaluation dataset and model. Both are now open-source to support the resÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -11353,7 +11353,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Voicebots acting as call center agentsâaccessible via telephone and capable of speaking local languagesâhold immense potential for development cooperation. They provide a vital link to users in rural areas who may lack internet access, have limited literacy, do not speak Engliâ¦",
+        "description": "Voicebots acting as call center agentsÃ¢ÂÂaccessible via telephone and capable of speaking local languagesÃ¢ÂÂhold immense potential for development cooperation. They provide a vital link to users in rural areas who may lack internet access, have limited literacy, do not speak EngliÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -11365,13 +11365,13 @@
     "dataset_name": "Forest Carbon Stock Monitoring for Climate Accountability in Senegal",
     "authors": [
       "Powered by / Provided by: Data 354",
-      "MinistÃ¨re de l'Environnement et de la Transition Ãcologique (METE)- Senegal \nCatalyzed by: Data Economy",
+      "MinistÃÂ¨re de l'Environnement et de la Transition ÃÂcologique (METE)- Senegal \nCatalyzed by: Data Economy",
       "GIZ / FAIR Forward - AI for All",
       "GIZ / The Estonian Centre for International Development (ESTDEV)",
       "African Union",
-      "D4D Hub â Data for Development HubFinanced by: BMZ"
+      "D4D Hub Ã¢ÂÂ Data for Development HubFinanced by: BMZ"
     ],
-    "source": "Powered by / Provided by: Data 354, MinistÃ¨re de l'Environnement et de la Transition Ãcologique (METE)- Senegal \nCatalyzed by: Data Economy, GIZ / FAIR Forward - AI for All, GIZ / The Estonian Centre for International Development (ESTDEV), African Union, D4D Hub â Data for Development HubFinanced by: BMZ",
+    "source": "Powered by / Provided by: Data 354, MinistÃÂ¨re de l'Environnement et de la Transition ÃÂcologique (METE)- Senegal \nCatalyzed by: Data Economy, GIZ / FAIR Forward - AI for All, GIZ / The Estonian Centre for International Development (ESTDEV), African Union, D4D Hub Ã¢ÂÂ Data for Development HubFinanced by: BMZ",
     "domain": "Environment",
     "countries": [
       "Senegal"
@@ -11397,7 +11397,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Senegal's forest monitoring agencies have long relied on costly, manual field surveys to estimate how much carbon its forests store â making it difficult to credibly track climate commitments or access carbon finance. This tool automates that process by combining satellite imaâ¦",
+        "description": "Senegal's forest monitoring agencies have long relied on costly, manual field surveys to estimate how much carbon its forests store Ã¢ÂÂ making it difficult to credibly track climate commitments or access carbon finance. This tool automates that process by combining satellite imaÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -11453,7 +11453,7 @@
       },
       {
         "title": "",
-        "description": "Field data collected on small holder agricultural farm land (crops) with raw datasets + applied use cases of classificationâ¦",
+        "description": "Field data collected on small holder agricultural farm land (crops) with raw datasets + applied use cases of classificationÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -11550,7 +11550,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Investigates the use of Sentinel-2 satellite imagery and a random forest (RF) machine learning algorithm to estimate the Leaf Area Index (LAI) of tomato crops in the Ha-Mphaila irrigation scheme, Limpopo Province, South Africa. The research aimed to determine key wavebands andâ¦",
+        "description": "Investigates the use of Sentinel-2 satellite imagery and a random forest (RF) machine learning algorithm to estimate the Leaf Area Index (LAI) of tomato crops in the Ha-Mphaila irrigation scheme, Limpopo Province, South Africa. The research aimed to determine key wavebands andÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -11598,7 +11598,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Investigates the use of remote sensing and machine learning to characterize maize stress in the Limpopo Province, South Africa. The study concludes that integrating field spectra and remotely sensed reflectance provides valuable information for maize stress investigation, suppâ¦",
+        "description": "Investigates the use of remote sensing and machine learning to characterize maize stress in the Limpopo Province, South Africa. The study concludes that integrating field spectra and remotely sensed reflectance provides valuable information for maize stress investigation, suppÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -11646,7 +11646,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Assesses the capabilities of Earth observation and machine learning algorithms, specifically Random Forest and Support Vector Machines, in detecting maize disease stress using drone data. The study was conducted on a small-scale farm in Limpopo, South Africa, focusing on healtâ¦",
+        "description": "Assesses the capabilities of Earth observation and machine learning algorithms, specifically Random Forest and Support Vector Machines, in detecting maize disease stress using drone data. The study was conducted on a small-scale farm in Limpopo, South Africa, focusing on healtÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -11692,7 +11692,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Drone high-resolution images were used with a semi-automated random forest (RF) classifier algorithm in Google Earth Engine to classify bare soil, weeds, and tomatoes. The findings can serve as a reference for agricultural researchers and advise farmers on crop management, potâ¦",
+        "description": "Drone high-resolution images were used with a semi-automated random forest (RF) classifier algorithm in Google Earth Engine to classify bare soil, weeds, and tomatoes. The findings can serve as a reference for agricultural researchers and advise farmers on crop management, potÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -11740,7 +11740,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Explores using the Random Forest Regression (RFR) machine learning algorithm with Sentinel-2 and drone imagery to estimate relative chlorophyll values in tomato and maize crops within South Africa's Ha-Mphaila farming area. The research concludes that both Sentinel-2 imagery (â¦",
+        "description": "Explores using the Random Forest Regression (RFR) machine learning algorithm with Sentinel-2 and drone imagery to estimate relative chlorophyll values in tomato and maize crops within South Africa's Ha-Mphaila farming area. The research concludes that both Sentinel-2 imagery (Ã¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -11836,7 +11836,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Explores the integration of ground-based vegetation parameters, thermal infrared data from handheld cameras, and UAV multispectral data to map crop canopy temperature at high resolution. The research, conducted at the Ha-Mphaila irrigation scheme in Limpopo, South Africa, focuâ¦",
+        "description": "Explores the integration of ground-based vegetation parameters, thermal infrared data from handheld cameras, and UAV multispectral data to map crop canopy temperature at high resolution. The research, conducted at the Ha-Mphaila irrigation scheme in Limpopo, South Africa, focuÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -11886,7 +11886,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Investigates how remote sensing and machine learning can be used to improve Agricultural Index Insurance (AII) for smallholder farmers in South Africa, who often lack access to affordable insurance.  Key recommendations include supporting further research and development in thâ¦",
+        "description": "Investigates how remote sensing and machine learning can be used to improve Agricultural Index Insurance (AII) for smallholder farmers in South Africa, who often lack access to affordable insurance.  Key recommendations include supporting further research and development in thÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -11936,7 +11936,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Explores the use of Sentinel-1 and Sentinel-2 satellite data for crop type mapping in smallholder farming areas. The study focuses on improving classification accuracy by identifying optimal spectral bands and evaluating machine learning algorithms like decision tree and randoâ¦",
+        "description": "Explores the use of Sentinel-1 and Sentinel-2 satellite data for crop type mapping in smallholder farming areas. The study focuses on improving classification accuracy by identifying optimal spectral bands and evaluating machine learning algorithms like decision tree and randoÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -11982,7 +11982,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "The \"Voices of Mzansi\" project aimed to get South Africa's languages launched on the Mozilla Common Voice platform. To achieve this aim the Common Voice website had to be translated from English into the other official languages and at least 5 000 sentences had to be collectedâ¦",
+        "description": "The \"Voices of Mzansi\" project aimed to get South Africa's languages launched on the Mozilla Common Voice platform. To achieve this aim the Common Voice website had to be translated from English into the other official languages and at least 5 000 sentences had to be collectedÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -12024,7 +12024,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "This dataset and AI model was produced as part of the Radiant Earth Spot the Crop Challenge (https://zindi.africa/hackathons/radiant-earth-spot-the-crop-hackathon). The objective of the competition was to create a machine learning model to classify fields by crop type from imaâ¦",
+        "description": "This dataset and AI model was produced as part of the Radiant Earth Spot the Crop Challenge (https://zindi.africa/hackathons/radiant-earth-spot-the-crop-hackathon). The objective of the competition was to create a machine learning model to classify fields by crop type from imaÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -12067,7 +12067,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "A majority of smallholder farmers in Tanzania are only able to communicate through the Kiswahili spoken language and its dialects. A text and voice-based platform made available in the language of the underserved (i.e., Kiswahili) would be key to wide access, adoption, and usaâ¦",
+        "description": "A majority of smallholder farmers in Tanzania are only able to communicate through the Kiswahili spoken language and its dialects. A text and voice-based platform made available in the language of the underserved (i.e., Kiswahili) would be key to wide access, adoption, and usaÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -12109,7 +12109,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Kiazi Bora, âQuality Potatoesââ in Swahili, uses a voice enabled application that informs vulnerable women living in rural areas and marginalized communities of Tanzania on the nutritional values of Orange Fleshed Sweet Potatoes (OFSP), farming skills for better yields, and deâ¦",
+        "description": "Kiazi Bora, Ã¢ÂÂQuality PotatoesÃ¢ÂÂÃ¢ÂÂ in Swahili, uses a voice enabled application that informs vulnerable women living in rural areas and marginalized communities of Tanzania on the nutritional values of Orange Fleshed Sweet Potatoes (OFSP), farming skills for better yields, and deÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -12124,10 +12124,10 @@
       "M-Omulimisa",
       "Alliance of Bioversity International",
       "CIAT",
-      "TecnicafÃ©\nCatalyzed by: FAIR Forward - AI for All",
+      "TecnicafÃÂ©\nCatalyzed by: FAIR Forward - AI for All",
       "GIZ\nFinanced by: BMZ"
     ],
-    "source": "Powered by / Provided by: Producers Direct, M-Omulimisa, Alliance of Bioversity International and CIAT, TecnicafÃ©\nCatalyzed by: FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
+    "source": "Powered by / Provided by: Producers Direct, M-Omulimisa, Alliance of Bioversity International and CIAT, TecnicafÃÂ©\nCatalyzed by: FAIR Forward - AI for All, GIZ\nFinanced by: BMZ",
     "domain": "Agriculture",
     "countries": [
       "Uganda"
@@ -12153,7 +12153,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "Contributing almost a third of foreign export earnings, coffee is one of the main cash crops in Uganda. Nowadays, many small-holder farmers, who rely on coffee farming for their livelihood, are facing challenges such as unpredictable weather and volatile market prices. Traditiâ¦",
+        "description": "Contributing almost a third of foreign export earnings, coffee is one of the main cash crops in Uganda. Nowadays, many small-holder farmers, who rely on coffee farming for their livelihood, are facing challenges such as unpredictable weather and volatile market prices. TraditiÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -12197,7 +12197,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "The Site Identification tool is an AI-driven tool to enhance renewable energy planning. This tool utilizes machine learning and satellite imagery to identify optimal sites for renewable energy deployment, particularly in remote regions. A successful pilot in Lamwo District demâ¦",
+        "description": "The Site Identification tool is an AI-driven tool to enhance renewable energy planning. This tool utilizes machine learning and satellite imagery to identify optimal sites for renewable energy deployment, particularly in remote regions. A successful pilot in Lamwo District demÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -12241,7 +12241,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "The project successfully developed a machine learning model to predict daily Global Horizontal Irradiance (GHI) in Sub-Saharan Africa, with a specific focus on Uganda. The core objective was to correct the systematic bias found in readily available satellite-derived solar irraâ¦",
+        "description": "The project successfully developed a machine learning model to predict daily Global Horizontal Irradiance (GHI) in Sub-Saharan Africa, with a specific focus on Uganda. The core objective was to correct the systematic bias found in readily available satellite-derived solar irraÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -12284,7 +12284,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "In Uganda, the Civil Society and Budget Advocacy Group (CSBAG) in partnership with GIZ, has recognized the need for further enhancement in how audit reports are processed and understood. An AI-powered conversational assistant was designed to help anyone understand audit reportâ¦",
+        "description": "In Uganda, the Civil Society and Budget Advocacy Group (CSBAG) in partnership with GIZ, has recognized the need for further enhancement in how audit reports are processed and understood. An AI-powered conversational assistant was designed to help anyone understand audit reportÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -12328,7 +12328,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "This project provides Ugandaâs first openly accessible AI-ready satellite imagery dataset designed to predict land-use and land-cover change. It was created to address persistent deforestation and the lack of reliable, context-specific data needed to detect, forecast, and manaâ¦",
+        "description": "This project provides UgandaÃ¢ÂÂs first openly accessible AI-ready satellite imagery dataset designed to predict land-use and land-cover change. It was created to address persistent deforestation and the lack of reliable, context-specific data needed to detect, forecast, and manaÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -12373,7 +12373,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "The Lacuna PII Multilingual Text Dataset  contains annotated sentences with personally identifiable information (PII) in Luganda, Lumasaba, Hausa, and Kanuri. These four languages span Central and Eastern Uganda, Nigeria, Ghana, and Northern Cameroon. The dataset can help to aâ¦",
+        "description": "The Lacuna PII Multilingual Text Dataset  contains annotated sentences with personally identifiable information (PII) in Luganda, Lumasaba, Hausa, and Kanuri. These four languages span Central and Eastern Uganda, Nigeria, Ghana, and Northern Cameroon. The dataset can help to aÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -12417,7 +12417,7 @@
     "use_cases": [
       {
         "title": "",
-        "description": "An AI-powered voice transcription and translation solution for Rwanda's film and media industry, focused on low-resource African languages. The initiative prioritises ethical AI development by upskilling local transcribers and annotators as active contributors to model improveâ¦",
+        "description": "An AI-powered voice transcription and translation solution for Rwanda's film and media industry, focused on low-resource African languages. The initiative prioritises ethical AI development by upskilling local transcribers and annotators as active contributors to model improveÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -12458,8 +12458,8 @@
     "publication_link": "",
     "use_cases": [
       {
-        "title": "The âDhoNam",
-        "description": "Dholuo Speech datasetâ is a speech corpus designed to supercharge Automatic Speech Recognition (ASR) and other speech technologies for Dholuo, one of Kenyaâs major indigenous languages. This dataset contains native-speaker audio recordings collected through a platâ¦",
+        "title": "The Ã¢ÂÂDhoNam",
+        "description": "Dholuo Speech datasetÃ¢ÂÂ is a speech corpus designed to supercharge Automatic Speech Recognition (ASR) and other speech technologies for Dholuo, one of KenyaÃ¢ÂÂs major indigenous languages. This dataset contains native-speaker audio recordings collected through a platÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
@@ -12502,35 +12502,11 @@
     "use_cases": [
       {
         "title": "",
-        "description": "FarmerChat is an AI assistant built to help smallholder farmers make better field-level decisions by delivering timely, localized advice to help them grow more, earn more, and adapt to changing weather. It is designed for low-connectivity areas and available in over 15 languagâ¦",
+        "description": "FarmerChat is an AI assistant built to help smallholder farmers make better field-level decisions by delivering timely, localized advice to help them grow more, earn more, and adapt to changing weather. It is designed for low-connectivity areas and available in over 15 languagÃ¢ÂÂ¦",
         "paper_link": "",
         "code_repo": ""
       }
     ],
     "last_updated": "2026"
-  },
-  {
-    "dataset_id": "DS-297",
-    "dataset_name": "test",
-    "authors": [],
-    "source": "test",
-    "domain": "NLP",
-    "countries": [
-      "Ethiopia"
-    ],
-    "data_type": "Tabular",
-    "file_format": [],
-    "scale_coverage": "National",
-    "temporal_coverage": "",
-    "keywords": [],
-    "access_method": "Direct Download",
-    "license": "CC BY 4.0",
-    "license_url": "https://creativecommons.org/licenses/by/4.0/",
-    "link": "https://opendata-africa.github.io/admin.html",
-    "documentation_link": "https://opendata-africa.github.io/admin.html",
-    "publication_link": "",
-    "use_cases": [],
-    "last_updated": "2026",
-    "description": "test"
   }
 ]
