@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Open Data Africa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { background-color: #f8fafc; color: #0f172a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .form-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        .dataset-row:hover { background-color: #f1f5f9; }
+        .loading-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 100; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center gap-3">
+                    <span class="text-2xl">🌍</span>
+                    <div>
+                        <div class="font-bold text-slate-900 text-lg">Open Data Africa</div>
+                        <div class="text-xs text-slate-500">Admin Dashboard</div>
+                    </div>
+                </a>
+                <div class="hidden md:flex items-center gap-4">
+                    <span id="adminStatus" class="text-sm text-slate-500"></span>
+                    <button onclick="logout()" id="logoutBtn" class="hidden text-slate-600 hover:text-red-600 text-sm font-medium">
+                        <i class="fas fa-sign-out-alt mr-1"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 max-w-7xl mx-auto px-4 py-8 w-full">
+
+        <!-- LOGIN VIEW -->
+        <div id="loginView" class="max-w-md mx-auto mt-12">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-lg p-8">
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-lock text-blue-600 text-2xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-slate-900 mb-2">Admin Login</h1>
+                    <p class="text-sm text-slate-600">Enter your GitHub Personal Access Token</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-2">GitHub Username</label>
+                        <input type="text" id="githubUsername" class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none" placeholder="opendata-africa">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-2">Personal Access Token</label>
+                        <input type="password" id="githubToken" class="form-input w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none" placeholder="ghp_xxxxxxxxxxxx">
+                        <p class="text-xs text-slate-500 mt-1">
+                            <a href="https://github.com/settings/tokens/new?description=OpenDataAfricaAdmin&scopes=repo" target="_blank" class="text-blue-600 hover:underline">
+                                <i class="fas fa-external-link-alt mr-1"></i>Create a token here
+                            </a>
+                            (needs <code class="bg-slate-100 px-1 rounded">repo</code> scope)
+                        </p>
+                    </div>
+                    <button onclick="login()" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Login
+                    </button>
+                </div>
+
+                <div class="mt-6 bg-amber-50 border border-amber-200 rounded-lg p-4 text-xs text-amber-800">
+                    <p class="font-bold mb-1"><i class="fas fa-info-circle mr-1"></i>How to create a token:</p>
+                    <ol class="list-decimal list-inside space-y-1">
+                        <li>Click the "Create a token" link above</li>
+                        <li>Give it a name (e.g., "OpenDataAfrica Admin")</li>
+                        <li>Select the <strong>repo</strong> scope</li>
+                        <li>Click "Generate token" and copy it</li>
+                        <li>Paste it here (stored only in your browser)</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADMIN DASHBOARD VIEW -->
+        <div id="dashboardView" class="hidden">
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-2xl font-bold text-blue-600" id="statTotal">0</div>
+                    <div class="text-xs text-slate-500">Total Datasets</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-2xl font-bold text-emerald-600" id="statDomains">0</div>
+                    <div class="text-xs text-slate-500">Domains</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-2xl font-bold text-amber-600" id="statCountries">0</div>
+                    <div class="text-xs text-slate-500">Countries</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-2xl font-bold text-purple-600" id="statLastUpdate">-</div>
+                    <div class="text-xs text-slate-500">Last Updated</div>
+                </div>
+            </div>
+
+            <!-- Action Bar -->
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 mb-6 flex flex-wrap gap-3 items-center justify-between">
+                <div class="flex gap-3 flex-1">
+                    <div class="relative flex-1 max-w-md">
+                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" id="searchInput" placeholder="Search datasets..." class="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm">
+                    </div>
+                    <select id="domainFilter" class="px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white">
+                        <option value="All">All Domains</option>
+                    </select>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="refreshData()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-sync-alt mr-1"></i>Refresh
+                    </button>
+                    <button onclick="showAddForm()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-plus mr-1"></i>Add Dataset
+                    </button>
+                    <button onclick="exportJSON()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-download mr-1"></i>Export
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dataset List -->
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-slate-50 border-b border-slate-200">
+                            <tr>
+                                <th class="text-left px-4 py-3 text-xs font-semibold text-slate-600 uppercase">Dataset</th>
+                                <th class="text-left px-4 py-3 text-xs font-semibold text-slate-600 uppercase">Domain</th>
+                                <th class="text-left px-4 py-3 text-xs font-semibold text-slate-600 uppercase">Countries</th>
+                                <th class="text-left px-4 py-3 text-xs font-semibold text-slate-600 uppercase">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="datasetTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADD/EDIT MODAL -->
+        <div id="editModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center">
+                    <h2 id="modalTitle" class="text-xl font-bold text-slate-900">Add Dataset</h2>
+                    <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <form id="editForm" class="p-6 space-y-4">
+                    <input type="hidden" id="editIndex" value="-1">
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Dataset Name *</label>
+                            <input type="text" id="f_dataset_name" required class="form-input w-full px-3 py-2 border border-slate-300 rounded-lg text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Domain *</label>
+                            <select id="f_domain" required class="form-input w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white">
+                                <option value="NLP">NLP</option>
+                                <option value="Agriculture">Agriculture</option>
+                                <option value="Healthcare">Healthcare</option>
+                                <option value="Environment and Energy">Environment & Energy</option>
+                                <option value="Climate and Geospatial">Climate & Geospatial</option>
+                                <option value="Socioeconomic">Socioeconomic</option>
+                                <option value="Education">Education</option>
+                                <option value="Genomics">Genomics</option>
+                                <option value="Multiple">Multiple</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Source *</label>
+                            <input type="text" id="f_source" required class="form-input w-full px-3 py-2 border border-slate-300 rounded-lg text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Countries (comma-separated) *</label>
+                            <input type="text" id="f_countries" required class="form-input w-full px-3 py-2 border border-slate-300 rounded-lg text-sm" placeholder="Kenya, Ethiopia">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Data Type *</label>
+                            <select id="f_data_type" required class="form-input w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white">
+                                <option value="Tabular">Tabular</option>
+                                <option value="Image">Image</option>
+                                <option value="Audio">Audio</option>
+                                <option value="Video">Video</option>
+                                <option value="Text">Text</option>
+                                <option value="Geospatial">Geospatial</option>
+                                <option value="Mixed Formats">Mixed</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">License *</label>
+                            <select id="f_license" required class="form-input w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white">
+                                <option value="CC BY 4.0">CC BY 4.0</option>
+                                <option value="CC BY-SA 4.0">CC BY-SA 4.0</option>
+                                <option value="CC BY-NC 4.0">CC BY-NC 4.0</option>
+                                <option value="CC0 1.0">CC0 1.0</option>
+                                <option value="MIT">MIT</option>
+                                <option value="Apache 2.0">Apache 2.0</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Dataset URL *</label>
+                            <input type="url" id="f_link" required class="form-input w-full px-3 py-2 border border-slate-300 rounded-lg text-sm">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Description *</label>
+                            <textarea id="f_description" required rows="3" class="form-input w-full px-3 py-2 border border-slate-300 rounded-lg text-sm"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Scale Coverage</label>
+                            <select id="f_scale_coverage" class="form-input w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white">
+                                <option value="National">National</option>
+                                <option value="Regional">Regional</option>
+                                <option value="Continental">Continental</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Last Updated</label>
+                            <input type="text" id="f_last_updated" class="form-input w-full px-3 py-2 border border-slate-300 rounded-lg text-sm" placeholder="2024">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end gap-3 pt-4 border-t border-slate-200">
+                        <button type="button" onclick="closeModal()" class="px-6 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-medium">Cancel</button>
+                        <button type="submit" class="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium">
+                            <i class="fas fa-save mr-1"></i>Save & Commit to GitHub
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="loading-overlay hidden">
+            <div class="bg-white rounded-xl p-8 text-center shadow-2xl">
+                <i class="fas fa-circle-notch fa-spin text-4xl text-blue-600 mb-4"></i>
+                <p id="loadingText" class="text-slate-700 font-medium">Processing...</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-6 text-center text-sm mt-auto">
+        <p>© 2026 Open Data Africa Admin Panel</p>
+    </footer>
+
+    <script>
+        const REPO_OWNER = 'opendata-africa';
+        const REPO_NAME = 'opendata-africa.github.io';
+        const BRANCH = 'main';
+        const FILE_PATH = 'datasets.json';
+
+        let datasets = [];
+        let fileSha = ''; // Needed for updates
+
+        // Check for saved credentials on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedUser = localStorage.getItem('gh_username');
+            const savedToken = localStorage.getItem('gh_token');
+            if (savedUser && savedToken) {
+                document.getElementById('githubUsername').value = savedUser;
+                document.getElementById('githubToken').value = savedToken;
+            }
+        });
+
+        async function login() {
+            const username = document.getElementById('githubUsername').value.trim();
+            const token = document.getElementById('githubToken').value.trim();
+
+            if (!username || !token) {
+                alert('Please enter both username and token');
+                return;
+            }
+
+            showLoading('Verifying credentials...');
+
+            try {
+                // Test the token by fetching user info
+                const response = await fetch('https://api.github.com/user', {
+                    headers: { 'Authorization': `token ${token}` }
+                });
+
+                if (!response.ok) throw new Error('Invalid token');
+
+                // Save credentials
+                localStorage.setItem('gh_username', username);
+                localStorage.setItem('gh_token', token);
+
+                // Load datasets
+                await loadDatasets();
+
+                // Show dashboard
+                document.getElementById('loginView').classList.add('hidden');
+                document.getElementById('dashboardView').classList.remove('hidden');
+                document.getElementById('adminStatus').textContent = `Logged in as ${username}`;
+                document.getElementById('logoutBtn').classList.remove('hidden');
+
+            } catch (err) {
+                alert('Login failed: ' + err.message + '\n\nMake sure your token has the "repo" scope.');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('gh_username');
+            localStorage.removeItem('gh_token');
+            location.reload();
+        }
+
+        async function loadDatasets() {
+            showLoading('Loading datasets...');
+            try {
+                const token = localStorage.getItem('gh_token');
+                const response = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
+                    headers: { 'Authorization': `token ${token}` }
+                });
+
+                if (!response.ok) throw new Error('Failed to load datasets.json');
+
+                const data = await response.json();
+                fileSha = data.sha;
+
+                // Decode base64 content
+                const content = atob(data.content.replace(/\n/g, ''));
+                datasets = JSON.parse(content);
+
+                renderTable();
+                updateStats();
+                populateDomainFilter();
+
+            } catch (err) {
+                alert('Error loading datasets: ' + err.message);
+            } finally {
+                hideLoading();
+            }
+        }
+
+        async function refreshData() {
+            await loadDatasets();
+        }
+
+        function renderTable(filter = '') {
+            const tbody = document.getElementById('datasetTableBody');
+            const domainFilter = document.getElementById('domainFilter').value;
+            const search = document.getElementById('searchInput').value.toLowerCase();
+
+            const filtered = datasets.filter((ds, idx) => {
+                const matchSearch = !search ||
+                    ds.dataset_name.toLowerCase().includes(search) ||
+                    (ds.domain || '').toLowerCase().includes(search) ||
+                    (ds.source || '').toLowerCase().includes(search);
+                const matchDomain = domainFilter === 'All' || ds.domain === domainFilter;
+                return matchSearch && matchDomain;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center py-8 text-slate-500">No datasets found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filtered.map((ds, i) => {
+                const realIndex = datasets.indexOf(ds);
+                const countries = (ds.countries || []).slice(0, 3).join(', ') || 'N/A';
+                return `
+                    <tr class="dataset-row border-b border-slate-100">
+                        <td class="px-4 py-3">
+                            <div class="font-semibold text-slate-900 text-sm">${ds.dataset_name}</div>
+                            <div class="text-xs text-slate-500 mt-1">${ds.source || 'Unknown'}</div>
+                        </td>
+                        <td class="px-4 py-3">
+                            <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-medium">${ds.domain || 'N/A'}</span>
+                        </td>
+                        <td class="px-4 py-3 text-sm text-slate-600">${countries}</td>
+                        <td class="px-4 py-3">
+                            <div class="flex gap-2">
+                                <button onclick="editDataset(${realIndex})" class="text-blue-600 hover:text-blue-800 text-sm" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button onclick="deleteDataset(${realIndex})" class="text-red-600 hover:text-red-800 text-sm" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <a href="${ds.link}" target="_blank" class="text-slate-600 hover:text-slate-800 text-sm" title="View">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function updateStats() {
+            document.getElementById('statTotal').textContent = datasets.length;
+            const domains = new Set(datasets.map(d => d.domain).filter(Boolean));
+            const countries = new Set(datasets.flatMap(d => d.countries || []));
+            document.getElementById('statDomains').textContent = domains.size;
+            document.getElementById('statCountries').textContent = countries.size;
+            const lastUpdate = datasets[datasets.length - 1]?.last_updated || '-';
+            document.getElementById('statLastUpdate').textContent = lastUpdate;
+        }
+
+        function populateDomainFilter() {
+            const select = document.getElementById('domainFilter');
+            const domains = [...new Set(datasets.map(d => d.domain).filter(Boolean))].sort();
+            select.innerHTML = '<option value="All">All Domains</option>' +
+                domains.map(d => `<option value="${d}">${d}</option>`).join('');
+        }
+
+        function showAddForm() {
+            document.getElementById('modalTitle').textContent = 'Add New Dataset';
+            document.getElementById('editForm').reset();
+            document.getElementById('editIndex').value = -1;
+            document.getElementById('editModal').classList.remove('hidden');
+        }
+
+        function editDataset(index) {
+            const ds = datasets[index];
+            document.getElementById('modalTitle').textContent = 'Edit Dataset';
+            document.getElementById('editIndex').value = index;
+            document.getElementById('f_dataset_name').value = ds.dataset_name || '';
+            document.getElementById('f_domain').value = ds.domain || 'NLP';
+            document.getElementById('f_source').value = ds.source || '';
+            document.getElementById('f_countries').value = (ds.countries || []).join(', ');
+            document.getElementById('f_data_type').value = ds.data_type || 'Tabular';
+            document.getElementById('f_license').value = ds.license || 'CC BY 4.0';
+            document.getElementById('f_link').value = ds.link || '';
+            document.getElementById('f_description').value = ds.description || '';
+            document.getElementById('f_scale_coverage').value = ds.scale_coverage || 'National';
+            document.getElementById('f_last_updated').value = ds.last_updated || '';
+            document.getElementById('editModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('editModal').classList.add('hidden');
+        }
+
+        async function deleteDataset(index) {
+            const ds = datasets[index];
+            if (!confirm(`Delete "${ds.dataset_name}"?\n\nThis will commit the change to GitHub immediately.`)) return;
+
+            showLoading('Deleting dataset...');
+            try {
+                datasets.splice(index, 1);
+                await commitChanges(`Delete dataset: ${ds.dataset_name}`);
+                await loadDatasets();
+                alert('Dataset deleted successfully!');
+            } catch (err) {
+                alert('Delete failed: ' + err.message);
+                await loadDatasets(); // Reload to restore state
+            } finally {
+                hideLoading();
+            }
+        }
+
+        document.getElementById('editForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const index = parseInt(document.getElementById('editIndex').value);
+
+            const newDataset = {
+                dataset_id: index >= 0 ? datasets[index].dataset_id : `DS-${String(datasets.length + 1).padStart(3, '0')}`,
+                dataset_name: document.getElementById('f_dataset_name').value.trim(),
+                authors: [],
+                source: document.getElementById('f_source').value.trim(),
+                domain: document.getElementById('f_domain').value,
+                countries: document.getElementById('f_countries').value.split(',').map(c => c.trim()).filter(Boolean),
+                data_type: document.getElementById('f_data_type').value,
+                file_format: [],
+                scale_coverage: document.getElementById('f_scale_coverage').value,
+                temporal_coverage: '',
+                keywords: [],
+                access_method: 'Direct Download',
+                license: document.getElementById('f_license').value,
+                license_url: getLicenseUrl(document.getElementById('f_license').value),
+                link: document.getElementById('f_link').value.trim(),
+                documentation_link: document.getElementById('f_link').value.trim(),
+                publication_link: '',
+                use_cases: [],
+                last_updated: document.getElementById('f_last_updated').value.trim() || new Date().getFullYear().toString(),
+                description: document.getElementById('f_description').value.trim()
+            };
+
+            showLoading(index >= 0 ? 'Updating dataset...' : 'Adding dataset...');
+
+            try {
+                if (index >= 0) {
+                    datasets[index] = { ...datasets[index], ...newDataset };
+                } else {
+                    datasets.push(newDataset);
+                }
+
+                const action = index >= 0 ? 'Update' : 'Add';
+                await commitChanges(`${action} dataset: ${newDataset.dataset_name}`);
+                await loadDatasets();
+                closeModal();
+                alert(`Dataset ${index >= 0 ? 'updated' : 'added'} successfully!`);
+            } catch (err) {
+                alert('Save failed: ' + err.message);
+                await loadDatasets();
+            } finally {
+                hideLoading();
+            }
+        });
+
+        function getLicenseUrl(license) {
+            const map = {
+                'CC BY 4.0': 'https://creativecommons.org/licenses/by/4.0/',
+                'CC BY-SA 4.0': 'https://creativecommons.org/licenses/by-sa/4.0/',
+                'CC BY-NC 4.0': 'https://creativecommons.org/licenses/by-nc/4.0/',
+                'CC0 1.0': 'https://creativecommons.org/publicdomain/zero/1.0/',
+                'MIT': 'https://opensource.org/licenses/MIT',
+                'Apache 2.0': 'https://www.apache.org/licenses/LICENSE-2.0'
+            };
+            return map[license] || '';
+        }
+
+        async function commitChanges(message) {
+            const token = localStorage.getItem('gh_token');
+            const content = btoa(unescape(encodeURIComponent(JSON.stringify(datasets, null, 2))));
+
+            const response = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: message,
+                    content: content,
+                    sha: fileSha,
+                    branch: BRANCH
+                })
+            });
+
+            if (!response.ok) {
+                const err = await response.json();
+                throw new Error(err.message || 'Commit failed');
+            }
+
+            const data = await response.json();
+            fileSha = data.content.sha;
+        }
+
+        function exportJSON() {
+            const blob = new Blob([JSON.stringify(datasets, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'datasets-export.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function showLoading(text) {
+            document.getElementById('loadingText').textContent = text;
+            document.getElementById('loadingOverlay').classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.add('hidden');
+        }
+
+        // Search and filter listeners
+        document.getElementById('searchInput').addEventListener('input', () => renderTable());
+        document.getElementById('domainFilter').addEventListener('change', () => renderTable());
+    </script>
+</body>
+</html>
